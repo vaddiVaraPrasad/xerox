@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>762325685309-gsgo9snbmq85j75cr01m60glooml5sff.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.762325685309-gsgo9snbmq85j75cr01m60glooml5sff</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDNLBvU7YpTrNaXl_cVBhh0dxjbkpMyu-U</string>
+	<key>GCM_SENDER_ID</key>
+	<string>762325685309</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.xerox</string>
+	<key>PROJECT_ID</key>
+	<string>xerox-01-04</string>
+	<key>STORAGE_BUCKET</key>
+	<string>xerox-01-04.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:762325685309:ios:84789c3e38035f031b8654</string>
+</dict>
+</plist>
