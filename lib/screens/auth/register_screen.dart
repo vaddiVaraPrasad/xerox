@@ -13,7 +13,11 @@ import "../../utils/color_pallets.dart";
 import "../../widgets/auth/sing_in_up_bar.dart";
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+  final VoidCallback callLoginScreen;
+  const RegisterScreen({
+    super.key,
+    required this.callLoginScreen,
+  });
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -335,7 +339,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               style: TextStyle(fontSize: 18),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                if (widget.callLoginScreen != null) {
+                                  widget.callLoginScreen();
+                                }
+                              },
                               child: const Text(
                                 "Login",
                                 style: TextStyle(

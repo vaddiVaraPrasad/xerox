@@ -12,7 +12,11 @@ import "./forget_password_Screen.dart";
 import "../../widgets/auth/sing_in_up_bar.dart";
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final VoidCallback callRegisterScreen;
+  const LoginScreen({
+    super.key,
+    required this.callRegisterScreen,
+  });
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -191,10 +195,10 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ),
       );
-    // } finally {
-    //   setState(() {
-    //     _isLoading = false;
-    //   });
+      // } finally {
+      //   setState(() {
+      //     _isLoading = false;
+      //   });
     }
   }
 
@@ -315,7 +319,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(fontSize: 18),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                if (widget.callRegisterScreen != null) {
+                                  widget.callRegisterScreen();
+                                }
+                              },
                               child: const Text(
                                 "Register",
                                 style: TextStyle(
