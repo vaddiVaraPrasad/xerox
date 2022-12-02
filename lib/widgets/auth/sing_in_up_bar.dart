@@ -46,3 +46,45 @@ class SignInBar extends StatelessWidget {
     );
   }
 }
+
+class SignUpBar extends StatelessWidget {
+  final String label;
+  final VoidCallback onPressed;
+  final bool isLoading;
+
+  const SignUpBar({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    required this.isLoading,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+              color: ColorPallets.white,
+              fontSize: 24,
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: LoadingProgressIndicator(
+                isLoading: isLoading,
+              ),
+            ),
+          ),
+          RoundContinueButton(
+            onPressed: onPressed,
+          )
+        ],
+      ),
+    );
+  }
+}

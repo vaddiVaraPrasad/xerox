@@ -9,6 +9,7 @@ import "./utils/color_pallets.dart";
 
 import "./screens/auth/auth_screen.dart";
 import "./screens/home/home_screen.dart";
+import "./screens/auth/forget_password_Screen.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +28,7 @@ class Xerox extends StatelessWidget {
       // googlefonts.istokweb is for heading  .. when ever in need use there ..
       // googlefonts.lora is for body ..... so we defing the lora as global text theme
       theme: ThemeData(
-        // canvasColor: ColorPallets.lightPurplishWhile,
+        // canvasColor: ColorPallets.yellowShadedPurple,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: GoogleFonts.loraTextTheme(),
         colorScheme: ColorScheme.fromSwatch().copyWith(
@@ -50,6 +51,10 @@ class Xerox extends StatelessWidget {
           }
         },
       ),
+      routes: {
+        ForgetPasswordScreen.routeName: (context) =>
+            const ForgetPasswordScreen(),
+      },
     );
   }
 }

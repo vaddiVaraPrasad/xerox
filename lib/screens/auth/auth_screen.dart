@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 
 import "./backGround_paint.dart";
 import "./login_Screen.dart";
+import "./register_screen.dart";
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -34,6 +35,7 @@ class _AuthScreenState extends State<AuthScreen>
                     BackGroundPainter(animation: _animationController.view)),
           ),
           LoginScreen()
+          // RegisterScreen()
         ],
       ),
     );
