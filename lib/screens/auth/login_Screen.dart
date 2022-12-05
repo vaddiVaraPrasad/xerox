@@ -48,12 +48,14 @@ class _LoginScreenState extends State<LoginScreen> {
       } on FirebaseAuthException catch (e) {
         var msg = "user credentials are improper ";
         if (e.code == 'user-not-found') {
-          msg = "No user found for that email";
+          msg = "No user found with that email";
           // print('No user found for that email.');
         } else if (e.code == 'wrong-password') {
-          msg = "Wrong password provided for that user";
+          msg = "Wrong password. Try again";
           // print('Wrong password provided for that user.');
         }
+        ScaffoldMessenger.of(context).clearSnackBars();
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: ColorPallets.deepBlue,
@@ -68,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   msg,
                   style: const TextStyle(
                     fontSize: 18,
-                    fontStyle: FontStyle.italic,
+                    fontStyle: FontStyle.normal,
                     color: ColorPallets.white,
                   ),
                 )
@@ -77,6 +79,8 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         );
       } catch (e) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: ColorPallets.deepBlue,
@@ -91,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   e.toString(),
                   style: const TextStyle(
                     fontSize: 18,
-                    fontStyle: FontStyle.italic,
+                    fontStyle: FontStyle.normal,
                     color: ColorPallets.white,
                   ),
                 )

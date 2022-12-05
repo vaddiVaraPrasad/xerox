@@ -35,7 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   };
 
   Future<void> registerUser() async {
-    var msg = "";
+    var msg = "Invalid Credentials !!!";
     var ProfilePicUrl = "";
 
     final isvalid = formKeyRegister.currentState!.validate();
@@ -79,6 +79,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           } else if (e.code == 'email-already-in-use') {
             msg = 'The account already exists for that email';
           }
+          ScaffoldMessenger.of(context).clearSnackBars();
+
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: ColorPallets.deepBlue,
@@ -93,7 +95,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     msg,
                     style: const TextStyle(
                       fontSize: 18,
-                      fontStyle: FontStyle.italic,
+                      fontStyle: FontStyle.normal,
                       color: ColorPallets.white,
                     ),
                   )
@@ -111,6 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         //   _isLoading = false;
         // });
       } else {
+        ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: ColorPallets.deepBlue,
@@ -122,10 +125,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   color: Colors.red,
                 ),
                 Text(
-                  "add profile to register !!!",
+                  "add profile picture to register !!",
                   style: TextStyle(
                     fontSize: 18,
-                    fontStyle: FontStyle.italic,
+                    fontStyle: FontStyle.normal,
                     color: ColorPallets.white,
                   ),
                 )

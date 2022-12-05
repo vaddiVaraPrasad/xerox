@@ -31,12 +31,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         context: context,
         builder: (context) => AlertDialog(
           content: const Text(
-              "email to reset password has send to ur mail pls check"),
+              "Email is sent to reset your password\ncheck your spam box"),
           actions: [
             IconButton(
                 onPressed: () => Navigator.of(context).pop(),
                 icon: const Icon(
-                  Icons.done,
+                  FontAwesomeIcons.check,
                   size: 30,
                 ))
           ],
@@ -44,6 +44,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       );
     } on FirebaseAuthException catch (e) {
       var msg = e.code;
+      ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: ColorPallets.deepBlue,
@@ -58,7 +59,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 msg,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontStyle: FontStyle.italic,
+                  fontStyle: FontStyle.normal,
                   color: ColorPallets.white,
                 ),
               )
@@ -88,6 +89,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     CustomIconButton(
                       onPressed: () {
                         Navigator.of(context).pop();
+                        ScaffoldMessenger.of(context).clearSnackBars();
                       },
                       icon: FontAwesomeIcons.chevronLeft,
                       iconColor: ColorPallets.white,
@@ -112,10 +114,13 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 child: Column(
                   children: [
                     const Text(
-                      "Enter Your Email and we will send you a password reset link",
+                      "Enter Your Email\nLink will be sent to reset password",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontSize: 20, color: Color.fromARGB(255, 187, 67, 230)),
+                          fontSize: 20, color: Color.fromARGB(255, 6, 1, 8)),
+                    ),
+                    const SizedBox(
+                      height: 10,
                     ),
                     TextField(
                       controller: emailController,
@@ -139,7 +144,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           style: TextStyle(
                               color: ColorPallets.white,
                               fontSize: 24,
-                              fontStyle: FontStyle.italic),
+                              fontStyle: FontStyle.normal),
                         ),
                       ),
                     ),
