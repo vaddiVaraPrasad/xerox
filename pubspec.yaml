@@ -42,6 +42,8 @@ dependencies:
   github_sign_in: ^0.0.4
   get: ^4.6.1
   animations: ^2.0.7
+  google_nav_bar: ^5.0.6
+  line_icons: ^2.0.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -72,13 +74,13 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - image/google.png
-    - image/add_profile_border.png
-    - image/add_profile_fill.png
-    - image/forgetPasswordPink.gif
-    - image/forgetPasswordPurple.gif
-    - image/forgotPassword.png
-    - image/search.png
+    - assets/image/google.png
+    - assets/image/add_profile_border.png
+    - assets/image/add_profile_fill.png
+    - assets/image/forgetPasswordPink.gif
+    - assets/image/forgetPasswordPurple.gif
+    - assets/image/forgotPassword.png
+    - assets/image/search.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

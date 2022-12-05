@@ -13,7 +13,7 @@ class ColorPallets {
 
   static const Color yellowShadedPurple = Color.fromARGB(255, 208, 189, 141);
 
-  static const Color pinkinshShadedPurple = Color.fromARGB(255, 253, 150, 154);
+  static const Color pinkinshShadedPurple = Color.fromARGB(150, 253, 150, 154);
 
   static const Color white = Color.fromARGB(255, 255, 255, 255);
 
