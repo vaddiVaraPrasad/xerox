@@ -27,7 +27,7 @@ class DrawerScreen extends StatelessWidget {
 
 Widget buildMenuItem(MenuItem item) {
   return ListTile(
-    minLeadingWidth: 20,
+    minLeadingWidth: 10,
     leading: Icon(item.icon),
     title: Text(item.title),
     onTap: () {},
