@@ -103,7 +103,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           Expanded(
               flex: 5,
               child: Image.asset(
-                "image/forgotPassword.png",
+                "assets/image/forgotPassword.png",
                 fit: BoxFit.cover,
               )),
           Expanded(

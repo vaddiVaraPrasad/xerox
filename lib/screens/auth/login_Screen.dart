@@ -362,7 +362,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Image.asset(
-                                "image/google.png",
+                                "assets/image/google.png",
                                 fit: BoxFit.cover,
                               ),
                               const Text(

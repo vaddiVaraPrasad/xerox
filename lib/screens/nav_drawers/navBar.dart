@@ -4,10 +4,10 @@ import "package:line_icons/line_icons.dart";
 
 import "../../utils/color_pallets.dart";
 
-import "../home_screen.dart";
-import "../search_shop_screen.dart";
-import "../cart_Screen.dart";
-import "../profile_Screen.dart";
+import "../navBar_Screens/cart_Screen.dart";
+import "../navBar_Screens/home_screen.dart";
+import "../navBar_Screens/profile_Screen.dart";
+import "../navBar_Screens/search_shop_screen.dart";
 
 class ButtonNavigationBar extends StatefulWidget {
   const ButtonNavigationBar({super.key});

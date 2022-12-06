@@ -191,7 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ? InkWell(
                                 onTap: pickProfilePic,
                                 child: Image.asset(
-                                  "image/add_profile_border.png",
+                                  "assets/image/add_profile_border.png",
                                   color: ColorPallets.deepBlue,
                                   height: 60,
                                   width: 60,
