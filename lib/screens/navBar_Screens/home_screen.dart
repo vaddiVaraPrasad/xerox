@@ -25,14 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ZoomDrawer.of(context)!.toggle();
             },
             icon: Icon(FontAwesomeIcons.bars)),
-        Center(
-          child: ElevatedButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-            },
-            child: Text("Log out"),
-          ),
-        ),
         SizedBox(
           height: 150,
         ),

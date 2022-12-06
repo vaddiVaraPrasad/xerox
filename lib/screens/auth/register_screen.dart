@@ -170,7 +170,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       fontSize: 40,
                       color: ColorPallets.white,
                       fontWeight: FontWeight.w600,
-                      fontFamily: GoogleFonts.ubuntu().fontFamily),
+                      fontFamily: GoogleFonts.audiowide().fontFamily),
                 ),
               )),
           Expanded(

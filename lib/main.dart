@@ -43,7 +43,7 @@ class Xerox extends StatelessWidget {
       theme: ThemeData(
         // canvasColor: ColorPallets.yellowShadedPurple,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: GoogleFonts.loraTextTheme(),
+        textTheme: GoogleFonts.ubuntuTextTheme(),
         colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: ColorPallets.pinkinshShadedPurple,
           primary: ColorPallets.deepBlue,

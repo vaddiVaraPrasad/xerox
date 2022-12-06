@@ -1,4 +1,6 @@
 import "package:flutter/material.dart";
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:line_icons/line_icons.dart';
 
 class OrderScreen extends StatelessWidget {
   static const routeName = "orderScreen";
@@ -6,8 +8,19 @@ class OrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("ORdersScreen"),
+    return Scaffold(
+      body: Column(
+        children: [
+          IconButton(
+              onPressed: () {
+                ZoomDrawer.of(context)!.toggle();
+              },
+              icon: Icon(LineIcons.bars)),
+          Center(
+            child: Text("About XEROX Team App"),
+          ),
+        ],
+      ),
     );
   }
 }

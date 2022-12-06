@@ -2,12 +2,11 @@ import "package:flutter/material.dart";
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:line_icons/line_icons.dart';
 
-class rewardsScreen extends StatelessWidget {
-  static const routeName = "/rewardScreen";
-  const rewardsScreen({super.key});
+class RateUsScreen extends StatelessWidget {
+  const RateUsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
@@ -15,9 +14,9 @@ class rewardsScreen extends StatelessWidget {
               onPressed: () {
                 ZoomDrawer.of(context)!.toggle();
               },
-              icon:const  Icon(LineIcons.bars)),
+              icon: Icon(LineIcons.bars)),
           Center(
-            child: Text("this is rate us screens"),
+            child: Text("this is rate us screen"),
           ),
         ],
       ),

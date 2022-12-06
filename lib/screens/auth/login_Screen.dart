@@ -222,8 +222,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                       fontSize: 40,
                       color: ColorPallets.white,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: GoogleFonts.ubuntu().fontFamily),
+                      // fontWeight: FontWeight.w600,
+                      fontFamily: GoogleFonts.audiowide().fontFamily),
                 ),
               )),
           Expanded(
