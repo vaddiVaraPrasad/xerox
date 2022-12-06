@@ -11,6 +11,7 @@ import "./screens/auth/auth_screen.dart";
 import "./screens/auth/forget_password_Screen.dart";
 import "./screens/nav_drawers/navBar.dart";
 import "./screens/nav_drawers/drawer_screen.dart";
+import "./screens/nav_drawers/hidden_drawer.dart";
 
 import 'screens/dummy_screen.dart';
 import 'screens/home/home_nav_drawer_stack.dart';
@@ -22,8 +23,6 @@ import "screens/navBar_Screens/profile_Screen.dart";
 import "screens/drawer_Screens/orders_Screen.dart";
 import "screens/drawer_Screens/rewards_screen.dart";
 import "screens/navBar_Screens/search_shop_screen.dart";
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,7 +56,7 @@ class Xerox extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const HomeNavDrawerSlider();
+            return const HiddenSideZoomDrawer();
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
           } else {
@@ -76,7 +75,7 @@ class Xerox extends StatelessWidget {
         ProfilePage.routeName: (context) => const ProfilePage(),
         rewardsScreen.routeName: (context) => const rewardsScreen(),
         SearchShop.routeName: (context) => const SearchShop(),
-        DummyScreen.routeName : (context) => const DummyScreen()
+        DummyScreen.routeName: (context) => const DummyScreen()
       },
     );
   }

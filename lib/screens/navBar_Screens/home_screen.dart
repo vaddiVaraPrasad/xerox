@@ -1,7 +1,9 @@
 import "package:flutter/material.dart";
-
 import "package:firebase_auth/firebase_auth.dart";
-import 'package:xerox/screens/dummy_screen.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../dummy_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = "/homeScreen";
@@ -15,29 +17,31 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(microseconds: 200),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: ElevatedButton(
-              onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-              },
-              child: Text("Log out"),
-            ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+            onPressed: () {
+              ZoomDrawer.of(context)!.toggle();
+            },
+            icon: Icon(FontAwesomeIcons.bars)),
+        Center(
+          child: ElevatedButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+            },
+            child: Text("Log out"),
           ),
-          SizedBox(
-            height: 150,
-          ),
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(DummyScreen.routeName);
-              },
-              child: Text("navigate to dummy screen"))
-        ],
-      ),
+        ),
+        SizedBox(
+          height: 150,
+        ),
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(DummyScreen.routeName);
+            },
+            child: Text("navigate to dummy screen"))
+      ],
     );
   }
 }
