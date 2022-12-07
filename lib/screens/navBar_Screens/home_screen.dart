@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import "../nav_drawers/drawer_screen.dart";
 
 import '../dummy_screen.dart';
 
@@ -28,6 +31,13 @@ class _HomeScreenState extends State<HomeScreen> {
         SizedBox(
           height: 150,
         ),
+        Text(FirebaseAuth.instance.currentUser!.uid),
+        Text(FirebaseAuth.instance.currentUser!.photoURL == null
+            ? "photoUrl is null"
+            : FirebaseAuth.instance.currentUser!.photoURL.toString()),
+        Text(FirebaseAuth.instance.currentUser!.displayName == null
+            ? "display is null"
+            : FirebaseAuth.instance.currentUser!.displayName.toString()),
         TextButton(
             onPressed: () {
               Navigator.of(context).pushNamed(DummyScreen.routeName);

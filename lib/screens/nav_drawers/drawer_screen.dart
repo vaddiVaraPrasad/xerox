@@ -1,5 +1,3 @@
-import "dart:io";
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
@@ -11,6 +9,9 @@ import 'package:xerox/utils/color_pallets.dart';
 class DrawerScreen extends StatefulWidget {
   final MenuItem currentItem;
   final ValueChanged<MenuItem> onSelectedItems;
+  NetworkImage? userProfileImage;
+  String? userProfileUrl;
+  String userName = "kothikanna";
 
   DrawerScreen({
     super.key,
@@ -23,23 +24,40 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
-  String _userProfileUrl = "";
-  String _userName = "";
-  NetworkImage? _userPic;
-
   @override
-  // void initState() async {
-  //   if (FirebaseAuth.instance.currentUser!.photoURL != null) {
-  //     _userProfileUrl = FirebaseAuth.instance.currentUser!.photoURL as String;
-  //     _userPic = NetworkImage(_userProfileUrl);
-  //   }
+  void initState() {
+    getUserCredentials();
+    super.initState();
+  }
 
-  //   if (FirebaseAuth.instance.currentUser!.displayName != null) {
-  //     _userName = FirebaseAuth.instance.currentUser!.displayName as String;
-  //   }
+  void getUserCredentials() async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    CollectionReference usersCollection =
+        FirebaseFirestore.instance.collection('users');
 
-  //   super.initState();
-  // }
+    final userGet = await usersCollection.doc(userId).get();
+    Map<String, dynamic> data = userGet.data() as Map<String, dynamic>;
+
+    // FutureBuilder<DocumentSnapshot>(
+    //   builder: (context, snapshot) {
+    //     if (snapshot.hasError) {
+    //        print("Something went wrong");
+    //     }
+    //     if (snapshot.hasData && !snapshot.data!.exists) {
+    //       print("Document does not exist");
+    //     }
+
+    //   },
+    //   future: usersCollection.doc(userId).get(),
+    // );
+
+    setState(() {
+      print("inside the void setstae");
+      widget.userName = data["userName"];
+      widget.userProfileUrl = data["profilePicUrl"];
+      widget.userProfileImage = NetworkImage(widget.userProfileUrl as String);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +74,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 12.0, right: 8),
+                  padding: EdgeInsets.only(left: 12.0, right: 8),
                   child: CircleAvatar(
                     radius: 25,
                     backgroundImage:
-                        FirebaseAuth.instance.currentUser!.photoURL != null
-                            ? NetworkImage(FirebaseAuth
-                                .instance.currentUser!.photoURL as String)
-                            : null,
+                        FirebaseAuth.instance.currentUser!.photoURL == null
+                            ? null
+                            : NetworkImage(FirebaseAuth
+                                .instance.currentUser!.photoURL as String),
                     backgroundColor: ColorPallets.pinkinshShadedPurple,
                   ),
                 ),
@@ -82,17 +100,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         width: 100,
                       ),
                       Text(
-                        FirebaseAuth.instance.currentUser!.displayName == null
-                            ? " "
-                            : (FirebaseAuth.instance.currentUser!.displayName
-                                            as String)
-                                        .length >
-                                    20
-                                ? "${(FirebaseAuth.instance.currentUser!
-                                            .displayName as String)
-                                        .substring(0, 10)}..."
-                                : (FirebaseAuth.instance.currentUser!
-                                    .displayName as String),
+                        (widget.userName.toString().length > 20)
+                            ? "${widget.userName.toString().substring(0, 10)}..."
+                            : widget.userName.toString(),
                         style: const TextStyle(
                             color: ColorPallets.deepBlue,
                             fontSize: 20,
