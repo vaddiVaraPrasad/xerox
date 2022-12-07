@@ -146,11 +146,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       source: ImageSource.gallery,
       imageQuality: 50,
     );
-    if (pickedFile != null) {
-      setState(() {
-        _userProfilePic = File(pickedFile.path);
-      });
+    if (pickedFile == null) {
+      return;
     }
+
+    setState(() {
+      _userProfilePic = File(pickedFile.path);
+    });
   }
 
   @override
@@ -186,7 +188,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         backgroundImage: _userProfilePic != null
                             ? FileImage(_userProfilePic as File)
                             : null,
-                        backgroundColor: ColorPallets.lightPurplishWhile,
+                        backgroundColor: ColorPallets.lightPurplishWhile.withOpacity(.7),
                         child: _userProfilePic == null
                             ? InkWell(
                                 onTap: pickProfilePic,
