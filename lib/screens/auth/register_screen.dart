@@ -55,6 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           final refPath = FirebaseStorage.instance
               .ref()
               .child("user")
+              .child(credential.user!.uid)
               .child("${credential.user!.uid}.png");
 
           await refPath.putFile(_userProfilePic as File).whenComplete(() {});

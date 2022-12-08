@@ -4,6 +4,7 @@ import "package:firebase_core/firebase_core.dart";
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xerox/firebase_options.dart';
+import 'package:xerox/screens/pdf/cutom_pdf_Render_Screen.dart';
 
 import "./utils/color_pallets.dart";
 
@@ -75,7 +76,8 @@ class Xerox extends StatelessWidget {
         ProfilePage.routeName: (context) => const ProfilePage(),
         rewardsScreen.routeName: (context) => const rewardsScreen(),
         SearchShop.routeName: (context) => const SearchShop(),
-        DummyScreen.routeName: (context) => const DummyScreen()
+        DummyScreen.routeName: (context) => const DummyScreen(),
+        CustomPDFPreview.routeName: (context) => const CustomPDFPreview(),
       },
     );
   }
