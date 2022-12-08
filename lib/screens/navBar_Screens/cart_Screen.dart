@@ -1,8 +1,10 @@
 import "package:flutter/material.dart";
 import "dart:io";
+import "package:image_picker/image_picker.dart";
 
 import '../../model/custom_pdf_modal.dart';
 import '../pdf/cutom_pdf_Render_Screen.dart';
+import '../pdf/images_grid_file.dart';
 
 class CartScreen extends StatefulWidget {
   static const routeName = "/cartScreen";
@@ -43,7 +45,28 @@ class _CartScreenState extends State<CartScreen> {
                     openFile(context, file as File);
                   },
                 ),
-              )
+              ),
+              // ElevatedButton(
+              //   child: const Text("pic pdf"),
+              //   onPressed: () async {
+              //     setState(() {
+              //       isPdfLoading = true;
+              //     });
+              //     File? file = await CustomPDF.generateImagePdf();
+              //     if (file == null) {
+              //       setState(() {
+              //         isPdfLoading = false;
+              //         return;
+              //       });
+              //     }
+              //     openFile(context, file);
+              //   },
+              // ),
+              ElevatedButton(
+                  onPressed: () async {
+                    Navigator.of(context).pushNamed(PdfImagesRender.routeName);
+                  },
+                  child: const Text("go to pages check"))
             ],
           );
   }
