@@ -30,19 +30,27 @@ class _CartScreenState extends State<CartScreen> {
                       isPdfLoading = true;
                     });
                     File? file = await CustomPDF.pickFile();
-                    setState(() {
-                      isPdfLoading = false;
-                    });
-                    if (file == null) return;
-                    openFile(context, file);
+                    if (file == null) {
+                      setState(() {
+                        isPdfLoading = false;
+                        return;
+                      });
+                    }
+                    openFile(context, file as File);
                   },
                 ),
-              ),
+              )
             ],
           );
   }
 
   void openFile(BuildContext ctx, File file) {
+    setState(() {
+      isPdfLoading = false;
+    });
     Navigator.of(ctx).pushNamed(CustomPDFPreview.routeName, arguments: file);
+    // setState(() {
+    //   isPdfLoading = false;
+    // });
   }
 }
