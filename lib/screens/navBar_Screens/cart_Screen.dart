@@ -36,6 +36,10 @@ class _CartScreenState extends State<CartScreen> {
                         return;
                       });
                     }
+                    // print("files got in cart_Screen");
+                    // int len = await file!.length();
+                    // print("lenght is $len");
+                    // print(file.path);
                     openFile(context, file as File);
                   },
                 ),
