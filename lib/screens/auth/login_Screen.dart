@@ -43,6 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> submitSinginform() async {
     var isValid = formKey.currentState!.validate();
+    emailController.clear();
+    passwordController.clear();
     if (isValid) {
       formKey.currentState!.save();
       // now create the user with this gmail and password !!!
