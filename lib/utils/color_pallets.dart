@@ -18,4 +18,7 @@ class ColorPallets {
   static const Color white = Color.fromARGB(255, 255, 255, 255);
 
   static const Color black = Color.fromARGB(255, 0, 0, 0);
+
+  static const Color transparent = Color(0x00000000);
 }
+
