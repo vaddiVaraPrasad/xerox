@@ -25,6 +25,7 @@ import "screens/drawer_Screens/orders_Screen.dart";
 import "screens/drawer_Screens/rewards_screen.dart";
 import "screens/navBar_Screens/search_shop_screen.dart";
 import "screens/pdf/images_grid_file.dart";
+import "screens/pdf/pdf_filters_Screen.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,7 +80,8 @@ class Xerox extends StatelessWidget {
         SearchShop.routeName: (context) => const SearchShop(),
         DummyScreen.routeName: (context) => const DummyScreen(),
         CustomPDFPreview.routeName: (context) => const CustomPDFPreview(),
-        PdfImagesRender.routeName: (context) => const PdfImagesRender()
+        PdfImagesRender.routeName: (context) => const PdfImagesRender(),
+        PdfFilters.routeName: (context) => const PdfFilters(),
       },
     );
   }

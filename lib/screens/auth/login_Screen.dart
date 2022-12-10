@@ -26,10 +26,20 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  bool isObsureText = true;
+
   Map<String, String> _userDetails = {
     "email": "",
     "password": "",
   };
+  @override
+  void initState() {
+    emailController.addListener(() => setState(() {}));
+    passwordController.addListener(() => setState(() {}));
+    super.initState();
+  }
 
   Future<void> submitSinginform() async {
     var isValid = formKey.currentState!.validate();
@@ -236,6 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       // email text form
                       TextFormField(
+                        controller: emailController,
                         key: const ValueKey("E-mail"),
                         cursorHeight: 22,
                         cursorWidth: 2,
@@ -243,10 +254,25 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontSize: 18, color: ColorPallets.deepBlue),
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
-                        decoration: const InputDecoration(
-                          focusColor: ColorPallets.deepBlue,
-                          label: Text("E-mail"),
-                        ),
+                        decoration: InputDecoration(
+                            suffixIcon: emailController.text.isEmpty
+                                ? const SizedBox(
+                                    width: 0,
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: IconButton(
+                                        onPressed: () {
+                                          emailController.clear();
+                                        },
+                                        icon: const Icon(
+                                          FontAwesomeIcons.xmark,
+                                          size: 18,
+                                        )),
+                                  ),
+                            focusColor: ColorPallets.deepBlue,
+                            label: const Text("E-mail"),
+                            hintText: "vachira@xerox.com"),
                         validator: (newMailId) {
                           if (newMailId!.isEmpty || !newMailId.contains('@')) {
                             return "Invalid EmailId";
@@ -259,17 +285,33 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       // password test form
                       TextFormField(
-                        obscureText: true,
+                        obscureText: isObsureText,
                         key: const ValueKey("Password"),
                         cursorHeight: 22,
+                        controller: passwordController,
                         cursorWidth: 2,
                         style: const TextStyle(
                             fontSize: 18, color: ColorPallets.deepBlue),
                         keyboardType: TextInputType.visiblePassword,
                         textInputAction: TextInputAction.done,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
+                          suffixIcon: passwordController.text.isEmpty
+                              ? const SizedBox()
+                              : Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: IconButton(
+                                    icon: isObsureText
+                                        ? const Icon(Icons.visibility)
+                                        : const Icon(Icons.visibility_off),
+                                    onPressed: () {
+                                      setState(() {
+                                        isObsureText = !isObsureText;
+                                      });
+                                    },
+                                  ),
+                                ),
                           focusColor: ColorPallets.deepBlue,
-                          label: Text("Password"),
+                          label: const Text("Password"),
                         ),
                         validator: (newPassword) {
                           if (newPassword!.isEmpty || newPassword.length < 6) {
