@@ -41,6 +41,13 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   Future<void> submitSinginform() async {
     var isValid = formKey.currentState!.validate();
     emailController.clear();

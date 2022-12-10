@@ -48,6 +48,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    emailController.dispose();
+    userNameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   Future<void> registerUser() async {
     var msg = "Invalid Credentials !!!";
     var ProfilePicUrl = "";

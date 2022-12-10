@@ -23,6 +23,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    emailController.addListener(() => setState(() {}));
+    super.initState();
+  }
+
   Future<void> sendPasswordLink() async {
     try {
       await FirebaseAuth.instance
@@ -124,7 +130,23 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     ),
                     TextField(
                       controller: emailController,
-                      decoration: const InputDecoration(label: Text("email")),
+                      decoration: InputDecoration(
+                          label: const Text("email"),
+                          border: const OutlineInputBorder(),
+                          hintText: "vachira@xerox.com",
+                          suffixIcon: emailController.text.isEmpty
+                              ? const SizedBox()
+                              : Padding(
+                                  padding: const EdgeInsets.only(top: 0),
+                                  child: IconButton(
+                                      onPressed: () {
+                                        emailController.clear();
+                                      },
+                                      icon: const Icon(
+                                        FontAwesomeIcons.xmark,
+                                        size: 18,
+                                      )),
+                                )),
                     ),
                     const SizedBox(
                       height: 40,
