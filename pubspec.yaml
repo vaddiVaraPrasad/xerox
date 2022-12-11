@@ -57,6 +57,8 @@ dependencies:
   syncfusion_flutter_pdf: ^20.3.48
 
   pdf: ^3.8.0
+  syncfusion_flutter_sliders: ^20.3.56
+  syncfusion_flutter_core: ^20.3.60
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -95,6 +97,8 @@ flutter:
     - assets/image/forgotPassword.png
     - assets/image/search.png
     - assets/image/dummy_profile.png
+    - assets/image/file_landscap.png
+    - assets/image/file_potrait.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

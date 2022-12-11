@@ -582,7 +582,7 @@ packages:
     source: hosted
     version: "1.1.1"
   syncfusion_flutter_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
@@ -602,6 +602,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "20.3.59"
+  syncfusion_flutter_sliders:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_sliders
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "20.3.60"
   syncfusion_pdfviewer_macos:
     dependency: transitive
     description:
