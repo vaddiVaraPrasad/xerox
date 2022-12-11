@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pdf/widgets.dart' as pdwd;
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
@@ -33,6 +34,8 @@ class _PdfFiltersState extends State<PdfFilters> {
   final _noPagesController = TextEditingController();
   final _ColorPagesController = TextEditingController();
   final _bondPagesController = TextEditingController();
+
+  int totalPrice = 450;
 
   int? totalPages = 50;
 
@@ -198,16 +201,72 @@ class _PdfFiltersState extends State<PdfFilters> {
           transparentSheets(),
 
           const SizedBox(
-            height: 170,
+            height: 50,
           )
         ]),
       ),
       bottomSheet: Container(
-        height: 200,
-        decoration: const BoxDecoration(
-            color: ColorPallets.lightPurple,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(22), topRight: Radius.circular(22))),
+        height: 80,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(
+            color: ColorPallets.lightBlue.withOpacity(.1),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(22),
+              topRight: Radius.circular(22),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: ColorPallets.lightBlue.withOpacity(.1),
+                blurRadius: 20,
+              )
+            ]),
+        child: Row(
+          children: [
+            const SizedBox(
+              width: 20,
+            ),
+            Chip(
+              backgroundColor: ColorPallets.deepBlue,
+              label: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 7, vertical: 10),
+                  child: Text(
+                    "$totalPrice Ruppes",
+                    style: const TextStyle(
+                        fontSize: 20, color: ColorPallets.white),
+                  )),
+            ),
+            const SizedBox(
+              width: 30,
+            ),
+            InkWell(
+              onTap: () {},
+              child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  decoration: BoxDecoration(
+                      // color: ColorPallets.deepBlue,
+                      borderRadius: BorderRadius.circular(18)),
+                  child: Row(
+                    children: const [
+                      Text(
+                        "Procede",
+                        style: TextStyle(
+                          fontSize: 26,
+                          color: ColorPallets.deepBlue,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Icon(
+                        FontAwesomeIcons.arrowRight,
+                        color: ColorPallets.deepBlue,
+                      ),
+                    ],
+                  )),
+            )
+          ],
+        ),
       ),
     );
   }
