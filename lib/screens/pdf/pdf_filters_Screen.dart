@@ -5,6 +5,9 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:xerox/utils/color_pallets.dart';
 
+import '../../model/ListShopes.dart';
+import '../../model/pdf_filters.dart';
+
 enum PageOrientation {
   landScape,
   potrait;
@@ -30,12 +33,27 @@ class PdfFilters extends StatefulWidget {
 }
 
 class _PdfFiltersState extends State<PdfFilters> {
+  PdfFiltersModal currentPdfModal = PdfFiltersModal(
+      pagesRange: '1-3',
+      noOfCopies: '1',
+      pageOrient: PageOrientation.potrait,
+      pagePrintSide: PritingSides.singleSided,
+      pageSize: 'A4',
+      printJobType: JobTypes.blackAndWhite,
+      colorPagesRange: null,
+      bindingType: "NoBound",
+      isBondPaperNeeded: false,
+      bondPaperRange: null,
+      isTransparentSheetNeed: false,
+      transparentSheetColor: null,
+      seletedShop: dummyShopePriceList[0]);
+
   final _pagesController = TextEditingController();
   final _noPagesController = TextEditingController();
   final _ColorPagesController = TextEditingController();
   final _bondPagesController = TextEditingController();
 
-  int totalPrice = 450;
+  double totalPrice = 0;
 
   int? totalPages = 50;
 
@@ -98,6 +116,21 @@ class _PdfFiltersState extends State<PdfFilters> {
 
   @override
   void initState() {
+    currentPdfModal = PdfFiltersModal(
+        pagesRange: _pagesController.text,
+        noOfCopies: _noPagesController.text,
+        pageOrient: PageOrientation.potrait,
+        pagePrintSide: PritingSides.singleSided,
+        pageSize: 'A4',
+        printJobType: JobTypes.blackAndWhite,
+        colorPagesRange: null,
+        bindingType: "NoBound",
+        isBondPaperNeeded: false,
+        bondPaperRange: null,
+        isTransparentSheetNeed: false,
+        transparentSheetColor: null,
+        seletedShop: dummyShopePriceList[0]);
+    totalPrice = currentPdfModal.getCostOfXerox();
     _ColorPagesController.addListener(() => setState(() {}));
     _pagesController.addListener(() => setState(() {}));
     _noPagesController.addListener(() => setState(() {}));
@@ -240,7 +273,9 @@ class _PdfFiltersState extends State<PdfFilters> {
               width: 30,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                print(currentPdfModal.getCostOfXerox());
+              },
               child: Container(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   decoration: BoxDecoration(
@@ -304,6 +339,44 @@ class _PdfFiltersState extends State<PdfFilters> {
                     height: 40,
                     padding: const EdgeInsets.all(0),
                     child: TextField(
+                      onSubmitted: (value) {
+                        setState(() {
+                          currentPdfModal = PdfFiltersModal(
+                              pagesRange: _pagesController.text,
+                              noOfCopies: _noPagesController.text,
+                              pageOrient: PageOrientation.potrait,
+                              pagePrintSide: PritingSides.singleSided,
+                              pageSize: 'A4',
+                              printJobType: JobTypes.blackAndWhite,
+                              colorPagesRange: null,
+                              bindingType: "NoBound",
+                              isBondPaperNeeded: false,
+                              bondPaperRange: null,
+                              isTransparentSheetNeed: false,
+                              transparentSheetColor: null,
+                              seletedShop: dummyShopePriceList[0]);
+                          totalPrice = currentPdfModal.getCostOfXerox();
+                        });
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          currentPdfModal = PdfFiltersModal(
+                              pagesRange: _pagesController.text,
+                              noOfCopies: _noPagesController.text,
+                              pageOrient: PageOrientation.potrait,
+                              pagePrintSide: PritingSides.singleSided,
+                              pageSize: 'A4',
+                              printJobType: JobTypes.blackAndWhite,
+                              colorPagesRange: null,
+                              bindingType: "NoBound",
+                              isBondPaperNeeded: false,
+                              bondPaperRange: null,
+                              isTransparentSheetNeed: false,
+                              transparentSheetColor: null,
+                              seletedShop: dummyShopePriceList[0]);
+                          totalPrice = currentPdfModal.getCostOfXerox();
+                        });
+                      },
                       controller: _pagesController,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(),
@@ -416,6 +489,44 @@ class _PdfFiltersState extends State<PdfFilters> {
                 height: 40,
                 padding: const EdgeInsets.all(0),
                 child: TextField(
+                  onSubmitted: (value) {
+                    setState(() {
+                      currentPdfModal = PdfFiltersModal(
+                          pagesRange: _pagesController.text,
+                          noOfCopies: _noPagesController.text,
+                          pageOrient: PageOrientation.potrait,
+                          pagePrintSide: PritingSides.singleSided,
+                          pageSize: 'A4',
+                          printJobType: JobTypes.blackAndWhite,
+                          colorPagesRange: null,
+                          bindingType: "NoBound",
+                          isBondPaperNeeded: false,
+                          bondPaperRange: null,
+                          isTransparentSheetNeed: false,
+                          transparentSheetColor: null,
+                          seletedShop: dummyShopePriceList[0]);
+                      totalPrice = currentPdfModal.getCostOfXerox();
+                    });
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      currentPdfModal = PdfFiltersModal(
+                          pagesRange: _pagesController.text,
+                          noOfCopies: _noPagesController.text,
+                          pageOrient: PageOrientation.potrait,
+                          pagePrintSide: PritingSides.singleSided,
+                          pageSize: 'A4',
+                          printJobType: JobTypes.blackAndWhite,
+                          colorPagesRange: null,
+                          bindingType: "NoBound",
+                          isBondPaperNeeded: false,
+                          bondPaperRange: null,
+                          isTransparentSheetNeed: false,
+                          transparentSheetColor: null,
+                          seletedShop: dummyShopePriceList[0]);
+                      totalPrice = currentPdfModal.getCostOfXerox();
+                    });
+                  },
                   keyboardType: TextInputType.number,
                   controller: _noPagesController,
                   decoration: const InputDecoration(
@@ -1301,8 +1412,17 @@ class _PdfFiltersState extends State<PdfFilters> {
                             height: 50,
                             width: 50,
                             decoration: BoxDecoration(
+                                border:
+                                    transpaperclr == TransparentPaperColor.blue
+                                        ? Border.all(
+                                            color: ColorPallets.lightBlue,
+                                            width: 2)
+                                        : null,
                                 borderRadius: BorderRadius.circular(12),
-                                color: Colors.lightBlueAccent.shade100),
+                                color:
+                                    transpaperclr == TransparentPaperColor.blue
+                                        ? Colors.lightBlueAccent
+                                        : Colors.lightBlueAccent.shade100),
                           ),
                         ),
                         const SizedBox(
@@ -1319,7 +1439,15 @@ class _PdfFiltersState extends State<PdfFilters> {
                               width: 50,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  color: Colors.lightGreenAccent.shade100),
+                                  border: transpaperclr ==
+                                          TransparentPaperColor.green
+                                      ? Border.all(
+                                          color: Colors.lightGreen, width: 2)
+                                      : null,
+                                  color: transpaperclr ==
+                                          TransparentPaperColor.green
+                                      ? Colors.lightGreenAccent
+                                      : Colors.lightGreenAccent.shade100),
                             )),
                         const SizedBox(
                           width: 20,
@@ -1327,15 +1455,22 @@ class _PdfFiltersState extends State<PdfFilters> {
                         InkWell(
                           onTap: () {
                             setState(() {
-                              transpaperclr = TransparentPaperColor.blue;
+                              transpaperclr = TransparentPaperColor.brow;
                             });
                           },
                           child: Container(
                             height: 50,
                             width: 50,
                             decoration: BoxDecoration(
+                                border: transpaperclr ==
+                                        TransparentPaperColor.brow
+                                    ? Border.all(color: Colors.brown, width: 2)
+                                    : null,
                                 borderRadius: BorderRadius.circular(12),
-                                color: Colors.brown.shade200),
+                                color:
+                                    transpaperclr == TransparentPaperColor.brow
+                                        ? Colors.brown
+                                        : Colors.brown.shade200),
                           ),
                         ),
                         const SizedBox(
@@ -1344,15 +1479,24 @@ class _PdfFiltersState extends State<PdfFilters> {
                         InkWell(
                           onTap: () {
                             setState(() {
-                              transpaperclr = TransparentPaperColor.blue;
+                              transpaperclr = TransparentPaperColor.purple;
                             });
                           },
                           child: Container(
                             height: 50,
                             width: 50,
                             decoration: BoxDecoration(
+                                border: transpaperclr ==
+                                        TransparentPaperColor.purple
+                                    ? Border.all(
+                                        color: Colors.deepPurpleAccent,
+                                        width: 2)
+                                    : null,
                                 borderRadius: BorderRadius.circular(12),
-                                color: Colors.deepPurpleAccent.shade100),
+                                color: transpaperclr ==
+                                        TransparentPaperColor.purple
+                                    ? Colors.deepPurpleAccent
+                                    : Colors.deepPurpleAccent.shade100),
                           ),
                         )
                       ],
