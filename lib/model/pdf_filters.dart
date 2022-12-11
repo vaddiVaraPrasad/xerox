@@ -11,13 +11,13 @@ class PdfFiltersModal {
   final PritingSides pagePrintSide;
   final String pageSize;
   final JobTypes printJobType;
-  final String? colorPagesRange;
+  final String colorPagesRange;
 
   final String bindingType;
   final bool isBondPaperNeeded;
-  final String? bondPaperRange;
+  final String bondPaperRange;
   final bool isTransparentSheetNeed;
-  final String? transparentSheetColor;
+  final String transparentSheetColor;
   final PdShopeCost seletedShop;
 
   PdfFiltersModal(
@@ -36,18 +36,25 @@ class PdfFiltersModal {
       required this.seletedShop});
 
   static int getPagesCount(String strRange) {
-    final list = strRange.split(',');
     int count = 0;
-    for (int i = 0; i < list.length; i++) {
-      if (list[i].contains('-')) {
-        final innerList = list[i].split('-');
-        var tempcount = int.parse(innerList[1]) - int.parse(innerList[0]);
-        count += tempcount;
-      } else {
-        count += 1;
+    print("strRange is $strRange");
+    if (strRange.isNotEmpty) {
+      final list = strRange.split(',');
+      print("list is $list");
+      for (int i = 0; i < list.length; i++) {
+        if (list[i].contains('-')) {
+          final innerList = list[i].split('-');
+          print("inner list is $innerList");
+          var tempcount = int.parse(innerList[1]) - int.parse(innerList[0]);
+          count += tempcount;
+          print("cont is $count");
+        } else {
+          count += 1;
+        }
       }
     }
-    print("$strRange is to $count");
+
+    print("strRange is $strRange and count is $count");
     return count;
   }
 
@@ -59,6 +66,7 @@ class PdfFiltersModal {
     int noOfPages = getPagesCount(pagesRange);
     if (printJobType != JobTypes.blackAndWhite) {
       noOfColorPages = getPagesCount(colorPagesRange as String);
+      print("no of coloe pages are $noOfColorPages");
     }
     if (isBondPaperNeeded) {
       noOfPagesBoundPaper = getPagesCount(bondPaperRange as String);
@@ -193,13 +201,13 @@ class PdfFiltersModal {
     }
 
     if (isTransparentSheetNeed) {
-      totalCost = seletedShop.costForTransparentSheetPerSheet;
+      totalCost += seletedShop.costForTransparentSheetPerSheet;
     }
 
     print("total cost is $totalCost");
 
     if (noOfCopies.isNotEmpty) {
-      totalCost += int.parse(noOfCopies);
+      totalCost *= int.parse(noOfCopies);
     }
 
     return totalCost;
