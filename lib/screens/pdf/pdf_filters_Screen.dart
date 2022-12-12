@@ -41,7 +41,7 @@ class _PdfFiltersState extends State<PdfFilters> {
       pageSize: 'A4',
       printJobType: JobTypes.blackAndWhite,
       colorPagesRange: "",
-      bindingType: "NoBound",
+      bindingType: "No Bound",
       isBondPaperNeeded: false,
       bondPaperRange: "",
       isTransparentSheetNeed: false,
@@ -116,8 +116,8 @@ class _PdfFiltersState extends State<PdfFilters> {
 
   @override
   void initState() {
-    print("height is ${MediaQuery.of(context).size.height}");
-    print("width is ${MediaQuery.of(context).size.width}");
+    // print("height is ${MediaQuery.of(context).size.height}");
+    // print("width is ${MediaQuery.of(context).size.width}");
 
     currentPdfModal = PdfFiltersModal(
         pagesRange: _pagesController.text,
@@ -149,6 +149,8 @@ class _PdfFiltersState extends State<PdfFilters> {
     showTranparentSheetClour = false;
 
     boudSheets = false;
+
+    sheetBind = "No Bound";
 
     showColorTextBox = false;
     showWidgetColorTextBox = false;
@@ -196,7 +198,7 @@ class _PdfFiltersState extends State<PdfFilters> {
     sliderContHeight = showColorTextBox
         ? showColorsliderTextbox
             ? 130
-            : 70
+            : 58
         : 0;
     totalPrintingContainerHeight = showColorTextBox
         ? showColorsliderTextbox
@@ -335,104 +337,107 @@ class _PdfFiltersState extends State<PdfFilters> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Text(
-                    "Pages :",
-                    style: TextStyle(fontSize: 22),
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 5, right: 5),
+                      child: const Center(
+                        child: FittedBox(
+                          child: Text(
+                            "Pages :",
+                            style: TextStyle(fontSize: 22),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
-                  Container(
-                    width: 160,
-                    height: 40,
-                    padding: const EdgeInsets.all(0),
-                    child: TextField(
-                      onSubmitted: (value) {
-                        setState(() {
-                          currentPdfModal = PdfFiltersModal(
-                              pagesRange: _pagesController.text,
-                              noOfCopies: currentPdfModal.noOfCopies,
-                              pageOrient: currentPdfModal.pageOrient,
-                              pagePrintSide: currentPdfModal.pagePrintSide,
-                              pageSize: currentPdfModal.pageSize,
-                              printJobType: currentPdfModal.printJobType,
-                              colorPagesRange: currentPdfModal.colorPagesRange,
-                              bindingType: currentPdfModal.bindingType,
-                              isBondPaperNeeded:
-                                  currentPdfModal.isBondPaperNeeded,
-                              bondPaperRange: currentPdfModal.bondPaperRange,
-                              isTransparentSheetNeed:
-                                  currentPdfModal.isTransparentSheetNeed,
-                              transparentSheetColor:
-                                  currentPdfModal.transparentSheetColor,
-                              seletedShop: currentPdfModal.seletedShop);
-                          totalPrice = currentPdfModal.getCostOfXerox();
-                        });
-                      },
-                      // onChanged: (value) {
-                      //   setState(() {
-                      //     currentPdfModal = PdfFiltersModal(
-                      //         pagesRange: _pagesController.text,
-                      //         noOfCopies: _noPagesController.text,
-                      //         pageOrient: PageOrientation.potrait,
-                      //         pagePrintSide: PritingSides.singleSided,
-                      //         pageSize: 'A4',
-                      //         printJobType: JobTypes.blackAndWhite,
-                      //         colorPagesRange: null,
-                      //         bindingType: "NoBound",
-                      //         isBondPaperNeeded: false,
-                      //         bondPaperRange: null,
-                      //         isTransparentSheetNeed: false,
-                      //         transparentSheetColor: null,
-                      //         seletedShop: dummyShopePriceList[0]);
-                      //     totalPrice = currentPdfModal.getCostOfXerox();
-                      //   });
-                      // },
-                      controller: _pagesController,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintStyle: TextStyle(fontSize: 22),
-                          hintText: "eg : 1-5,8,11-15"),
+                  Expanded(
+                    flex: 5,
+                    child: SizedBox(
+                      height: 40,
+                      child: TextField(
+                        cursorHeight: 25,
+                        textInputAction: TextInputAction.next,
+                        onSubmitted: (value) {
+                          setState(() {
+                            currentPdfModal = PdfFiltersModal(
+                                pagesRange: _pagesController.text,
+                                noOfCopies: currentPdfModal.noOfCopies,
+                                pageOrient: currentPdfModal.pageOrient,
+                                pagePrintSide: currentPdfModal.pagePrintSide,
+                                pageSize: currentPdfModal.pageSize,
+                                printJobType: currentPdfModal.printJobType,
+                                colorPagesRange:
+                                    currentPdfModal.colorPagesRange,
+                                bindingType: currentPdfModal.bindingType,
+                                isBondPaperNeeded:
+                                    currentPdfModal.isBondPaperNeeded,
+                                bondPaperRange: currentPdfModal.bondPaperRange,
+                                isTransparentSheetNeed:
+                                    currentPdfModal.isTransparentSheetNeed,
+                                transparentSheetColor:
+                                    currentPdfModal.transparentSheetColor,
+                                seletedShop: currentPdfModal.seletedShop);
+                            totalPrice = currentPdfModal.getCostOfXerox();
+                          });
+                        },
+                        controller: _pagesController,
+                        decoration: const InputDecoration(
+                            floatingLabelStyle: TextStyle(fontSize: 25),
+                            border: OutlineInputBorder(),
+                            hintStyle: TextStyle(fontSize: 18),
+                            hintText: "1-5,8,11-15"),
+                      ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () async {
-                      if (showSlider == false) {
-                        setState(() {
-                          showSlider = true;
-                        });
-                        await Future.delayed(const Duration(milliseconds: 300));
-                        setState(() {
-                          showwidgetSlider = true;
-                        });
-                      } else {
-                        setState(() {
-                          showSlider = false;
-                          showwidgetSlider = false;
-                        });
-                      }
-                    },
-                    child: const Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      child: Chip(
-                        label: Text(
-                          "Slider",
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                  Expanded(
+                    flex: 3,
+                    child: InkWell(
+                      onTap: () async {
+                        if (showSlider == false) {
+                          setState(() {
+                            showSlider = true;
+                          });
+                          await Future.delayed(
+                              const Duration(milliseconds: 300));
+                          setState(() {
+                            showwidgetSlider = true;
+                          });
+                        } else {
+                          setState(() {
+                            showSlider = false;
+                            showwidgetSlider = false;
+                          });
+                        }
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.only(
+                            left: 3, right: 0, top: 5, bottom: 5),
+                        child: Chip(
+                          label: Text(
+                            "Slider",
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                          backgroundColor: ColorPallets.deepBlue,
                         ),
-                        backgroundColor: ColorPallets.deepBlue,
                       ),
                     ),
                   )
                 ],
               ),
-              showwidgetSlider as bool == true
+              showwidgetSlider == true
                   ? SingleChildScrollView(
                       child: SizedBox(
                         height: 80,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
                             const Text(
                               '0',
                               style: TextStyle(
@@ -493,7 +498,10 @@ class _PdfFiltersState extends State<PdfFilters> {
                               totalPages.toString(),
                               style: const TextStyle(
                                   fontSize: 22, color: ColorPallets.deepBlue),
-                            )
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
                           ],
                         ),
                       ),
@@ -513,68 +521,83 @@ class _PdfFiltersState extends State<PdfFilters> {
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
             children: [
-              const Text(
-                "no.of copies  :",
-                style: TextStyle(fontSize: 20),
+              Expanded(
+                flex: 4,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 5, right: 5),
+                  child: const Center(
+                    child: FittedBox(
+                      child: Text(
+                        "no.of copies  :",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(
                 width: 10,
               ),
-              Container(
-                width: 160,
-                height: 40,
-                padding: const EdgeInsets.all(0),
-                child: TextField(
-                  onSubmitted: (value) {
-                    setState(() {
-                      currentPdfModal = PdfFiltersModal(
-                          pagesRange: currentPdfModal.pagesRange,
-                          noOfCopies: _noPagesController.text,
-                          pageOrient: currentPdfModal.pageOrient,
-                          pagePrintSide: currentPdfModal.pagePrintSide,
-                          pageSize: currentPdfModal.pageSize,
-                          printJobType: currentPdfModal.printJobType,
-                          colorPagesRange: currentPdfModal.colorPagesRange,
-                          bindingType: currentPdfModal.bindingType,
-                          isBondPaperNeeded: currentPdfModal.isBondPaperNeeded,
-                          bondPaperRange: currentPdfModal.bondPaperRange,
-                          isTransparentSheetNeed:
-                              currentPdfModal.isTransparentSheetNeed,
-                          transparentSheetColor:
-                              currentPdfModal.transparentSheetColor,
-                          seletedShop: currentPdfModal.seletedShop);
-                      totalPrice = currentPdfModal.getCostOfXerox();
-                    });
-                  },
-                  onChanged: (value) {
-                    setState(() {
-                      currentPdfModal = PdfFiltersModal(
-                          pagesRange: currentPdfModal.pagesRange,
-                          noOfCopies: _noPagesController.text,
-                          pageOrient: currentPdfModal.pageOrient,
-                          pagePrintSide: currentPdfModal.pagePrintSide,
-                          pageSize: currentPdfModal.pageSize,
-                          printJobType: currentPdfModal.printJobType,
-                          colorPagesRange: currentPdfModal.colorPagesRange,
-                          bindingType: currentPdfModal.bindingType,
-                          isBondPaperNeeded: currentPdfModal.isBondPaperNeeded,
-                          bondPaperRange: currentPdfModal.bondPaperRange,
-                          isTransparentSheetNeed:
-                              currentPdfModal.isTransparentSheetNeed,
-                          transparentSheetColor:
-                              currentPdfModal.transparentSheetColor,
-                          seletedShop: currentPdfModal.seletedShop);
-                      totalPrice = currentPdfModal.getCostOfXerox();
-                    });
-                  },
-                  keyboardType: TextInputType.number,
-                  controller: _noPagesController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintStyle: TextStyle(fontSize: 22),
-                      hintText: "eg : 1"),
+              Expanded(
+                flex: 5,
+                child: Container(
+                  height: 40,
+                  child: TextField(
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (value) {
+                      setState(() {
+                        currentPdfModal = PdfFiltersModal(
+                            pagesRange: currentPdfModal.pagesRange,
+                            noOfCopies: _noPagesController.text,
+                            pageOrient: currentPdfModal.pageOrient,
+                            pagePrintSide: currentPdfModal.pagePrintSide,
+                            pageSize: currentPdfModal.pageSize,
+                            printJobType: currentPdfModal.printJobType,
+                            colorPagesRange: currentPdfModal.colorPagesRange,
+                            bindingType: currentPdfModal.bindingType,
+                            isBondPaperNeeded:
+                                currentPdfModal.isBondPaperNeeded,
+                            bondPaperRange: currentPdfModal.bondPaperRange,
+                            isTransparentSheetNeed:
+                                currentPdfModal.isTransparentSheetNeed,
+                            transparentSheetColor:
+                                currentPdfModal.transparentSheetColor,
+                            seletedShop: currentPdfModal.seletedShop);
+                        totalPrice = currentPdfModal.getCostOfXerox();
+                      });
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        currentPdfModal = PdfFiltersModal(
+                            pagesRange: currentPdfModal.pagesRange,
+                            noOfCopies: _noPagesController.text,
+                            pageOrient: currentPdfModal.pageOrient,
+                            pagePrintSide: currentPdfModal.pagePrintSide,
+                            pageSize: currentPdfModal.pageSize,
+                            printJobType: currentPdfModal.printJobType,
+                            colorPagesRange: currentPdfModal.colorPagesRange,
+                            bindingType: currentPdfModal.bindingType,
+                            isBondPaperNeeded:
+                                currentPdfModal.isBondPaperNeeded,
+                            bondPaperRange: currentPdfModal.bondPaperRange,
+                            isTransparentSheetNeed:
+                                currentPdfModal.isTransparentSheetNeed,
+                            transparentSheetColor:
+                                currentPdfModal.transparentSheetColor,
+                            seletedShop: currentPdfModal.seletedShop);
+                        totalPrice = currentPdfModal.getCostOfXerox();
+                      });
+                    },
+                    cursorHeight: 25,
+                    keyboardType: TextInputType.number,
+                    controller: _noPagesController,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintStyle: TextStyle(fontSize: 18),
+                        hintText: "1 or 28"),
+                  ),
                 ),
-              )
+              ),
             ],
           )),
     );
@@ -587,115 +610,135 @@ class _PdfFiltersState extends State<PdfFilters> {
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
             children: [
-              const Text(
-                "Printing Layout  :",
-                style: TextStyle(fontSize: 20),
+              Expanded(
+                flex: 4,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 5, right: 5),
+                  child: const Center(
+                    child: FittedBox(
+                      child: Text(
+                        "Printing Layout  :",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(
                 width: 10,
               ),
-              Container(
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(28)),
-                width: 150,
-                height: 40,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            pageOri = PageOrientation.potrait;
-                            currentPdfModal = PdfFiltersModal(
-                                pagesRange: currentPdfModal.pagesRange,
-                                noOfCopies: currentPdfModal.noOfCopies,
-                                pageOrient: PageOrientation.potrait,
-                                pagePrintSide: currentPdfModal.pagePrintSide,
-                                pageSize: currentPdfModal.pageSize,
-                                printJobType: currentPdfModal.printJobType,
-                                colorPagesRange:
-                                    currentPdfModal.colorPagesRange,
-                                bindingType: currentPdfModal.bindingType,
-                                isBondPaperNeeded:
-                                    currentPdfModal.isBondPaperNeeded,
-                                bondPaperRange: currentPdfModal.bondPaperRange,
-                                isTransparentSheetNeed:
-                                    currentPdfModal.isTransparentSheetNeed,
-                                transparentSheetColor:
-                                    currentPdfModal.transparentSheetColor,
-                                seletedShop: currentPdfModal.seletedShop);
-                            totalPrice = currentPdfModal.getCostOfXerox();
-                          });
-                        },
-                        child: Container(
-                          height: 40,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 7),
-                          decoration: BoxDecoration(
-                            color: pageOri == PageOrientation.potrait
-                                ? ColorPallets.lightBlue.withOpacity(.2)
-                                : null,
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(22),
-                                bottomLeft: Radius.circular(22)),
-                            border: Border.all(color: ColorPallets.lightBlue),
-                          ),
-                          child: const FittedBox(
-                            child: Text("Potraint"),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            pageOri = PageOrientation.landScape;
-                            currentPdfModal = PdfFiltersModal(
-                                pagesRange: currentPdfModal.pagesRange,
-                                noOfCopies: currentPdfModal.noOfCopies,
-                                pageOrient: PageOrientation.landScape,
-                                pagePrintSide: currentPdfModal.pagePrintSide,
-                                pageSize: currentPdfModal.pageSize,
-                                printJobType: currentPdfModal.printJobType,
-                                colorPagesRange:
-                                    currentPdfModal.colorPagesRange,
-                                bindingType: currentPdfModal.bindingType,
-                                isBondPaperNeeded:
-                                    currentPdfModal.isBondPaperNeeded,
-                                bondPaperRange: currentPdfModal.bondPaperRange,
-                                isTransparentSheetNeed:
-                                    currentPdfModal.isTransparentSheetNeed,
-                                transparentSheetColor:
-                                    currentPdfModal.transparentSheetColor,
-                                seletedShop: currentPdfModal.seletedShop);
-                            totalPrice = currentPdfModal.getCostOfXerox();
-                          });
-                        },
-                        child: Container(
-                          height: 40,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 9),
-                          decoration: BoxDecoration(
-                            color: pageOri == PageOrientation.landScape
-                                ? ColorPallets.lightBlue.withOpacity(.2)
-                                : null,
-                            borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(22),
-                                bottomRight: Radius.circular(22)),
-                            border: Border.all(color: ColorPallets.lightBlue),
-                          ),
-                          child: const FittedBox(
-                            child: Text("LandScape"),
+              Expanded(
+                flex: 5,
+                child: Container(
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(28)),
+                  height: 40,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              pageOri = PageOrientation.potrait;
+                              currentPdfModal = PdfFiltersModal(
+                                  pagesRange: currentPdfModal.pagesRange,
+                                  noOfCopies: currentPdfModal.noOfCopies,
+                                  pageOrient: PageOrientation.potrait,
+                                  pagePrintSide: currentPdfModal.pagePrintSide,
+                                  pageSize: currentPdfModal.pageSize,
+                                  printJobType: currentPdfModal.printJobType,
+                                  colorPagesRange:
+                                      currentPdfModal.colorPagesRange,
+                                  bindingType: currentPdfModal.bindingType,
+                                  isBondPaperNeeded:
+                                      currentPdfModal.isBondPaperNeeded,
+                                  bondPaperRange:
+                                      currentPdfModal.bondPaperRange,
+                                  isTransparentSheetNeed:
+                                      currentPdfModal.isTransparentSheetNeed,
+                                  transparentSheetColor:
+                                      currentPdfModal.transparentSheetColor,
+                                  seletedShop: currentPdfModal.seletedShop);
+                              totalPrice = currentPdfModal.getCostOfXerox();
+                            });
+                          },
+                          child: Container(
+                            height: 40,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 7),
+                            decoration: BoxDecoration(
+                              color: pageOri == PageOrientation.potrait
+                                  ? ColorPallets.lightBlue.withOpacity(.2)
+                                  : null,
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(22),
+                                  bottomLeft: Radius.circular(22)),
+                              border: Border.all(color: ColorPallets.lightBlue),
+                            ),
+                            child: const FittedBox(
+                              child: Text(
+                                " Potraint  ",
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        flex: 1,
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              pageOri = PageOrientation.landScape;
+                              currentPdfModal = PdfFiltersModal(
+                                  pagesRange: currentPdfModal.pagesRange,
+                                  noOfCopies: currentPdfModal.noOfCopies,
+                                  pageOrient: PageOrientation.landScape,
+                                  pagePrintSide: currentPdfModal.pagePrintSide,
+                                  pageSize: currentPdfModal.pageSize,
+                                  printJobType: currentPdfModal.printJobType,
+                                  colorPagesRange:
+                                      currentPdfModal.colorPagesRange,
+                                  bindingType: currentPdfModal.bindingType,
+                                  isBondPaperNeeded:
+                                      currentPdfModal.isBondPaperNeeded,
+                                  bondPaperRange:
+                                      currentPdfModal.bondPaperRange,
+                                  isTransparentSheetNeed:
+                                      currentPdfModal.isTransparentSheetNeed,
+                                  transparentSheetColor:
+                                      currentPdfModal.transparentSheetColor,
+                                  seletedShop: currentPdfModal.seletedShop);
+                              totalPrice = currentPdfModal.getCostOfXerox();
+                            });
+                          },
+                          child: Container(
+                            height: 40,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 7),
+                            decoration: BoxDecoration(
+                              color: pageOri == PageOrientation.landScape
+                                  ? ColorPallets.lightBlue.withOpacity(.2)
+                                  : null,
+                              borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(22),
+                                  bottomRight: Radius.circular(22)),
+                              border: Border.all(color: ColorPallets.lightBlue),
+                            ),
+                            child: const FittedBox(
+                              child: Text(
+                                "LandScape",
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // child: Text("fdf")
                 ),
-                // child: Text("fdf")
               ),
             ],
           )),
@@ -709,18 +752,28 @@ class _PdfFiltersState extends State<PdfFilters> {
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
             children: [
-              const Text(
-                "Priting Side :",
-                style: TextStyle(fontSize: 20),
+              Expanded(
+                flex: 4,
+                child: Container(
+                  margin: EdgeInsets.only(left: 5, right: 5),
+                  child: const Center(
+                    child: FittedBox(
+                      child: Text(
+                        "Priting  Side  :",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(
-                width: 30,
+                width: 10,
               ),
               Expanded(
+                flex: 5,
                 child: Container(
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(28)),
-                  width: 150,
                   height: 40,
                   child: Row(
                     children: [
@@ -766,7 +819,10 @@ class _PdfFiltersState extends State<PdfFilters> {
                               border: Border.all(color: ColorPallets.lightBlue),
                             ),
                             child: const FittedBox(
-                              child: Text("Single side"),
+                              child: Text(
+                                "Single side",
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ),
                         ),
@@ -813,7 +869,10 @@ class _PdfFiltersState extends State<PdfFilters> {
                               border: Border.all(color: ColorPallets.lightBlue),
                             ),
                             child: const FittedBox(
-                              child: Text("double side"),
+                              child: Text(
+                                "double side",
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ),
                         ),
@@ -832,21 +891,31 @@ class _PdfFiltersState extends State<PdfFilters> {
     return Card(
       elevation: 3,
       child: Container(
-        height: 50,
+        height: 60,
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          const Text(
-            "Size of pages :",
-            style: TextStyle(fontSize: 20),
+          Expanded(
+            flex: 4,
+            child: Container(
+              margin: const EdgeInsets.only(right: 5, left: 5),
+              child: const Center(
+                child: FittedBox(
+                  child: Text(
+                    "Size of pages :",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+            ),
           ),
           const SizedBox(
-            width: 20,
+            width: 10,
           ),
           Expanded(
+            flex: 5,
             child: Container(
-              width: 100,
               height: 40,
-              padding: EdgeInsets.only(left: 40, top: 2, bottom: 2),
+              padding: const EdgeInsets.only(left: 60, top: 2, bottom: 2),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: ColorPallets.lightBlue, width: 1)),
@@ -877,9 +946,6 @@ class _PdfFiltersState extends State<PdfFilters> {
               )),
             ),
           ),
-          const SizedBox(
-            width: 20,
-          )
         ]),
       ),
     );
@@ -891,23 +957,33 @@ class _PdfFiltersState extends State<PdfFilters> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         height: totalPrintingContainerHeight,
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 0),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: Column(
           children: [
             Row(
               children: [
-                const Text(
-                  "Printing JOB :",
-                  style: TextStyle(fontSize: 20),
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 5, right: 5),
+                    child: const Center(
+                      child: FittedBox(
+                        child: Text(
+                          "Printing JOB :",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(
-                  width: 20,
+                  width: 10,
                 ),
                 Expanded(
+                  flex: 5,
                   child: Container(
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(28)),
-                    width: 150,
                     height: 40,
                     child: Row(
                       children: [
@@ -946,7 +1022,7 @@ class _PdfFiltersState extends State<PdfFilters> {
                             child: Container(
                               height: 40,
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 7),
+                                  horizontal: 8, vertical: 7),
                               decoration: BoxDecoration(
                                 color: printjob == JobTypes.blackAndWhite
                                     ? ColorPallets.lightBlue.withOpacity(.2)
@@ -998,7 +1074,7 @@ class _PdfFiltersState extends State<PdfFilters> {
                             child: Container(
                               height: 40,
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 7),
+                                  horizontal: 7, vertical: 7),
                               decoration: BoxDecoration(
                                 color: printjob == JobTypes.fullColor
                                     ? ColorPallets.lightBlue.withOpacity(.2)
@@ -1042,7 +1118,7 @@ class _PdfFiltersState extends State<PdfFilters> {
                             child: Container(
                               height: 40,
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 7),
+                                  horizontal: 3, vertical: 7),
                               decoration: BoxDecoration(
                                 color: printjob == JobTypes.partialColor
                                     ? ColorPallets.lightBlue.withOpacity(.2)
@@ -1064,9 +1140,6 @@ class _PdfFiltersState extends State<PdfFilters> {
                     // child: Text("fdf")
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                )
               ],
             ),
             showWidgetColorTextBox == true
@@ -1079,81 +1152,106 @@ class _PdfFiltersState extends State<PdfFilters> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const Text(
-                              "Color Pages :",
-                              style: TextStyle(fontSize: 22),
+                            Expanded(
+                              flex: 3,
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.only(left: 5, right: 5),
+                                child: const Center(
+                                  child: FittedBox(
+                                    child: Text(
+                                      "Color Pages :",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                             const SizedBox(
                               width: 10,
                             ),
-                            Container(
-                              width: 90,
-                              height: 40,
-                              padding: const EdgeInsets.all(0),
-                              child: TextField(
-                                onSubmitted: (value) {
-                                  setState(() {
-                                    currentPdfModal = PdfFiltersModal(
-                                        pagesRange: currentPdfModal.pagesRange,
-                                        noOfCopies: currentPdfModal.noOfCopies,
-                                        pageOrient: currentPdfModal.pageOrient,
-                                        pagePrintSide:
-                                            currentPdfModal.pagePrintSide,
-                                        pageSize: currentPdfModal.pageSize,
-                                        printJobType: JobTypes.partialColor,
-                                        colorPagesRange:
-                                            _ColorPagesController.text,
-                                        bindingType:
-                                            currentPdfModal.bindingType,
-                                        isBondPaperNeeded:
-                                            currentPdfModal.isBondPaperNeeded,
-                                        bondPaperRange:
-                                            currentPdfModal.bondPaperRange,
-                                        isTransparentSheetNeed: currentPdfModal
-                                            .isTransparentSheetNeed,
-                                        transparentSheetColor: currentPdfModal
-                                            .transparentSheetColor,
-                                        seletedShop:
-                                            currentPdfModal.seletedShop);
-                                    totalPrice =
-                                        currentPdfModal.getCostOfXerox();
-                                  });
-                                },
-                                controller: _ColorPagesController,
-                                decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintStyle: TextStyle(fontSize: 22),
-                                    hintText: "1-5,8"),
+                            Expanded(
+                              flex: 3,
+                              child: Container(
+                                height: 40,
+                                padding: const EdgeInsets.all(0),
+                                child: TextField(
+                                  onSubmitted: (value) {
+                                    setState(() {
+                                      currentPdfModal = PdfFiltersModal(
+                                          pagesRange:
+                                              currentPdfModal.pagesRange,
+                                          noOfCopies:
+                                              currentPdfModal.noOfCopies,
+                                          pageOrient:
+                                              currentPdfModal.pageOrient,
+                                          pagePrintSide:
+                                              currentPdfModal.pagePrintSide,
+                                          pageSize: currentPdfModal.pageSize,
+                                          printJobType: JobTypes.partialColor,
+                                          colorPagesRange:
+                                              _ColorPagesController.text,
+                                          bindingType:
+                                              currentPdfModal.bindingType,
+                                          isBondPaperNeeded:
+                                              currentPdfModal.isBondPaperNeeded,
+                                          bondPaperRange:
+                                              currentPdfModal.bondPaperRange,
+                                          isTransparentSheetNeed:
+                                              currentPdfModal
+                                                  .isTransparentSheetNeed,
+                                          transparentSheetColor: currentPdfModal
+                                              .transparentSheetColor,
+                                          seletedShop:
+                                              currentPdfModal.seletedShop);
+                                      totalPrice =
+                                          currentPdfModal.getCostOfXerox();
+                                    });
+                                  },
+                                  controller: _ColorPagesController,
+                                  cursorHeight: 25,
+                                  decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintStyle: TextStyle(fontSize: 18),
+                                      hintText: "1-5,8"),
+                                ),
                               ),
                             ),
-                            InkWell(
-                              onTap: () async {
-                                if (showColorsliderTextbox == false) {
-                                  setState(() {
-                                    showColorsliderTextbox = true;
-                                  });
-                                  await Future.delayed(
-                                      const Duration(milliseconds: 300));
-                                  setState(() {
-                                    showColorWidgetSliderTextBox = true;
-                                  });
-                                } else {
-                                  setState(() {
-                                    showColorsliderTextbox = false;
-                                    showColorWidgetSliderTextBox = false;
-                                  });
-                                }
-                              },
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 0),
-                                child: Chip(
-                                  label: Text(
-                                    "Slider",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 16),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: InkWell(
+                                onTap: () async {
+                                  if (showColorsliderTextbox == false) {
+                                    setState(() {
+                                      showColorsliderTextbox = true;
+                                    });
+                                    await Future.delayed(
+                                        const Duration(milliseconds: 300));
+                                    setState(() {
+                                      showColorWidgetSliderTextBox = true;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      showColorsliderTextbox = false;
+                                      showColorWidgetSliderTextBox = false;
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  // padding: EdgeInsets.only(
+                                  //   left: 10,
+                                  // ),
+                                  child: const Chip(
+                                    label: Text(
+                                      "Slider",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                    backgroundColor: ColorPallets.deepBlue,
                                   ),
-                                  backgroundColor: ColorPallets.deepBlue,
                                 ),
                               ),
                             )
@@ -1167,6 +1265,9 @@ class _PdfFiltersState extends State<PdfFilters> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       const Text(
                                         '0',
                                         style: TextStyle(
@@ -1179,7 +1280,8 @@ class _PdfFiltersState extends State<PdfFilters> {
                                               tooltipBackgroundColor:
                                                   ColorPallets.deepBlue),
                                           child: SfRangeSlider(
-                                              key: ValueKey("colorpagesClider"),
+                                              key: const ValueKey(
+                                                  "colorpagesClider"),
                                               min: 1,
                                               max: totalPages!.toDouble(),
                                               enableTooltip: true,
@@ -1250,6 +1352,9 @@ class _PdfFiltersState extends State<PdfFilters> {
                                         style: const TextStyle(
                                             fontSize: 22,
                                             color: ColorPallets.deepBlue),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
                                       )
                                     ],
                                   ),
@@ -1270,21 +1375,31 @@ class _PdfFiltersState extends State<PdfFilters> {
     return Card(
       elevation: 3,
       child: Container(
-        height: 50,
+        height: 60,
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          const Text(
-            "Binding :",
-            style: TextStyle(fontSize: 20),
+          Expanded(
+            flex: 4,
+            child: Container(
+              margin: const EdgeInsets.only(left: 5, right: 5),
+              child: const Center(
+                child: FittedBox(
+                  child: Text(
+                    "Binding :",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+            ),
           ),
           const SizedBox(
-            width: 20,
+            width: 10,
           ),
           Expanded(
+            flex: 5,
             child: Container(
-              width: 100,
               height: 40,
-              padding: EdgeInsets.only(left: 40, top: 2, bottom: 2),
+              padding: const EdgeInsets.only(left: 20, top: 2, bottom: 2),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: ColorPallets.lightBlue, width: 1)),
@@ -1315,9 +1430,7 @@ class _PdfFiltersState extends State<PdfFilters> {
               )),
             ),
           ),
-          const SizedBox(
-            width: 20,
-          )
+          // const SizedBox(width: 20),
         ]),
       ),
     );
@@ -1334,18 +1447,29 @@ class _PdfFiltersState extends State<PdfFilters> {
           children: [
             Row(
               children: [
-                const Text(
-                  "BondPaper :",
-                  style: TextStyle(fontSize: 20),
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 5, right: 5),
+                    child: const Center(
+                      child: FittedBox(
+                        child: Text(
+                          "BondPaper :",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(
-                  width: 20,
+                  width: 10,
                 ),
                 Expanded(
+                  flex: 5,
                   child: Container(
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(28)),
-                    width: 150,
+
                     height: 40,
                     child: Row(
                       children: [
@@ -1397,6 +1521,7 @@ class _PdfFiltersState extends State<PdfFilters> {
                               child: const Center(
                                 child: Text(
                                   "No",
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ),
@@ -1444,6 +1569,7 @@ class _PdfFiltersState extends State<PdfFilters> {
                               child: const Center(
                                 child: Text(
                                   "Yes",
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ),
@@ -1455,14 +1581,11 @@ class _PdfFiltersState extends State<PdfFilters> {
                     // child: Text("fdf")
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                )
               ],
             ),
             showBondWingetSheetsTextBox == true
                 ? AnimatedContainer(
-                    padding: EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 10),
                     height: BondPapersliderContHeight,
                     duration: const Duration(milliseconds: 300),
                     child: Column(
@@ -1470,53 +1593,105 @@ class _PdfFiltersState extends State<PdfFilters> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const Text(
-                              "Color Pages :",
-                              style: TextStyle(fontSize: 22),
+                            Expanded(
+                              flex: 3,
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.only(left: 5, right: 5),
+                                child: const Center(
+                                  child: FittedBox(
+                                    child: Text(
+                                      "Bond Pages :",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                             const SizedBox(
                               width: 10,
                             ),
-                            Container(
-                              width: 90,
-                              height: 30,
-                              padding: const EdgeInsets.all(0),
-                              child: TextField(
-                                controller: _bondPagesController,
-                                decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintStyle: TextStyle(fontSize: 22),
-                                    hintText: "1-5,8"),
+                            Expanded(
+                              flex: 3,
+                              child: Container(
+                                height: 40,
+                                padding: const EdgeInsets.all(0),
+                                child: TextField(
+                                  onSubmitted: (value) {
+                                    setState(() {
+                                      currentPdfModal = PdfFiltersModal(
+                                          pagesRange:
+                                              currentPdfModal.pagesRange,
+                                          noOfCopies:
+                                              currentPdfModal.noOfCopies,
+                                          pageOrient:
+                                              currentPdfModal.pageOrient,
+                                          pagePrintSide:
+                                              currentPdfModal.pagePrintSide,
+                                          pageSize: currentPdfModal.pageSize,
+                                          printJobType:
+                                              currentPdfModal.printJobType,
+                                          colorPagesRange:
+                                              _ColorPagesController.text,
+                                          bindingType:
+                                              currentPdfModal.bindingType,
+                                          isBondPaperNeeded: true,
+                                          bondPaperRange:
+                                              _bondPagesController.text,
+                                          isTransparentSheetNeed:
+                                              currentPdfModal
+                                                  .isTransparentSheetNeed,
+                                          transparentSheetColor: currentPdfModal
+                                              .transparentSheetColor,
+                                          seletedShop:
+                                              currentPdfModal.seletedShop);
+                                      totalPrice =
+                                          currentPdfModal.getCostOfXerox();
+                                    });
+                                  },
+                                  cursorHeight: 25,
+                                  controller: _bondPagesController,
+                                  decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintStyle: TextStyle(fontSize: 18),
+                                      hintText: "1-5,8"),
+                                ),
                               ),
                             ),
-                            InkWell(
-                              onTap: () async {
-                                if (showBondSheetsSliderTextBox == false) {
-                                  setState(() {
-                                    showBondSheetsSliderTextBox = true;
-                                  });
-                                  await Future.delayed(
-                                      const Duration(milliseconds: 300));
-                                  setState(() {
-                                    showBondSheetWidgetsliderTextBox = true;
-                                  });
-                                } else {
-                                  setState(() {
-                                    showBondSheetsSliderTextBox = false;
-                                    showBondSheetWidgetsliderTextBox = false;
-                                  });
-                                }
-                              },
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 5),
-                                child: Chip(
-                                  label: Text(
-                                    "Slider",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 16),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: InkWell(
+                                onTap: () async {
+                                  if (showBondSheetsSliderTextBox == false) {
+                                    setState(() {
+                                      showBondSheetsSliderTextBox = true;
+                                    });
+                                    await Future.delayed(
+                                        const Duration(milliseconds: 300));
+                                    setState(() {
+                                      showBondSheetWidgetsliderTextBox = true;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      showBondSheetsSliderTextBox = false;
+                                      showBondSheetWidgetsliderTextBox = false;
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  // padding: EdgeInsets.symmetric(
+                                  //     horizontal: 10, vertical: 5),
+                                  child: const Chip(
+                                    label: Text(
+                                      "Slider",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                    backgroundColor: ColorPallets.deepBlue,
                                   ),
-                                  backgroundColor: ColorPallets.deepBlue,
                                 ),
                               ),
                             )
@@ -1530,6 +1705,9 @@ class _PdfFiltersState extends State<PdfFilters> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       const Text(
                                         '0',
                                         style: TextStyle(
@@ -1612,7 +1790,10 @@ class _PdfFiltersState extends State<PdfFilters> {
                                         style: const TextStyle(
                                             fontSize: 22,
                                             color: ColorPallets.deepBlue),
-                                      )
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -1638,100 +1819,122 @@ class _PdfFiltersState extends State<PdfFilters> {
         child: Column(
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              const Text(
-                "transparentSheet :",
-                style: TextStyle(fontSize: 20),
+              Expanded(
+                flex: 4,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 5, right: 5),
+                  child: const Center(
+                    child: FittedBox(
+                      child: Text(
+                        "Transparent\nSheet :",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(
                 width: 10,
               ),
               Expanded(
-                flex: 2,
-                child: InkWell(
-                  onTap: () async {
-                    setState(() {
-                      needTransparent = true;
-                    });
-                    await Future.delayed(Duration(milliseconds: 300));
-                    setState(() {
-                      showTranparentSheetClour = true;
-                    });
-                  },
-                  child: Container(
-                    height: 40,
-                    padding: const EdgeInsets.only(),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: ColorPallets.lightBlue),
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(22),
-                        bottomLeft: Radius.circular(22),
-                      ),
-                      color: needTransparent == true
-                          ? ColorPallets.lightBlue.withOpacity(.2)
-                          : null,
-                    ),
-                    child: const Center(
-                        child: Text(
-                      "Yes",
-                      style: TextStyle(fontSize: 20),
-                    )),
+                flex: 5,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(28),
                   ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      needTransparent = false;
-                      showTranparentSheetClour = false;
-                      currentPdfModal = PdfFiltersModal(
-                          pagesRange: currentPdfModal.pagesRange,
-                          noOfCopies: currentPdfModal.noOfCopies,
-                          pageOrient: currentPdfModal.pageOrient,
-                          pagePrintSide: currentPdfModal.pagePrintSide,
-                          pageSize: currentPdfModal.pageSize,
-                          printJobType: currentPdfModal.printJobType,
-                          colorPagesRange: currentPdfModal.colorPagesRange,
-                          bindingType: currentPdfModal.bindingType,
-                          isBondPaperNeeded: currentPdfModal.isBondPaperNeeded,
-                          bondPaperRange: currentPdfModal.bondPaperRange,
-                          isTransparentSheetNeed: false,
-                          transparentSheetColor: "",
-                          seletedShop: currentPdfModal.seletedShop);
-                      totalPrice = currentPdfModal.getCostOfXerox();
-                    });
-                  },
-                  child: Container(
-                    height: 40,
-                    padding: const EdgeInsets.only(),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: ColorPallets.lightBlue),
-                        borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(22),
-                          bottomRight: Radius.circular(22),
+                  height: 40,
+                  child: Row(children: [
+                    Expanded(
+                      flex: 2,
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            needTransparent = false;
+                            showTranparentSheetClour = false;
+                            currentPdfModal = PdfFiltersModal(
+                                pagesRange: currentPdfModal.pagesRange,
+                                noOfCopies: currentPdfModal.noOfCopies,
+                                pageOrient: currentPdfModal.pageOrient,
+                                pagePrintSide: currentPdfModal.pagePrintSide,
+                                pageSize: currentPdfModal.pageSize,
+                                printJobType: currentPdfModal.printJobType,
+                                colorPagesRange:
+                                    currentPdfModal.colorPagesRange,
+                                bindingType: currentPdfModal.bindingType,
+                                isBondPaperNeeded:
+                                    currentPdfModal.isBondPaperNeeded,
+                                bondPaperRange: currentPdfModal.bondPaperRange,
+                                isTransparentSheetNeed: false,
+                                transparentSheetColor: "",
+                                seletedShop: currentPdfModal.seletedShop);
+                            totalPrice = currentPdfModal.getCostOfXerox();
+                          });
+                        },
+                        child: Container(
+                          height: 40,
+                          padding: const EdgeInsets.only(),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: ColorPallets.lightBlue),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(22),
+                                bottomLeft: Radius.circular(22),
+                              ),
+                              color: needTransparent == false
+                                  ? ColorPallets.lightBlue.withOpacity(.2)
+                                  : null),
+                          child: const Center(
+                              child: Text(
+                            "No",
+                            style: TextStyle(fontSize: 20),
+                          )),
                         ),
-                        color: needTransparent == false
-                            ? ColorPallets.lightBlue.withOpacity(.2)
-                            : null),
-                    child: const Center(
-                        child: Text(
-                      "No",
-                      style: TextStyle(fontSize: 20),
-                    )),
-                  ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: InkWell(
+                        onTap: () async {
+                          setState(() {
+                            needTransparent = true;
+                          });
+                          await Future.delayed(
+                              const Duration(milliseconds: 300));
+                          setState(() {
+                            showTranparentSheetClour = true;
+                          });
+                        },
+                        child: Container(
+                          height: 40,
+                          padding: const EdgeInsets.only(),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: ColorPallets.lightBlue),
+                            borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(22),
+                              bottomRight: Radius.circular(22),
+                            ),
+                            color: needTransparent == true
+                                ? ColorPallets.lightBlue.withOpacity(.2)
+                                : null,
+                          ),
+                          child: const Center(
+                              child: Text(
+                            "Yes",
+                            style: TextStyle(fontSize: 20),
+                          )),
+                        ),
+                      ),
+                    ),
+                  ]),
                 ),
               ),
-              const SizedBox(
-                width: 0,
-              )
             ]),
             const SizedBox(
               height: 10,
             ),
             showTranparentSheetClour
                 ? Container(
-                    margin: EdgeInsets.only(top: 10),
+                    margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -1904,7 +2107,7 @@ class _PdfFiltersState extends State<PdfFilters> {
                                     ? Colors.deepPurpleAccent
                                     : Colors.deepPurpleAccent.shade100),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   )

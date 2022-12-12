@@ -99,6 +99,10 @@ flutter:
     - assets/image/dummy_profile.png
     - assets/image/file_landscap.png
     - assets/image/file_potrait.png
+    - assets/image/documentUpload.png
+    - assets/image/imageUpload.png
+    - assets/image/referFriend.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
