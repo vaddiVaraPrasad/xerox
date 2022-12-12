@@ -5,6 +5,8 @@ import "../../model/custom_pdf_modal.dart";
 
 import "package:flutter/material.dart";
 
+import 'package:edge_detection/edge_detection.dart';
+
 class PdfImagesRender extends StatefulWidget {
   static const routeName = "/pdfImagesrender";
   const PdfImagesRender({super.key});
@@ -26,6 +28,21 @@ class _PdfImagesRenderState extends State<PdfImagesRender> {
     }
     setState(() {
       listfiles.add(file);
+    });
+  }
+
+  void addFileToLisFromEdgeDet() async {
+    final tempimagePath = (await EdgeDetection.detectEdge);
+    if (tempimagePath == null) {
+      return;
+    }
+    print("temp image path is $tempimagePath");
+    File tempfile = File(tempimagePath);
+    if (tempfile == null) {
+      return;
+    }
+    setState(() {
+      listfiles.add(tempfile);
     });
   }
 
@@ -133,7 +150,7 @@ class _PdfImagesRenderState extends State<PdfImagesRender> {
                 )
               : const SizedBox(),
           IconButton(
-            onPressed: addFileToList,
+            onPressed: addFileToLisFromEdgeDet,
             icon: const Icon(Icons.add_a_photo),
           )
         ],
