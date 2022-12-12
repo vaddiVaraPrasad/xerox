@@ -16,6 +16,7 @@ import "./screens/nav_drawers/drawer_screen.dart";
 import "./screens/nav_drawers/hidden_drawer.dart";
 
 import 'screens/dummy_screen.dart';
+import 'screens/dummyshopsScreen.dart';
 import 'screens/home/home_nav_drawer_stack.dart';
 import 'screens/navBar_Screens/cart_Screen.dart';
 import "screens/drawer_Screens/ContactUs.dart";
@@ -84,6 +85,8 @@ class Xerox extends StatelessWidget {
         PdfImagesRender.routeName: (context) => const PdfImagesRender(),
         PdfFilters.routeName: (context) => const PdfFilters(),
         NotificationPage.routeName: (context) => const NotificationPage(),
+        DummyShops.routeName: (context) => const DummyShops(),
+        ButtonNavigationBar.routeName: (context) => const ButtonNavigationBar(),
       },
     );
   }

@@ -37,24 +37,24 @@ class PdfFiltersModal {
 
   static int getPagesCount(String strRange) {
     int count = 0;
-    print("strRange is $strRange");
+    // print("strRange is $strRange");
     if (strRange.isNotEmpty) {
       final list = strRange.split(',');
-      print("list is $list");
+      // print("list is $list");
       for (int i = 0; i < list.length; i++) {
         if (list[i].contains('-')) {
           final innerList = list[i].split('-');
-          print("inner list is $innerList");
-          var tempcount = int.parse(innerList[1]) - int.parse(innerList[0]);
+          // print("inner list is $innerList");
+          var tempcount = int.parse(innerList[1]) - int.parse(innerList[0]) + 1;
           count += tempcount;
-          print("cont is $count");
+          // print("cont is $count");
         } else {
           count += 1;
         }
       }
     }
 
-    print("strRange is $strRange and count is $count");
+    // print("strRange is $strRange and count is $count");
     return count;
   }
 
@@ -66,7 +66,7 @@ class PdfFiltersModal {
     int noOfPages = getPagesCount(pagesRange);
     if (printJobType != JobTypes.blackAndWhite) {
       noOfColorPages = getPagesCount(colorPagesRange as String);
-      print("no of coloe pages are $noOfColorPages");
+      // print("no of coloe pages are $noOfColorPages");
     }
     if (isBondPaperNeeded) {
       noOfPagesBoundPaper = getPagesCount(bondPaperRange as String);
@@ -210,6 +210,6 @@ class PdfFiltersModal {
       totalCost *= int.parse(noOfCopies);
     }
 
-    return totalCost;
+    return totalCost.toDouble();
   }
 }

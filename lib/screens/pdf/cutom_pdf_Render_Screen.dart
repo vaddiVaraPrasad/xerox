@@ -10,6 +10,7 @@ import "dart:io";
 import 'package:xerox/utils/color_pallets.dart';
 
 import '../../widgets/auth/sing_in_up_bar.dart';
+import '../dummyshopsScreen.dart';
 
 class CustomPDFPreview extends StatefulWidget {
   static const routeName = "/cutomPDFPreview";
@@ -67,6 +68,16 @@ class _CustomPDFPreviewState extends State<CustomPDFPreview> {
     }
   }
 
+  void openFile(BuildContext ctx, File file) {
+    setState(() {
+      isUploadingToFirebase = false;
+    });
+    Navigator.of(ctx).pushNamed(DummyShops.routeName, arguments: file);
+    // setState(() {
+    //   isPdfLoading = false;
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
     File file = ModalRoute.of(context)!.settings.arguments as File;
@@ -105,10 +116,14 @@ class _CustomPDFPreviewState extends State<CustomPDFPreview> {
             ]),
         padding: const EdgeInsets.symmetric(horizontal: 20),
         height: 80,
-        child: SignInBar(
-            label: "procede",
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: SignInBar(
+            label: "Select Shop",
             isLoading: isUploadingToFirebase,
-            onPressed: () => uploadToFirebase(file, fileName, context)),
+            onPressed: () => openFile(context, file),
+          ),
+        ),
       ),
     );
   }

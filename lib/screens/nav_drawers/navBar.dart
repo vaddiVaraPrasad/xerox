@@ -10,6 +10,7 @@ import "../navBar_Screens/profile_Screen.dart";
 import "../navBar_Screens/search_shop_screen.dart";
 
 class ButtonNavigationBar extends StatefulWidget {
+  static const routeName = "/buttomNavBar";
   const ButtonNavigationBar({super.key});
 
   @override

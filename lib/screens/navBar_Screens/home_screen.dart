@@ -75,11 +75,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      const Expanded(flex: 3, child: UploadDoc()),
+                      Expanded(
+                          flex: 3,
+                          child: UploadDoc(
+                            ctx: context,
+                          )),
                       const SizedBox(
                         height: 20,
                       ),
-                      const Expanded(flex: 3, child: ScanDoc())
+                      Expanded(
+                          flex: 3,
+                          child: ScanDoc(
+                            ctx: context,
+                          ))
                     ],
                   ),
                 ))

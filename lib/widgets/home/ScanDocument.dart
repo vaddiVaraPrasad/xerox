@@ -4,7 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../utils/color_pallets.dart';
 
 class ScanDoc extends StatelessWidget {
-  const ScanDoc({super.key});
+  final BuildContext ctx;
+  const ScanDoc({
+    super.key,
+    required this.ctx,
+  });
 
   @override
   Widget build(BuildContext context) {

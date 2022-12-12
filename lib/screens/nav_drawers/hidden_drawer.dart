@@ -13,6 +13,7 @@ import "../drawer_Screens/rateUs_Screens.dart";
 import "./navBar.dart";
 
 class HiddenSideZoomDrawer extends StatefulWidget {
+
   const HiddenSideZoomDrawer({super.key});
 
   @override
@@ -30,7 +31,7 @@ class _HiddenSideZoomDrawerState extends State<HiddenSideZoomDrawer> {
         style: DrawerStyle.defaultStyle,
         angle: -10,
         openCurve: Curves.fastOutSlowIn,
-        closeCurve: Curves. linearToEaseOut,
+        closeCurve: Curves.linearToEaseOut,
         slideWidth: MediaQuery.of(context).size.width * 0.6,
         mainScreen: getScreen(),
         menuScreen: Builder(builder: (context) {
