@@ -102,6 +102,7 @@ flutter:
     - assets/image/documentUpload.png
     - assets/image/imageUpload.png
     - assets/image/referFriend.png
+    - assets/image/ImageUpload2.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

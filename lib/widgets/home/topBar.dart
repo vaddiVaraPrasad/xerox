@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../screens/notificationPage.dart';
 import '../../utils/color_pallets.dart';
 
 class TopCont extends StatelessWidget {
   final String cityName;
+  final BuildContext ctx;
 
   const TopCont({
     super.key,
     required this.cityName,
+    required this.ctx,
   });
 
   @override
@@ -17,11 +20,12 @@ class TopCont extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(
-          color: ColorPallets.deepBlue,
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(24),
-            bottomRight: Radius.circular(24),
-          )),
+        color: ColorPallets.deepBlue,
+        // borderRadius: BorderRadius.only(
+        //   bottomLeft: Radius.circular(24),
+        //   bottomRight: Radius.circular(24),
+        // ),
+      ),
       child: Row(
         children: [
           const SizedBox(
@@ -51,6 +55,9 @@ class TopCont extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
@@ -83,12 +90,17 @@ class TopCont extends StatelessWidget {
           ),
           Expanded(
             flex: 2,
-            child: CircleAvatar(
-                backgroundColor: ColorPallets.lightBlue.withOpacity(.5),
-                child: const Icon(
-                  FontAwesomeIcons.bell,
-                  color: ColorPallets.white,
-                )),
+            child: InkWell(
+              onTap: () {
+                Navigator.of(ctx).pushNamed(NotificationPage.routeName);
+              },
+              child: CircleAvatar(
+                  backgroundColor: ColorPallets.lightBlue.withOpacity(.5),
+                  child: const Icon(
+                    FontAwesomeIcons.bell,
+                    color: ColorPallets.white,
+                  )),
+            ),
           ),
           const SizedBox(
             width: 10,
