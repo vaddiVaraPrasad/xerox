@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pdf/widgets.dart' as Pw;
 import 'package:xerox/utils/color_pallets.dart';
 
+import '../../widgets/home/inviteCont.dart';
 import '../../widgets/home/topBar.dart';
 import "../nav_drawers/drawer_screen.dart";
 
@@ -39,16 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: Column(
                   children: [
-                    Expanded(
-                        child: Container(
-                      color: ColorPallets.lightPurplishWhile,
-                      child: Row(
-                        children: const [
-                          Expanded(child: Text("df")),
-                          Expanded(child: Text("fgf"))
-                        ],
-                      ),
-                    )),
+                    const Expanded(flex: 4, child: InviteCont()),
                     const SizedBox(
                       height: 20,
                     ),
@@ -71,16 +63,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 20,
                     ),
                     Expanded(
+                        flex: 3,
                         child: Container(
-                      color: ColorPallets.pinkinshShadedPurple,
-                    )),
+                          decoration: BoxDecoration(
+                              color: ColorPallets.pinkinshShadedPurple
+                                  .withOpacity(.3),
+                              borderRadius: BorderRadius.circular(14)),
+                        )),
                     const SizedBox(
                       height: 20,
                     ),
                     Expanded(
+                        flex: 3,
                         child: Container(
-                      color: ColorPallets.yellowShadedPurple,
-                    ))
+                          decoration: BoxDecoration(
+                              color: ColorPallets.lightBlue.withOpacity(.3),
+                              borderRadius: BorderRadius.circular(14)),
+                        ))
                   ],
                 ),
               ))
