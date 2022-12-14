@@ -63,6 +63,7 @@ class _PdfImagesRenderState extends State<PdfImagesRender> {
     File? resultFile = await CustomPDF()
         .generateImagesPdfFromMultiImages(fileName as String, listfiles);
     print("pdf is generated succefully");
+    
     return resultFile;
     // setState(() {
     //   isLoading = false;
@@ -152,7 +153,12 @@ class _PdfImagesRenderState extends State<PdfImagesRender> {
           IconButton(
             onPressed: addFileToLisFromEdgeDet,
             icon: const Icon(Icons.add_a_photo),
+          ),
+          IconButton(
+            onPressed: addFileToList,
+            icon: const Icon(Icons.add_a_photo),
           )
+
         ],
       ),
       body: isLoading
