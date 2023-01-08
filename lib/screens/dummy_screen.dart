@@ -9,7 +9,8 @@ class DummyScreen extends StatelessWidget {
     return  Scaffold(
       appBar: AppBar(),
       body: const Center(
-        child: Text("dummySCreen"),
+        child: Text("pdf has been uploaded to firestore"),
+
       ),
     );
   }

@@ -52,18 +52,20 @@ class _PdfImagesRenderState extends State<PdfImagesRender> {
       formKey.currentState!.save();
     }
     Navigator.of(context).pop();
-    print("file name is $fileName");
+    // print("file name is $fileName");
 
     // send the list of images to modal and get pdf from it !!!
-    print("all these has to done");
+    // print("all these has to done");
     setState(() {
       isLoading = true;
     });
-    print("before calling generate pdfs");
+    // print("before calling generate pdfs");
     File? resultFile = await CustomPDF()
         .generateImagesPdfFromMultiImages(fileName as String, listfiles);
-    print("pdf is generated succefully");
-    
+    // print("pdf is generated succefully");
+    setState(() {
+      isLoading = false;
+    });
     return resultFile;
     // setState(() {
     //   isLoading = false;
@@ -154,12 +156,13 @@ class _PdfImagesRenderState extends State<PdfImagesRender> {
             onPressed: addFileToLisFromEdgeDet,
             icon: const Icon(Icons.add_a_photo),
           ),
-          IconButton(
-            onPressed: addFileToList,
-            icon: const Icon(Icons.add_a_photo),
-          )
+          // IconButton(
+          //   onPressed: addFileToList,
+          //   icon: const Icon(Icons.add_a_photo),
+          // )
 
         ],
+        
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())

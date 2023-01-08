@@ -50,8 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> submitSinginform() async {
     var isValid = formKey.currentState!.validate();
-    emailController.clear();
-    passwordController.clear();
+
     if (isValid) {
       formKey.currentState!.save();
       // now create the user with this gmail and password !!!
@@ -65,6 +64,8 @@ class _LoginScreenState extends State<LoginScreen> {
         print("singined IN SUCCESSULLY");
         // Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
       } on FirebaseAuthException catch (e) {
+        emailController.clear();
+        passwordController.clear();
         var msg = "user credentials are improper ";
         if (e.code == 'user-not-found') {
           msg = "No user found with that email";

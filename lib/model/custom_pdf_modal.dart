@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import "package:path/path.dart";
 import "package:path_provider/path_provider.dart";
-import "package:http/http.dart";
+// import "package:http/http.dart";
 import "package:file_picker/file_picker.dart";
 // import "package:flutter/material.dart";
 import "package:pdf_merger/pdf_merger.dart";
@@ -12,12 +12,23 @@ import 'package:pdf/widgets.dart' as pw;
 import "dart:io";
 
 class CustomPDF {
-  static Future<File> _storeFile(String url, List<int> bytes) async {
-    final filename = basename(url);
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File("${dir.path}/$filename");
-    await file.writeAsBytes(bytes, flush: true);
-    return file;
+  // static Future<File> _storeFile(String url, List<int> bytes) async {
+  //   final filename = basename(url);
+  //   final dir = await getApplicationDocumentsDirectory();
+  //   final file = File("${dir.path}/$filename");
+  //   await file.writeAsBytes(bytes, flush: true);
+  //   return file;
+  // }
+
+  Future<File?> pickProfilePic() async {
+    // ignore: deprecated_member_use
+    final pickedFile = await ImagePicker().getImage(
+      source: ImageSource.camera,
+    );
+    if (pickedFile == null) {
+      return null;
+    }
+    return File(pickedFile.path);
   }
 
   static Future<File?> pickFile() async {
@@ -85,19 +96,28 @@ class CustomPDF {
 
     final bytes = await File(path).readAsBytes();
 
-    const pageTheme = pw.PageTheme(pageFormat: PdfPageFormat.a4);
+    // const pageTheme = pw.PageTheme(pageFormat: PdfPageFormat.a4);
 
-    pdf.addPage(
-      pw.MultiPage(
-        pageTheme: pageTheme,
-        build: (context) => [
-          pw.Image(pw.MemoryImage(bytes),
-              width: pageTheme.pageFormat.availableWidth,
-              height: pageTheme.pageFormat.availableHeight,
-              fit: pw.BoxFit.contain),
-        ],
-      ),
-    );
+    // pdf.addPage(
+    //   pw.MultiPage(
+    //     pageTheme: pageTheme,
+    //     build: (context) => [
+    //       pw.Image(pw.MemoryImage(bytes),
+    //           // width: pageTheme.pageFormat.availableWidth,
+    //           // height: pageTheme.pageFormat.availableHeight,
+    //           fit: pw.BoxFit.cover),
+    //     ],
+    //   ),
+    // );
+    pdf.addPage(pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return pw.Expanded(
+              child: pw.Image(
+            pw.MemoryImage(bytes),
+            fit: pw.BoxFit.cover,
+          ));
+        }));
     final basenamefile = basename(path);
     String basefilename = basenamefile.split(".")[0];
 //   final output = await getTemporaryDirectory();
@@ -105,17 +125,6 @@ class CustomPDF {
     final file = File("${dir.path}/$basefilename.pdf");
     await file.writeAsBytes(await pdf.save());
     return file;
-  }
-
-  Future<File?> pickProfilePic() async {
-    // ignore: deprecated_member_use
-    final pickedFile = await ImagePicker().getImage(
-      source: ImageSource.camera,
-    );
-    if (pickedFile == null) {
-      return null;
-    }
-    return File(pickedFile.path);
   }
 
   Future<File?> generateImagesPdfFromMultiImages(
@@ -139,4 +148,10 @@ class CustomPDF {
 
     return null;
   }
+
+  // Future<File?> generateImagesPdfFromMultiImages(
+  //     String fileName, List<File> listImagesFiles) async {}
+  // Future<File?> generateSingleImage(String fileName, File imageFile) async {
+  //   final pdfimage = PdfImage.file(imageFile, bytes: bytes);
+  // }
 }

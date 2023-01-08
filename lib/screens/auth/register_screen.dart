@@ -61,9 +61,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     var ProfilePicUrl = "";
 
     final isvalid = formKeyRegister.currentState!.validate();
-    emailController.clear();
-    passwordController.clear();
-    userNameController.clear();
+    // emailController.clear();
+    // passwordController.clear();
+    // userNameController.clear();
     if (isvalid) {
       formKeyRegister.currentState!.save();
       if (_userProfilePic != null) {
@@ -76,7 +76,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             email: _userDetails["email"] as String,
             password: _userDetails["password"] as String,
           );
-
+          print("PROILE is added to auth");
           final refPath = FirebaseStorage.instance
               .ref()
               .child("user")
@@ -97,9 +97,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             "userName": _userDetails["userName"],
             "createdAt": Timestamp.now()
           });
+          print("use is register to firestore ");
 
           print("REGISTER SUCCESULLY");
         } on FirebaseAuthException catch (e) {
+          emailController.clear();
+          passwordController.clear();
+          userNameController.clear();
           if (e.code == 'weak-password') {
             msg = 'The password provided is too weak.';
           } else if (e.code == 'email-already-in-use') {

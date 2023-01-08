@@ -13,6 +13,7 @@ import "../drawer_Screens/rateUs_Screens.dart";
 import "./navBar.dart";
 
 class HiddenSideZoomDrawer extends StatefulWidget {
+  static const routeName = "hiddenZoomDrawer";
 
   const HiddenSideZoomDrawer({super.key});
 

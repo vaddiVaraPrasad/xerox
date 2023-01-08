@@ -10,6 +10,8 @@ import 'package:xerox/utils/color_pallets.dart';
 
 import '../../model/ListShopes.dart';
 import '../../model/pdf_filters.dart';
+import '../drawer_Screens/orders_Screen.dart';
+import '../dummy_screen.dart';
 import '../navBar_Screens/home_screen.dart';
 import '../nav_drawers/hidden_drawer.dart';
 import '../nav_drawers/navBar.dart';
@@ -340,10 +342,10 @@ class _PdfFiltersState extends State<PdfFilters> {
             InkWell(
               onTap: () {
                 Navigator.of(context)
-                    .pushReplacementNamed(ButtonNavigationBar.routeName);
+                    .pushReplacementNamed(DummyScreen.routeName);
               },
               child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   decoration: BoxDecoration(
                       // color: ColorPallets.deepBlue,
                       borderRadius: BorderRadius.circular(18)),
