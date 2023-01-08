@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Map<String, String> _userDetails = {
     "email": "",
     "password": "",
-  };
+  }; 
 
   Future<void> submitSinginform() async {
     var isValid = formKey.currentState!.validate();

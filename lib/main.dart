@@ -23,6 +23,7 @@ import "screens/navBar_Screens/profile_Screen.dart";
 import "screens/drawer_Screens/orders_Screen.dart";
 import "screens/drawer_Screens/rewards_screen.dart";
 import "screens/navBar_Screens/search_shop_screen.dart";
+import "screens/pdf/custom_pdf_Render_Screen.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,7 +76,8 @@ class Xerox extends StatelessWidget {
         ProfilePage.routeName: (context) => const ProfilePage(),
         rewardsScreen.routeName: (context) => const rewardsScreen(),
         SearchShop.routeName: (context) => const SearchShop(),
-        DummyScreen.routeName: (context) => const DummyScreen()
+        DummyScreen.routeName: (context) => const DummyScreen(),
+        CustomPDFViewer.routeName: (context) => const CustomPDFViewer(),
       },
     );
   }
