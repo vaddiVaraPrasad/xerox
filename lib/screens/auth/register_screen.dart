@@ -28,17 +28,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final formKeyRegister = GlobalKey<FormState>();
   bool _isLoading = false;
 
+  final emailController = TextEditingController();
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  bool isObsecureText = true;
+
   Map<String, String> _userDetails = {
     "email": "",
     "password": "",
     "userName": ""
   };
 
+  @override
+  void initState() {
+    emailController.addListener(() => setState(() {}));
+    userNameController.addListener(() => setState(() {}));
+    passwordController.addListener(() => setState(() {}));
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    userNameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   Future<void> registerUser() async {
     var msg = "Invalid Credentials !!!";
     var ProfilePicUrl = "";
 
     final isvalid = formKeyRegister.currentState!.validate();
+    emailController.clear();
+    passwordController.clear();
+    userNameController.clear();
     if (isvalid) {
       formKeyRegister.currentState!.save();
       if (_userProfilePic != null) {
@@ -55,6 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           final refPath = FirebaseStorage.instance
               .ref()
               .child("user")
+              .child(credential.user!.uid)
               .child("${credential.user!.uid}.png");
 
           await refPath.putFile(_userProfilePic as File).whenComplete(() {});
@@ -188,7 +214,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         backgroundImage: _userProfilePic != null
                             ? FileImage(_userProfilePic as File)
                             : null,
-                        backgroundColor: ColorPallets.lightPurplishWhile.withOpacity(.7),
+                        backgroundColor:
+                            ColorPallets.lightPurplishWhile.withOpacity(.7),
                         child: _userProfilePic == null
                             ? InkWell(
                                 onTap: pickProfilePic,
@@ -204,6 +231,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                       // email form text filed
                       TextFormField(
+                        controller: emailController,
                         key: const ValueKey("mail"),
                         cursorHeight: 22,
                         cursorWidth: 2,
@@ -214,20 +242,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
-                        decoration: const InputDecoration(
-                          errorStyle: TextStyle(
+                        decoration: InputDecoration(
+                          suffixIcon: emailController.text.isEmpty
+                              ? const SizedBox()
+                              : Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: IconButton(
+                                      onPressed: () {
+                                        emailController.clear();
+                                      },
+                                      icon: const Icon(
+                                        FontAwesomeIcons.xmark,
+                                        size: 18,
+                                      ))),
+                          errorStyle: const TextStyle(
                               color: ColorPallets.pinkinshShadedPurple),
-                          focusedBorder: UnderlineInputBorder(
+                          focusedBorder: const UnderlineInputBorder(
                               borderSide:
                                   BorderSide(color: ColorPallets.white)),
-                          enabledBorder: UnderlineInputBorder(
+                          enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
                               width: 2,
                               color: ColorPallets.white,
                             ),
                           ),
                           focusColor: ColorPallets.white,
-                          label: Text(
+                          label: const Text(
                             "E-mail",
                             style: TextStyle(color: ColorPallets.white),
                           ),
@@ -244,6 +284,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       TextFormField(
                         key: const ValueKey("userName"),
+                        controller: userNameController,
                         cursorHeight: 22,
                         cursorWidth: 2,
                         cursorColor: ColorPallets.white,
@@ -253,22 +294,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
-                        decoration: const InputDecoration(
-                            focusedBorder: UnderlineInputBorder(
+                        decoration: InputDecoration(
+                            suffixIcon: userNameController.text.isEmpty
+                                ? const SizedBox()
+                                : Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: IconButton(
+                                        onPressed: () {
+                                          userNameController.clear();
+                                        },
+                                        icon: const Icon(
+                                          FontAwesomeIcons.xmark,
+                                          size: 18,
+                                        ))),
+                            focusedBorder: const UnderlineInputBorder(
                                 borderSide:
                                     BorderSide(color: ColorPallets.white)),
-                            enabledBorder: UnderlineInputBorder(
+                            enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 width: 2,
                                 color: ColorPallets.white,
                               ),
                             ),
                             focusColor: ColorPallets.white,
-                            label: Text(
+                            label: const Text(
                               "UserName",
                               style: TextStyle(color: ColorPallets.white),
                             ),
-                            errorStyle: TextStyle(
+                            errorStyle: const TextStyle(
                                 color: ColorPallets.pinkinshShadedPurple)),
                         validator: (newUserName) {
                           if (newUserName!.isEmpty) {
@@ -283,6 +336,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       TextFormField(
                         key: const ValueKey("passWoRd"),
+                        controller: passwordController,
                         cursorHeight: 22,
                         cursorWidth: 2,
                         cursorColor: ColorPallets.white,
@@ -291,15 +345,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           color: ColorPallets.white,
                         ),
                         keyboardType: TextInputType.text,
-                        obscureText: true,
+                        obscureText: isObsecureText,
                         textInputAction: TextInputAction.done,
-                        decoration: const InputDecoration(
-                          errorStyle: TextStyle(
+                        decoration: InputDecoration(
+                          suffixIcon: passwordController.text.isEmpty
+                              ? const SizedBox()
+                              : Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: IconButton(
+                                    icon: isObsecureText
+                                        ? const Icon(
+                                            Icons.visibility,
+                                            size: 22,
+                                          )
+                                        : const Icon(
+                                            Icons.visibility_off,
+                                            size: 22,
+                                          ),
+                                    onPressed: () {
+                                      setState(() {
+                                        isObsecureText = !isObsecureText;
+                                      });
+                                    },
+                                  ),
+                                ),
+                          errorStyle: const TextStyle(
                               color: ColorPallets.pinkinshShadedPurple),
-                          focusedBorder: UnderlineInputBorder(
+                          focusedBorder: const UnderlineInputBorder(
                               borderSide:
                                   BorderSide(color: ColorPallets.white)),
-                          enabledBorder: UnderlineInputBorder(
+                          enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
                               width: 2,
                               color: ColorPallets.white,
@@ -322,7 +397,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               newPassword.toString().trim();
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
 

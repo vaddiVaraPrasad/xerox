@@ -9,9 +9,9 @@ import 'package:xerox/utils/color_pallets.dart';
 class DrawerScreen extends StatefulWidget {
   final MenuItem currentItem;
   final ValueChanged<MenuItem> onSelectedItems;
-  NetworkImage? userProfileImage;
-  String? userProfileUrl;
-  String userName = "kothikanna";
+  // NetworkImage? userProfileImage;
+  // String? userProfileUrl;
+  // String userName = "kothikanna";
 
   DrawerScreen({
     super.key,
@@ -24,41 +24,6 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
-  @override
-  void initState() {
-    getUserCredentials();
-    super.initState();
-  }
-
-  void getUserCredentials() async {
-    String userId = FirebaseAuth.instance.currentUser!.uid;
-    CollectionReference usersCollection =
-        FirebaseFirestore.instance.collection('users');
-
-    final userGet = await usersCollection.doc(userId).get();
-    Map<String, dynamic> data = userGet.data() as Map<String, dynamic>;
-
-    // FutureBuilder<DocumentSnapshot>(
-    //   builder: (context, snapshot) {
-    //     if (snapshot.hasError) {
-    //        print("Something went wrong");
-    //     }
-    //     if (snapshot.hasData && !snapshot.data!.exists) {
-    //       print("Document does not exist");
-    //     }
-
-    //   },
-    //   future: usersCollection.doc(userId).get(),
-    // );
-
-    setState(() {
-      print("inside the void setstae");
-      widget.userName = data["userName"];
-      widget.userProfileUrl = data["profilePicUrl"];
-      widget.userProfileImage = NetworkImage(widget.userProfileUrl as String);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,9 +65,17 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         width: 100,
                       ),
                       Text(
-                        (widget.userName.toString().length > 20)
-                            ? "${widget.userName.toString().substring(0, 10)}..."
-                            : widget.userName.toString(),
+                        FirebaseAuth.instance.currentUser!.displayName == null
+                            ? ""
+                            : FirebaseAuth.instance.currentUser!.displayName
+                                        .toString()
+                                        .length <
+                                    10
+                                ? FirebaseAuth.instance.currentUser!.displayName
+                                    .toString()
+                                : FirebaseAuth.instance.currentUser!.displayName
+                                    .toString()
+                                    .split(" ")[0],
                         style: const TextStyle(
                             color: ColorPallets.deepBlue,
                             fontSize: 20,
