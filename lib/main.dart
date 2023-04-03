@@ -1,17 +1,19 @@
-import 'package:flutter/material.dart';
+import "package:connectivity_plus/connectivity_plus.dart";
 import "package:firebase_auth/firebase_auth.dart";
+import 'package:flutter/material.dart';
 import "package:firebase_core/firebase_core.dart";
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xerox/firebase_options.dart';
+import "package:xerox/screens/additional/network_error.dart";
+import "package:xerox/screens/auth/auth_screen.dart";
+import "package:xerox/screens/nav_drawers/hidden_drawer.dart";
 import 'package:xerox/screens/notificationPage.dart';
 import 'package:xerox/screens/pdf/cutom_pdf_Render_Screen.dart';
-import "package:connectivity_plus/connectivity_plus.dart";
 import "package:xerox/utils/check_connection.dart";
 
 import "./utils/color_pallets.dart";
 
-import "./screens/auth/auth_screen.dart";
 import "./screens/auth/forget_password_Screen.dart";
 import "./screens/nav_drawers/navBar.dart";
 
@@ -29,16 +31,19 @@ import "screens/navBar_Screens/search_shop_screen.dart";
 import "screens/pdf/images_grid_file.dart";
 import "screens/pdf/pdf_filters_Screen.dart";
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const Xerox());
+  runApp(Xerox());
 }
 
 class Xerox extends StatelessWidget {
-  const Xerox({super.key});
+  Xerox({super.key});
+
+  final Stream<ConnectivityResult> connectivityStream =
+      Connectivity().onConnectivityChanged;
+  final Stream<User?> authStateChanges =
+      FirebaseAuth.instance.authStateChanges();
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +64,46 @@ class Xerox extends StatelessWidget {
             color: ColorPallets.deepBlue,
             systemOverlayStyle: SystemUiOverlayStyle.light),
       ),
-      home: const CheckConnection(),
+      // home: StreamBuilder(
+      //       stream: FirebaseAuth.instance.authStateChanges(),
+      //       builder: (context, snapshot) {
+      //         if (snapshot.hasData) {
+      //           return const HiddenSideZoomDrawer();
+      //         } else if (snapshot.connectionState == ConnectionState.waiting) {
+      //           return const CircularProgressIndicator();
+      //         } else {
+      //           return const AuthScreen();
+      //         }
+      //       },
+      //     ),
+      home: StreamBuilder<ConnectivityResult>(
+          stream: Connectivity().onConnectivityChanged,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              switch (snapshot.data!) {
+                case ConnectivityResult.wifi:
+                case ConnectivityResult.mobile:
+                  return StreamBuilder<User?>(
+                    stream: FirebaseAuth.instance.authStateChanges(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return const HiddenSideZoomDrawer();
+                        ;
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else {
+                        return const AuthScreen();
+                      }
+                    },
+                  );
+                default:
+                  return const NetworkError();
+              }
+            } else {
+              return const CircularProgressIndicator();
+            }
+          }),
       routes: {
         ForgetPasswordScreen.routeName: (context) =>
             const ForgetPasswordScreen(),
@@ -82,8 +126,109 @@ class Xerox extends StatelessWidget {
       },
     );
   }
-
- 
-
-  
 }
+
+
+// import 'dart:async';
+
+// import 'package:connectivity_plus/connectivity_plus.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:flutter/material.dart';
+// import 'package:xerox/screens/additional/network_error.dart';
+// import 'package:xerox/screens/auth/auth_screen.dart';
+// import 'package:xerox/screens/nav_drawers/hidden_drawer.dart';
+
+// import 'firebase_options.dart';
+
+// void main() async {
+//     WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+//   runApp(MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   final Stream<ConnectivityResult> connectivityStream =
+//       Connectivity().onConnectivityChanged;
+//   final Stream<User?> authStateChanges = FirebaseAuth.instance.authStateChanges();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Flutter Demo',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: StreamBuilder<ConnectivityResult>(
+//           stream: connectivityStream,
+//           builder: (context, snapshot) {
+//             if (snapshot.hasData) {
+//               switch (snapshot.data!) {
+//                 case ConnectivityResult.wifi:
+//                 case ConnectivityResult.mobile:
+//                   return StreamBuilder<User?>(
+//                     stream: authStateChanges,
+//                     builder: (context, snapshot) {
+//                       if (snapshot.hasData) {
+//                         return HiddenSideZoomDrawer();;
+//                       } 
+//                       else if( snapshot.connectionState == ConnectionState.waiting){
+//                         return CircularProgressIndicator();
+//                       }
+//                       else {
+//                         return AuthScreen();
+//                       }
+//                     },
+//                   );
+//                 default:
+//                   return NetworkError();
+//               }
+//             } else {
+//               return CircularProgressIndicator();
+//             }
+//           }),
+//     );
+//   }
+// }
+
+// // class AuthScreen extends StatelessWidget {
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return Scaffold(
+// //       appBar: AppBar(
+// //         title: Text('Auth Screen'),
+// //       ),
+// //       body: Center(
+// //         child: Text('Please log in.'),
+// //       ),
+// //     );
+// //   }
+// // }
+
+// class MainScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Main Screen'),
+//       ),
+//       body: Center(
+//         child: Text('You are logged in.'),
+//       ),
+//     );
+//   }
+// }
+
+// class NoInternetScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('No Internet'),
+//       ),
+//       body: Center(
+//         child: Text('Please check your internet connection.'),
+//       ),
+//     );
+//   }
+// }
