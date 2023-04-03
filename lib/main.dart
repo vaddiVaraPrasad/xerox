@@ -6,14 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:xerox/firebase_options.dart';
 import 'package:xerox/screens/notificationPage.dart';
 import 'package:xerox/screens/pdf/cutom_pdf_Render_Screen.dart';
+import "package:connectivity_plus/connectivity_plus.dart";
+import "package:xerox/utils/check_connection.dart";
 
 import "./utils/color_pallets.dart";
 
 import "./screens/auth/auth_screen.dart";
 import "./screens/auth/forget_password_Screen.dart";
 import "./screens/nav_drawers/navBar.dart";
-import "./screens/nav_drawers/drawer_screen.dart";
-import "./screens/nav_drawers/hidden_drawer.dart";
 
 import 'screens/dummy_screen.dart';
 import 'screens/dummyshopsScreen.dart';
@@ -28,6 +28,8 @@ import "screens/drawer_Screens/rewards_screen.dart";
 import "screens/navBar_Screens/search_shop_screen.dart";
 import "screens/pdf/images_grid_file.dart";
 import "screens/pdf/pdf_filters_Screen.dart";
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,18 +59,7 @@ class Xerox extends StatelessWidget {
             color: ColorPallets.deepBlue,
             systemOverlayStyle: SystemUiOverlayStyle.light),
       ),
-      home: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return const HiddenSideZoomDrawer();
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          } else {
-            return const AuthScreen();
-          }
-        },
-      ),
+      home: const CheckConnection(),
       routes: {
         ForgetPasswordScreen.routeName: (context) =>
             const ForgetPasswordScreen(),
@@ -91,4 +82,8 @@ class Xerox extends StatelessWidget {
       },
     );
   }
+
+ 
+
+  
 }

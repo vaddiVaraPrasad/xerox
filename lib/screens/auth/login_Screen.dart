@@ -11,6 +11,8 @@ import "./forget_password_Screen.dart";
 
 import "../../widgets/auth/sing_in_up_bar.dart";
 
+import "../../model/user.dart";
+
 class LoginScreen extends StatefulWidget {
   final VoidCallback callRegisterScreen;
   const LoginScreen({
@@ -171,9 +173,11 @@ class _LoginScreenState extends State<LoginScreen> {
         "userName": googleSignInAccount.displayName,
         "createdAt": Timestamp.now()
       });
+
+     
+
       Text("LOGed in succefully  BY GOOGLE ");
       // Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
-
     } on FirebaseAuthException catch (e) {
       var msg = "";
       switch (e.code) {
@@ -208,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text("log in with google fail!!!"),
+          title: const Text("Another Error !"),
           content: Text(e.toString()),
           actions: [
             TextButton(
@@ -219,10 +223,10 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ),
       );
-      // } finally {
-      //   setState(() {
-      //     _isLoading = false;
-      //   });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
