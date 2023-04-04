@@ -4,6 +4,8 @@ import "package:firebase_auth/firebase_auth.dart";
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pdf/widgets.dart' as Pw;
+import 'package:provider/provider.dart';
+import 'package:xerox/Provider/current_user.dart';
 import 'package:xerox/utils/color_pallets.dart';
 
 import '../../widgets/home/ScanDocument.dart';
@@ -26,6 +28,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    CurrentUser curUser = Provider.of(context, listen: false);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 0, right: 0, left: 0),
@@ -42,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 0),
                   child: TopCont(
-                    cityName: "Tadepalligudem",
+                    cityName: curUser.getPlaceName,
                     ctx: context,
                   ),
                 )),

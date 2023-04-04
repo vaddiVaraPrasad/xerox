@@ -7,7 +7,10 @@ import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
+import '../../Provider/current_user.dart';
+import '../../model/user.dart';
 import "../../utils/color_pallets.dart";
 
 import "../../widgets/auth/sing_in_up_bar.dart";
@@ -56,7 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  Future<void> registerUser() async {
+  Future<void> registerUser(CurrentUser currUser, BuildContext ctx) async {
     var msg = "Invalid Credentials !!!";
     var ProfilePicUrl = "";
 
@@ -98,7 +101,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
             "createdAt": Timestamp.now()
           });
           print("use is register to firestore ");
-
+          var users = Users(
+            userId: credential.user!.uid,
+            userName: _userDetails["userName"] as String,
+            userEmail: credential.user!.email as String,
+            userPlaceName: "Elure",
+            latitude: 34546.56,
+            longitude: 457567.67,
+            userProfileUrl: ProfilePicUrl,
+          );
+          currUser.setCurrentUser(users);
+          print(
+              "<<<<------------------Provider Map is ------------------------>");
+          print(currUser.getCurrentUserMap);
           print("REGISTER SUCCESULLY");
         } on FirebaseAuthException catch (e) {
           emailController.clear();
@@ -187,6 +202,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var currentUser = Provider.of<CurrentUser>(context, listen: true);
     return Container(
       padding: const EdgeInsets.all(32),
       child: Column(
@@ -385,7 +401,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           focusColor: ColorPallets.white,
-                          label: Text(
+                          label: const Text(
                             "Password",
                             style: TextStyle(color: ColorPallets.white),
                           ),
@@ -409,7 +425,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SignUpBar(
                         isLoading: _isLoading,
                         label: "Register",
-                        onPressed: registerUser,
+                        onPressed: () => registerUser(currentUser, context),
                       ),
                       // nav from register to login
                       Padding(

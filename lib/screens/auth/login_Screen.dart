@@ -52,7 +52,8 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  Future<void> submitSinginform(BuildContext ctx) async {
+  Future<void> submitSinginform(
+      BuildContext ctx, CurrentUser currentUser) async {
     var isValid = formKey.currentState!.validate();
 
     if (isValid) {
@@ -65,7 +66,10 @@ class _LoginScreenState extends State<LoginScreen> {
         final cred = await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: _userDetails["email"].toString().trim(),
             password: _userDetails["password"].toString().trim());
+        print(cred.user!.uid);
+        currentUser.initCurrentUser(cred.user!.uid);
         print("singined IN SUCCESSULLY");
+
         // Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
       } on FirebaseAuthException catch (e) {
         emailController.clear();
@@ -181,7 +185,9 @@ class _LoginScreenState extends State<LoginScreen> {
         userId: FirebaseAuth.instance.currentUser!.uid,
         userName: FirebaseAuth.instance.currentUser!.displayName as String,
         userEmail: FirebaseAuth.instance.currentUser!.email as String,
-        userLocaation: "Elure",
+        userPlaceName: "Elure",
+        latitude: 4534.45,
+        longitude:  345456.45,
         userProfileUrl: FirebaseAuth.instance.currentUser!.photoURL as String,
       );
       currUser.setCurrentUser(users);
@@ -384,7 +390,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SignInBar(
                         isLoading: _isLoading,
                         label: "Sign In",
-                        onPressed: () => submitSinginform(context),
+                        onPressed: () => submitSinginform(context,currUser),
                       ),
 
                       // nav b/w login and register screen

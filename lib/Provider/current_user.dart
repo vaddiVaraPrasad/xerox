@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:xerox/helpers/sqlLite.dart';
 import "../model/user.dart";
 
 class CurrentUser with ChangeNotifier {
@@ -6,11 +8,32 @@ class CurrentUser with ChangeNotifier {
       userId: "chumma",
       userName: "chumma chumma",
       userEmail: "chumma",
-      userLocaation: "chumma",
-      userProfileUrl: "https://kalasalingam.ac.in/wp-content/uploads/2021/11/Faculty-dummy-profile.png");
+      userPlaceName: "chumma",
+      latitude: 4353.54,
+      longitude: 34545.34,
+      userProfileUrl:
+          "https://kalasalingam.ac.in/wp-content/uploads/2021/11/Faculty-dummy-profile.png");
+
+  void initCurrentUser(String id) async {
+    Map<String, dynamic> user_map = await SQLHelpers.getUserById(id);
+    Users tempuser = Users(
+        userId: user_map["userId"],
+        userName: user_map["userName"],
+        userEmail: user_map["userEmail"],
+        userPlaceName: user_map["userPlaceName"],
+        latitude: user_map["latitude"],
+        longitude: user_map["longitude"],
+        userProfileUrl: user_map["userProfileUrl"]);
+    current_user = tempuser;
+    print("init current user is called");
+    print("user is updated");
+    print(getCurrentUserMap);
+    notifyListeners();
+  }
 
   void setCurrentUser(Users curUser) {
     current_user = curUser;
+    SQLHelpers.insertUser(current_user);
     notifyListeners();
   }
 
@@ -20,6 +43,7 @@ class CurrentUser with ChangeNotifier {
 
   void setUserName(String userName) {
     current_user.userName = userName;
+    SQLHelpers.insertUser(current_user);
     notifyListeners();
   }
 
@@ -29,6 +53,7 @@ class CurrentUser with ChangeNotifier {
 
   void setUserEmail(String userEmail) {
     current_user.userEmail = userEmail;
+    SQLHelpers.insertUser(current_user);
     notifyListeners();
   }
 
@@ -36,17 +61,33 @@ class CurrentUser with ChangeNotifier {
     return current_user.userEmail;
   }
 
-  void setUserLocation(String userLocation) {
-    current_user.userLocaation = userLocation;
+  void setUserPlaceName(String userPlaceName) {
+    current_user.userPlaceName = userPlaceName;
+    SQLHelpers.insertUser(current_user);
     notifyListeners();
   }
 
-  String get getUserLocation {
-    return current_user.userLocaation;
+  String get getPlaceName {
+    return current_user.userPlaceName;
+  }
+
+  void setUserLatitudeLogitude(double latitude, double logitude) {
+    current_user.latitude = latitude;
+    current_user.longitude = logitude;
+    notifyListeners();
+  }
+
+  double get getUsetLatitude {
+    return current_user.latitude;
+  }
+
+  double get getUserLongitude {
+    return current_user.longitude;
   }
 
   void setUserProfileUrl(String userProfileUrl) {
     current_user.userProfileUrl = userProfileUrl;
+    SQLHelpers.insertUser(current_user);
     notifyListeners();
   }
 

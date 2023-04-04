@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 import 'package:xerox/Provider/current_user.dart';
+import 'package:xerox/helpers/sqlLite.dart';
 
 class SearchShop extends StatelessWidget {
   static const routeName = "/searchScreen";
@@ -40,9 +42,19 @@ class SearchShop extends StatelessWidget {
               child: Text("change user Email to kanna.bmace")),
           ElevatedButton(
               onPressed: () {
-                curretUSer.setUserLocation("Tadepalligudem");
+                curretUSer.setUserPlaceName("Tadepalligudem");
               },
               child: Text("chnage location ")),
+          ElevatedButton(
+              onPressed: () {
+                SQLHelpers.getAllTableData("users");
+              },
+              child: Text("print the data from table")),
+               ElevatedButton(
+              onPressed: () {
+                SQLHelpers.getUserById(FirebaseAuth.instance.currentUser!.uid);
+              },
+              child: Text("get user by ID"))
         ],
       ),
     );

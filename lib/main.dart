@@ -5,6 +5,7 @@ import "package:firebase_core/firebase_core.dart";
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xerox/firebase_options.dart';
+import "package:xerox/helpers/sqlLite.dart";
 import "package:xerox/screens/additional/network_error.dart";
 import "package:xerox/screens/auth/auth_screen.dart";
 import "package:xerox/screens/nav_drawers/hidden_drawer.dart";
@@ -37,6 +38,8 @@ import "./Provider/current_user.dart";
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  SQLHelpers.getDatabase;
+  
   runApp(Xerox());
 }
 
