@@ -1,21 +1,24 @@
-class User {
-  final String userName;
-  final String userId;
-  final String profileUrl;
-  final String userEmail;
+class Users {
+  String userName;
+  String userId;
+  String userEmail;
+  String userProfileUrl;
+  String userLocaation;
 
-  User(
+  Users(
       {required this.userId,
-      required this.userEmail,
       required this.userName,
-      required this.profileUrl});
+      required this.userEmail,
+      required this.userLocaation,
+      required this.userProfileUrl});
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> get toMap {
     return {
+      "userName": userName,
       "userId": userId,
       "userEmail": userEmail,
-      "userName": userName,
-      "userProfileUrl": profileUrl,
+      "userProfileUrl": userProfileUrl,
+      "userLocaation": userLocaation,
     };
   }
 }

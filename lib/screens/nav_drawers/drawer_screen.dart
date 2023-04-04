@@ -4,11 +4,15 @@ import "package:flutter/material.dart";
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:xerox/Provider/current_user.dart';
 import 'package:xerox/utils/color_pallets.dart';
 
 class DrawerScreen extends StatefulWidget {
   final MenuItem currentItem;
   final ValueChanged<MenuItem> onSelectedItems;
+  String userName;
+  String userProfileUrl;
   // NetworkImage? userProfileImage;
   // String? userProfileUrl;
   // String userName = "kothikanna";
@@ -17,6 +21,8 @@ class DrawerScreen extends StatefulWidget {
     super.key,
     required this.currentItem,
     required this.onSelectedItems,
+    required this.userName,
+    required this.userProfileUrl,
   });
 
   @override
@@ -26,6 +32,7 @@ class DrawerScreen extends StatefulWidget {
 class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
+    var currentUser = Provider.of<CurrentUser>(context, listen: true);
     return Scaffold(
       body: Container(
         color: ColorPallets.lightPurplishWhile.withOpacity(.7),
@@ -39,14 +46,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
             Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 12.0, right: 8),
+                  padding: const EdgeInsets.only(left: 12.0, right: 8),
                   child: CircleAvatar(
                     radius: 25,
-                    backgroundImage:
-                        FirebaseAuth.instance.currentUser!.photoURL == null
-                            ? null
-                            : NetworkImage(FirebaseAuth
-                                .instance.currentUser!.photoURL as String),
+                    backgroundImage: NetworkImage(
+                      widget.userProfileUrl
+                    ),
                     backgroundColor: ColorPallets.pinkinshShadedPurple,
                   ),
                 ),
@@ -65,20 +70,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         width: 100,
                       ),
                       Text(
-                        FirebaseAuth.instance.currentUser!.displayName == null
-                            ? ""
-                            : FirebaseAuth.instance.currentUser!.displayName
-                                        .toString()
-                                        .length <
-                                    10
-                                ? FirebaseAuth.instance.currentUser!.displayName
-                                    .toString()
-                                : FirebaseAuth.instance.currentUser!.displayName
-                                    .toString()
-                                    .split(" ")[0],
+                        widget.userName,
                         style: const TextStyle(
                             color: ColorPallets.deepBlue,
-                            fontSize: 20,
+                            fontSize: 18,
+                            overflow: TextOverflow.ellipsis,
                             fontWeight: FontWeight.bold),
                       )
                     ],

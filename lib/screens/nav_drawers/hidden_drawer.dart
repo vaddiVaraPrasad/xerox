@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import "package:provider/provider.dart";
+import "package:xerox/Provider/current_user.dart";
 import 'package:xerox/utils/color_pallets.dart';
 
 import "./drawer_screen.dart";
@@ -15,7 +17,9 @@ import "./navBar.dart";
 class HiddenSideZoomDrawer extends StatefulWidget {
   static const routeName = "hiddenZoomDrawer";
 
-  const HiddenSideZoomDrawer({super.key});
+  const HiddenSideZoomDrawer({
+    super.key,
+  });
 
   @override
   State<HiddenSideZoomDrawer> createState() => _HiddenSideZoomDrawerState();
@@ -25,6 +29,7 @@ class _HiddenSideZoomDrawerState extends State<HiddenSideZoomDrawer> {
   var currentItem = MenuItems.home;
   @override
   Widget build(BuildContext context) {
+    var curUser = Provider.of<CurrentUser>(context,listen: true);
     return Scaffold(
       body: ZoomDrawer(
         menuBackgroundColor: ColorPallets.lightPurplishWhile.withOpacity(.7),
@@ -38,6 +43,8 @@ class _HiddenSideZoomDrawerState extends State<HiddenSideZoomDrawer> {
         menuScreen: Builder(builder: (context) {
           return DrawerScreen(
             currentItem: currentItem,
+            userName: curUser.getUserName,
+            userProfileUrl: curUser.getUserProfileUrl,
             onSelectedItems: (item) {
               setState(() {
                 currentItem = item;

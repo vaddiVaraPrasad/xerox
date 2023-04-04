@@ -4,7 +4,9 @@ import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import "package:provider/provider.dart";
 
+import "../../Provider/current_user.dart";
 import "../../utils/color_pallets.dart";
 
 import "./forget_password_Screen.dart";
@@ -50,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  Future<void> submitSinginform() async {
+  Future<void> submitSinginform(BuildContext ctx) async {
     var isValid = formKey.currentState!.validate();
 
     if (isValid) {
@@ -132,7 +134,8 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<void> signInUpWithGoogle() async {
+  Future<void> signInUpWithGoogle(
+      CurrentUser currUser, BuildContext ctx) async {
     setState(() {
       _isLoading = true;
     });
@@ -160,6 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await FirebaseAuth.instance.signInWithCredential(credential);
 
       Text("LOGed in succefully  BY GOOGLE ");
+      print("before loading in to firestroe");
 
       await FirebaseFirestore.instance
           .collection('Users')
@@ -168,17 +172,27 @@ class _LoginScreenState extends State<LoginScreen> {
           )
           .set({
         "userId": FirebaseAuth.instance.currentUser!.uid,
-        "email": googleSignInAccount.email,
-        "profilePicUrl": googleSignInAccount.photoUrl,
-        "userName": googleSignInAccount.displayName,
+        "email": FirebaseAuth.instance.currentUser!.email,
+        "profilePicUrl": FirebaseAuth.instance.currentUser!.photoURL,
+        "userName": FirebaseAuth.instance.currentUser!.displayName,
         "createdAt": Timestamp.now()
       });
-
-     
+      var users = Users(
+        userId: FirebaseAuth.instance.currentUser!.uid,
+        userName: FirebaseAuth.instance.currentUser!.displayName as String,
+        userEmail: FirebaseAuth.instance.currentUser!.email as String,
+        userLocaation: "Elure",
+        userProfileUrl: FirebaseAuth.instance.currentUser!.photoURL as String,
+      );
+      currUser.setCurrentUser(users);
+      print("<<<<------------------Provider Map is ------------------------>");
+      print(currUser.getCurrentUserMap);
+      setState(() {});
 
       Text("LOGed in succefully  BY GOOGLE ");
       // Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
     } on FirebaseAuthException catch (e) {
+      print("ERROR ERROR ERROR EROOR ERROR ERRROR ERROR");
       var msg = "";
       switch (e.code) {
         case 'account-exists-with-different-credential':
@@ -195,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
           break;
       }
       showDialog(
-        context: context,
+        context: ctx,
         builder: (context) => AlertDialog(
           title: const Text("log in google fail!!!"),
           content: Text(msg),
@@ -209,29 +223,35 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     } catch (e) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Another Error !"),
-          content: Text(e.toString()),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text("OK!!"))
-          ],
-        ),
-      );
+      print("ERROR ERROR ERROR EROOR ERROR ERRROR ERROR");
+      print(e.toString());
+      // showDialog(
+      //   context: ctx,
+      //   builder: (context) => AlertDialog(
+      //     title: const Text("Another Error !"),
+      //     content: Text(e.toString()),
+      //     actions: [
+      //       TextButton(
+      //           onPressed: () {
+      //             Navigator.of(context).pop();
+      //             setState(() {
+      //               _isLoading = false;
+      //             });
+      //           },
+      //           child: const Text("OK!!"))
+      //     ],
+      //   ),
+      // );
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      // setState(() {
+      //   _isLoading = false;
+      // });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    CurrentUser currUser = Provider.of<CurrentUser>(context, listen: true);
     return Container(
       padding: const EdgeInsets.all(32),
       child: Column(
@@ -364,7 +384,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SignInBar(
                         isLoading: _isLoading,
                         label: "Sign In",
-                        onPressed: submitSinginform,
+                        onPressed: () => submitSinginform(context),
                       ),
 
                       // nav b/w login and register screen
@@ -400,7 +420,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       // google sign in up
                       InkWell(
-                        onTap: signInUpWithGoogle,
+                        onTap: () => signInUpWithGoogle(currUser, context),
                         child: Container(
                           height: 60,
                           width: 130,
