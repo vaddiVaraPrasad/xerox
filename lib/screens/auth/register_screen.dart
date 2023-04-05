@@ -5,11 +5,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../Provider/current_user.dart';
+import '../../helpers/user_location.dart';
 import '../../model/user.dart';
 import "../../utils/color_pallets.dart";
 
@@ -100,16 +102,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
             "userName": _userDetails["userName"],
             "createdAt": Timestamp.now()
           });
+          Position userCurrentPosition = await UserLocation.getUserLatLong();
+          Map<String, dynamic> userPlaceMark =
+              await UserLocation.getUserPlaceMarks(
+                  userCurrentPosition.latitude, userCurrentPosition.longitude);
           print("use is register to firestore ");
           var users = Users(
-            userId: credential.user!.uid,
-            userName: _userDetails["userName"] as String,
-            userEmail: credential.user!.email as String,
-            userPlaceName: "Elure",
-            latitude: 34546.56,
-            longitude: 457567.67,
-            userProfileUrl: ProfilePicUrl,
-          );
+              userId: credential.user!.uid,
+              userName: _userDetails["userName"] as String,
+              userEmail: credential.user!.email as String,
+              userPlaceName: userPlaceMark["locality"],
+              latitude: userCurrentPosition.latitude,
+              longitude: userCurrentPosition.longitude,
+              userProfileUrl: ProfilePicUrl,
+              userContryName: userPlaceMark["country"],
+              userPostalCode: userPlaceMark["postalCode"]);
           currUser.setCurrentUser(users);
           print(
               "<<<<------------------Provider Map is ------------------------>");

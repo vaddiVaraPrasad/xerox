@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import "package:geolocator/geolocator.dart";
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import "package:provider/provider.dart";
+import "package:xerox/helpers/sqlLite.dart";
+import "package:xerox/helpers/user_location.dart";
 
 import "../../Provider/current_user.dart";
 import "../../utils/color_pallets.dart";
@@ -67,7 +70,42 @@ class _LoginScreenState extends State<LoginScreen> {
             email: _userDetails["email"].toString().trim(),
             password: _userDetails["password"].toString().trim());
         print(cred.user!.uid);
-        currentUser.initCurrentUser(cred.user!.uid);
+        bool isUserNotPresnt =
+            await SQLHelpers.checkUserPresent(cred.user!.uid);
+        if (isUserNotPresnt) {
+          Position userCurrentPosition = await UserLocation.getUserLatLong();
+          Map<String, dynamic> userPlaceMark =
+              await UserLocation.getUserPlaceMarks(
+                  userCurrentPosition.latitude, userCurrentPosition.longitude);
+          final docRef = FirebaseFirestore.instance
+              .collection("Users")
+              .doc(cred.user!.uid);
+          docRef.get().then(
+            (DocumentSnapshot doc) {
+              final data = doc.data() as Map<String, dynamic>;
+              var users = Users(
+                userId: data["userId"],
+                userName:
+                    data["userName"] as String,
+                userEmail: data["email"] as String,
+                userPlaceName: userPlaceMark["locality"],
+                latitude: userCurrentPosition.latitude,
+                longitude: userCurrentPosition.longitude,
+                userProfileUrl:
+                    data["profilePicUrl"],
+                userContryName: userPlaceMark["country"],
+                userPostalCode: userPlaceMark["postalCode"],
+              );
+              currentUser.setCurrentUser(users);
+              print(
+                  "<<<<------------------Provider Map is ------------------------>");
+              print(currentUser.getCurrentUserMap);
+            },
+            onError: (e) => print("ERROR in getting documets $e"),
+          );
+        } else {
+          currentUser.initCurrentUser(cred.user!.uid);
+        }
         print("singined IN SUCCESSULLY");
 
         // Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
@@ -169,6 +207,10 @@ class _LoginScreenState extends State<LoginScreen> {
       Text("LOGed in succefully  BY GOOGLE ");
       print("before loading in to firestroe");
 
+      Position userCurrentPosition = await UserLocation.getUserLatLong();
+      Map<String, dynamic> userPlaceMark = await UserLocation.getUserPlaceMarks(
+          userCurrentPosition.latitude, userCurrentPosition.longitude);
+
       await FirebaseFirestore.instance
           .collection('Users')
           .doc(
@@ -179,16 +221,18 @@ class _LoginScreenState extends State<LoginScreen> {
         "email": FirebaseAuth.instance.currentUser!.email,
         "profilePicUrl": FirebaseAuth.instance.currentUser!.photoURL,
         "userName": FirebaseAuth.instance.currentUser!.displayName,
-        "createdAt": Timestamp.now()
+        "createdAt": Timestamp.now(),
       });
       var users = Users(
         userId: FirebaseAuth.instance.currentUser!.uid,
         userName: FirebaseAuth.instance.currentUser!.displayName as String,
         userEmail: FirebaseAuth.instance.currentUser!.email as String,
-        userPlaceName: "Elure",
-        latitude: 4534.45,
-        longitude:  345456.45,
+        userPlaceName: userPlaceMark["locality"],
+        latitude: userCurrentPosition.latitude,
+        longitude: userCurrentPosition.longitude,
         userProfileUrl: FirebaseAuth.instance.currentUser!.photoURL as String,
+        userContryName: userPlaceMark["country"],
+        userPostalCode: userPlaceMark["postalCode"],
       );
       currUser.setCurrentUser(users);
       print("<<<<------------------Provider Map is ------------------------>");
@@ -390,7 +434,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SignInBar(
                         isLoading: _isLoading,
                         label: "Sign In",
-                        onPressed: () => submitSinginform(context,currUser),
+                        onPressed: () => submitSinginform(context, currUser),
                       ),
 
                       // nav b/w login and register screen

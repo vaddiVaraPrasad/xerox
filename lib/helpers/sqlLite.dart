@@ -24,7 +24,9 @@ CREATE TABLE users(
   userPlaceName TEXT,
   latitude DOUBLE,
   longitude DOUBLE,
-  userProfileUrl TEXT
+  userProfileUrl TEXT,
+  userPostalCode TEXT,
+  userContryName TEXT
 )
 ''');
     print("on create was called");
@@ -35,6 +37,16 @@ CREATE TABLE users(
     Database db = await getDatabase;
     var data = await db.query(tableName);
     print(data);
+  }
+
+  static Future<Map<String, dynamic>> getLatestUser(String tableName) async {
+    Database db = await getDatabase;
+    var data = await db.query(tableName);
+    print("in sql helper get latestUSer");
+    if (data.isNotEmpty) {
+      return data[data.length - 1];
+    }
+    return {};
   }
 
   static Future<void> insertUser(Users usr) async {
@@ -50,5 +62,12 @@ CREATE TABLE users(
     var data = await db.rawQuery("SELECT * FROM users WHERE userId = ?", [id]);
     print(data);
     return data[0];
+  }
+
+  static Future<bool> checkUserPresent(String id) async {
+    Database db = await getDatabase;
+    var data = await db.rawQuery("SELECT * FROM users WHERE userId = ?", [id]);
+    print(data);
+    return data.isEmpty;
   }
 }

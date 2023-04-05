@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../screens/notificationPage.dart';
 import '../../utils/color_pallets.dart';
+import "../../screens/maps/setLocationMaps.dart";
 
 class TopCont extends StatelessWidget {
   final String cityName;
@@ -49,7 +50,10 @@ class TopCont extends StatelessWidget {
           ),
           Expanded(
             flex: 8,
-            child: Container(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(setLocationMaps.routeName);
+              },
               // padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Center(
                 child: Column(

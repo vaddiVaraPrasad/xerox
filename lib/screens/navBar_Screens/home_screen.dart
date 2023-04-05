@@ -1,9 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
-import "package:firebase_auth/firebase_auth.dart";
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pdf/widgets.dart' as Pw;
 import 'package:provider/provider.dart';
 import 'package:xerox/Provider/current_user.dart';
 import 'package:xerox/utils/color_pallets.dart';
@@ -12,9 +7,7 @@ import '../../widgets/home/ScanDocument.dart';
 import '../../widgets/home/UploadDoc.dart';
 import '../../widgets/home/inviteCont.dart';
 import '../../widgets/home/topBar.dart';
-import "../nav_drawers/drawer_screen.dart";
 
-import '../dummy_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = "/homeScreen";
@@ -26,9 +19,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  
+
+
   @override
   Widget build(BuildContext context) {
-    CurrentUser curUser = Provider.of(context, listen: false);
+    CurrentUser curUser = Provider.of(context, listen: true);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 0, right: 0, left: 0),

@@ -31,25 +31,33 @@ import "screens/drawer_Screens/rewards_screen.dart";
 import "screens/navBar_Screens/search_shop_screen.dart";
 import "screens/pdf/images_grid_file.dart";
 import "screens/pdf/pdf_filters_Screen.dart";
+import "screens/maps/setLocationMaps.dart";
 
-import "./model/user.dart";
 import "./Provider/current_user.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   SQLHelpers.getDatabase;
-  
+
   runApp(Xerox());
 }
 
-class Xerox extends StatelessWidget {
+class Xerox extends StatefulWidget {
   Xerox({super.key});
 
+  @override
+  State<Xerox> createState() => _XeroxState();
+}
+
+class _XeroxState extends State<Xerox> {
   final Stream<ConnectivityResult> connectivityStream =
       Connectivity().onConnectivityChanged;
+
   final Stream<User?> authStateChanges =
       FirebaseAuth.instance.authStateChanges();
+
+  @override
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +142,7 @@ class Xerox extends StatelessWidget {
           DummyShops.routeName: (context) => const DummyShops(),
           ButtonNavigationBar.routeName: (context) =>
               const ButtonNavigationBar(),
+          setLocationMaps.routeName: (context) => const setLocationMaps()
           // HiddenSideZoomDrawer.routeName: (context) => const HiddenSideZoomDrawer()
         },
       ),

@@ -1,3 +1,4 @@
+import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
@@ -29,7 +30,11 @@ class _HiddenSideZoomDrawerState extends State<HiddenSideZoomDrawer> {
   var currentItem = MenuItems.home;
   @override
   Widget build(BuildContext context) {
-    var curUser = Provider.of<CurrentUser>(context,listen: true);
+    var curUser = Provider.of<CurrentUser>(context, listen: true);
+    print(curUser.getPlaceName);
+    if (curUser.getPlaceName == "chumma") {
+      curUser.loadUserByID(FirebaseAuth.instance.currentUser!.uid);
+    }
     return Scaffold(
       body: ZoomDrawer(
         menuBackgroundColor: ColorPallets.lightPurplishWhile.withOpacity(.7),

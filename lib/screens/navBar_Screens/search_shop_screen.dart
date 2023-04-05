@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
@@ -41,20 +42,35 @@ class SearchShop extends StatelessWidget {
               },
               child: Text("change user Email to kanna.bmace")),
           ElevatedButton(
-              onPressed: () {
-                curretUSer.setUserPlaceName("Tadepalligudem");
+              onPressed: () async {
+                final docRef = FirebaseFirestore.instance
+                    .collection("Users")
+                    .doc(curretUSer.getUserId);
+                docRef.get().then(
+                  (DocumentSnapshot doc) {
+                    final data = doc.data() as Map<String, dynamic>;
+                    print(data);
+                  },
+                  onError: (e) => print("ERROR in getting documets $e"),
+                );
               },
-              child: Text("chnage location ")),
+              child: Text("check user present or not !!")),
           ElevatedButton(
               onPressed: () {
                 SQLHelpers.getAllTableData("users");
               },
               child: Text("print the data from table")),
-               ElevatedButton(
+          ElevatedButton(
               onPressed: () {
                 SQLHelpers.getUserById(FirebaseAuth.instance.currentUser!.uid);
               },
-              child: Text("get user by ID"))
+              child: Text("get user by ID")),
+          ElevatedButton(
+              onPressed: () {
+                print(FirebaseAuth.instance.currentUser!.uid);
+                print(curretUSer.getUserId);
+              },
+              child: Text("print the data from table")),
         ],
       ),
     );

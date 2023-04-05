@@ -5,25 +5,31 @@ import "../model/user.dart";
 
 class CurrentUser with ChangeNotifier {
   late Users current_user = Users(
-      userId: "chumma",
-      userName: "chumma chumma",
-      userEmail: "chumma",
-      userPlaceName: "chumma",
-      latitude: 4353.54,
-      longitude: 34545.34,
-      userProfileUrl:
-          "https://kalasalingam.ac.in/wp-content/uploads/2021/11/Faculty-dummy-profile.png");
+    userId: "chumma",
+    userName: "chumma chumma",
+    userEmail: "chumma",
+    userPlaceName: "chumma",
+    latitude: 4353.54,
+    longitude: 34545.34,
+    userProfileUrl:
+        "https://kalasalingam.ac.in/wp-content/uploads/2021/11/Faculty-dummy-profile.png",
+    userContryName: "India",
+    userPostalCode: "534101",
+  );
 
   void initCurrentUser(String id) async {
     Map<String, dynamic> user_map = await SQLHelpers.getUserById(id);
     Users tempuser = Users(
-        userId: user_map["userId"],
-        userName: user_map["userName"],
-        userEmail: user_map["userEmail"],
-        userPlaceName: user_map["userPlaceName"],
-        latitude: user_map["latitude"],
-        longitude: user_map["longitude"],
-        userProfileUrl: user_map["userProfileUrl"]);
+      userId: user_map["userId"],
+      userName: user_map["userName"],
+      userEmail: user_map["userEmail"],
+      userPlaceName: user_map["userPlaceName"],
+      latitude: user_map["latitude"],
+      longitude: user_map["longitude"],
+      userProfileUrl: user_map["userProfileUrl"],
+      userContryName: user_map["userContryName"],
+      userPostalCode: user_map["userPostalCode"],
+    );
     current_user = tempuser;
     print("init current user is called");
     print("user is updated");
@@ -31,10 +37,50 @@ class CurrentUser with ChangeNotifier {
     notifyListeners();
   }
 
+  String get getUserId {
+    return current_user.userId;
+  }
+
   void setCurrentUser(Users curUser) {
     current_user = curUser;
     SQLHelpers.insertUser(current_user);
     notifyListeners();
+  }
+
+  void loadLatestUser() async {
+    Map<String, dynamic> latestUser = await SQLHelpers.getLatestUser("users");
+    if (latestUser != {}) {
+      Users latCurUser = Users(
+          userId: latestUser["userId"],
+          userName: latestUser["userName"],
+          userEmail: latestUser["userEmail"],
+          userPlaceName: latestUser["userPlaceName"],
+          latitude: latestUser["latitude"],
+          longitude: latestUser["longitude"],
+          userProfileUrl: latestUser["userProfileUrl"],
+          userContryName: latestUser["userContryName"],
+          userPostalCode: latestUser["userPostalCode"]);
+      current_user = latCurUser;
+      print("old user is loaded");
+      notifyListeners();
+    }
+  }
+
+  void loadUserByID(String id) async {
+    Map<String, dynamic> idUserMap = await SQLHelpers.getUserById(id);
+    Users id_user = Users(
+          userId: idUserMap["userId"],
+          userName: idUserMap["userName"],
+          userEmail: idUserMap["userEmail"],
+          userPlaceName: idUserMap["userPlaceName"],
+          latitude: idUserMap["latitude"],
+          longitude: idUserMap["longitude"],
+          userProfileUrl: idUserMap["userProfileUrl"],
+          userContryName: idUserMap["userContryName"],
+          userPostalCode: idUserMap["userPostalCode"]);
+       current_user = id_user;
+      print("old user is loaded");
+      notifyListeners(); 
   }
 
   Users get gerUser {
@@ -93,6 +139,26 @@ class CurrentUser with ChangeNotifier {
 
   String get getUserProfileUrl {
     return current_user.userProfileUrl;
+  }
+
+  void setUserContryName(String countryName) {
+    current_user.userContryName = countryName;
+    SQLHelpers.insertUser(current_user);
+    notifyListeners();
+  }
+
+  String get getUserContryName {
+    return current_user.userContryName;
+  }
+
+  void setUserPostalCode(String code) {
+    current_user.userPostalCode = code;
+    SQLHelpers.insertUser(current_user);
+    notifyListeners();
+  }
+
+  String get getUserPostalCode {
+    return current_user.userPostalCode;
   }
 
   Map<String, dynamic> get getCurrentUserMap {
