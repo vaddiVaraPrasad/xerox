@@ -45,15 +45,24 @@ class _setLocationMapsState extends State<setLocationMaps> {
   Set<Marker> _markers = {};
 
   Future<void> goToSearchedPlace(double lat, double lag, double zoms) async {
+     setState(() {
+      isLoading = true;
+    });
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(target: LatLng(lat, lag), zoom: zoms),
       ),
     );
+     setState(() {
+      isLoading = false;
+    });
   }
 
   void setMarkers(lat, lag) {
+     setState(() {
+      isLoading = true;
+    });
     _markers = {};
     final Marker marker = Marker(
       markerId: MarkerId("marker $lat $lag"),
@@ -70,16 +79,28 @@ class _setLocationMapsState extends State<setLocationMaps> {
     setState(() {
       _markers.add(marker);
     });
+     setState(() {
+      isLoading = false;
+    });
   }
 
   void goToProviderLocation(CurrentUser curUser, double zoms) async {
+     setState(() {
+      isLoading = true;
+    });
     await goToSearchedPlace(
         curUser.getUsetLatitude, curUser.getUserLongitude, zoms);
     setMarkers(curUser.getUsetLatitude, curUser.getUserLongitude);
+     setState(() {
+      isLoading = false;
+    });
   }
 
   void updateOnTapLocation(
       CurrentUser curUser, LatLng location, double zooms) async {
+         setState(() {
+      isLoading = true;
+    });
     Map<String, dynamic> userPlaceMark = await UserLocation.getUserPlaceMarks(
         location.latitude, location.longitude);
     await goToSearchedPlace(location.latitude, location.longitude, zooms);
@@ -87,9 +108,16 @@ class _setLocationMapsState extends State<setLocationMaps> {
     curUser.setUserLatitudeLogitude(location.latitude, location.longitude);
     curUser.setUserPlaceName(userPlaceMark["locality"]);
     curUser.setUserContryName(userPlaceMark["country"]);
+     setState(() {
+      isLoading = false;
+    });
   }
 
   void goToCurrentLocation(CurrentUser curUser, double zoms) async {
+    setState(() {
+      isLoading = true;
+    });
+    print("got to current location is called");
     Position userCurrentPosition = await UserLocation.getUserLatLong();
     Map<String, dynamic> userPlaceMark = await UserLocation.getUserPlaceMarks(
         userCurrentPosition.latitude, userCurrentPosition.longitude);
@@ -100,6 +128,9 @@ class _setLocationMapsState extends State<setLocationMaps> {
         userCurrentPosition.latitude, userCurrentPosition.longitude);
     curUser.setUserPlaceName(userPlaceMark["locality"]);
     curUser.setUserContryName(userPlaceMark["country"]);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -120,14 +151,8 @@ class _setLocationMapsState extends State<setLocationMaps> {
                   initialCameraPosition: _initialCameraPosition,
                   mapType: MapType.normal,
                   onMapCreated: (GoogleMapController controller) {
-                    setState(() {
-                      isLoading = true;
-                    });
                     _controller.complete(controller);
                     goToProviderLocation(curUser, 16);
-                    setState(() {
-                      isLoading = false;
-                    });
                   },
                   // onCameraIdle: () {},
                   // onCameraMove: (position) {},
@@ -136,13 +161,7 @@ class _setLocationMapsState extends State<setLocationMaps> {
                   zoomControlsEnabled: false,
                   zoomGesturesEnabled: true,
                   onTap: (val) {
-                    setState(() {
-                      isLoading = true;
-                    });
                     updateOnTapLocation(curUser, val, 18);
-                    setState(() {
-                      isLoading = false;
-                    });
                   },
 
                   markers: _markers,
@@ -153,13 +172,7 @@ class _setLocationMapsState extends State<setLocationMaps> {
                 left: screenWidth / 4,
                 child: GestureDetector(
                   onTap: () {
-                    setState(() {
-                      isLoading = true;
-                    });
                     goToCurrentLocation(curUser, 18);
-                    setState(() {
-                      isLoading = false;
-                    });
                   },
                   child: Container(
                     padding: const EdgeInsets.only(top: 8, left: 15, bottom: 8),
@@ -231,13 +244,19 @@ class _setLocationMapsState extends State<setLocationMaps> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          curUser.getPlaceName,
-                                          style: const TextStyle(
-                                            overflow: TextOverflow.fade,
-                                            color: Colors.white,
-                                            fontSize: 27,
+                                        SizedBox(
+                                          width: 150,
+                                          child: Text(
+                                            curUser.getPlaceName,
+                                            style: const TextStyle(
+                                              overflow: TextOverflow.ellipsis,
+                                              color: Colors.white,
+                                              fontSize: 27,
+                                            ),
                                           ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
                                         ),
                                         GestureDetector(
                                           onTap: () {

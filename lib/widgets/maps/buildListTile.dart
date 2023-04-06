@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:xerox/Provider/current_user.dart';
 import 'package:xerox/helpers/map_services.dart';
 import 'package:xerox/utils/color_pallets.dart';
+import '../../Provider/search_place.dart';
 import "../../model/auto_complete_result.dart";
+import '../../screens/maps/setLocationMaps.dart';
 
 class buildListTile extends StatefulWidget {
   AutoCompleteResult item;
@@ -20,6 +22,7 @@ class _buildListTileState extends State<buildListTile> {
   @override
   Widget build(BuildContext context) {
     CurrentUser curUser = Provider.of<CurrentUser>(context);
+    PlaceResult autoComple = Provider.of<PlaceResult>(context);
     double width = MediaQuery.of(context).size.width - 20;
     return GestureDetector(
       onTap: () async {
@@ -37,7 +40,14 @@ class _buildListTileState extends State<buildListTile> {
         setState(() {
           isLoading = false;
         });
-        Navigator.of(context).pop();
+        List<AutoCompleteResult> emptyList = [];
+        autoComple.setResult(emptyList);
+        // Navigator.of(context)
+        //     .popUntil(ModalRoute.withName(setLocationMaps.routeName));
+        while (Navigator.canPop(context)) {
+          Navigator.of(context).pop();
+        }
+        autoComple.allreturnedResult = [];
       },
       child: isLoading
           ? const Center(child: CircularProgressIndicator())
