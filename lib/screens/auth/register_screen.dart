@@ -108,15 +108,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   userCurrentPosition.latitude, userCurrentPosition.longitude);
           print("use is register to firestore ");
           var users = Users(
-              userId: credential.user!.uid,
-              userName: _userDetails["userName"] as String,
-              userEmail: credential.user!.email as String,
-              userPlaceName: userPlaceMark["locality"],
-              latitude: userCurrentPosition.latitude,
-              longitude: userCurrentPosition.longitude,
-              userProfileUrl: ProfilePicUrl,
-              userContryName: userPlaceMark["country"],
-              userPostalCode: userPlaceMark["postalCode"]);
+            userId: credential.user!.uid,
+            userName: _userDetails["userName"] as String,
+            userEmail: credential.user!.email as String,
+            userPlaceName: userPlaceMark["locality"],
+            latitude: userCurrentPosition.latitude,
+            longitude: userCurrentPosition.longitude,
+            userProfileUrl: ProfilePicUrl,
+            userContryName: userPlaceMark["country"],
+          );
           currUser.setCurrentUser(users);
           print(
               "<<<<------------------Provider Map is ------------------------>");

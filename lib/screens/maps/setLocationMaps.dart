@@ -87,7 +87,6 @@ class _setLocationMapsState extends State<setLocationMaps> {
     curUser.setUserLatitudeLogitude(location.latitude, location.longitude);
     curUser.setUserPlaceName(userPlaceMark["locality"]);
     curUser.setUserContryName(userPlaceMark["country"]);
-    curUser.setUserPostalCode(userPlaceMark["postalCode"]);
   }
 
   void goToCurrentLocation(CurrentUser curUser, double zoms) async {
@@ -101,7 +100,6 @@ class _setLocationMapsState extends State<setLocationMaps> {
         userCurrentPosition.latitude, userCurrentPosition.longitude);
     curUser.setUserPlaceName(userPlaceMark["locality"]);
     curUser.setUserContryName(userPlaceMark["country"]);
-    curUser.setUserPostalCode(userPlaceMark["postalCode"]);
   }
 
   @override
@@ -240,11 +238,11 @@ class _setLocationMapsState extends State<setLocationMaps> {
                                             color: Colors.white,
                                             fontSize: 27,
                                           ),
-                                        ),    
+                                        ),
                                         GestureDetector(
                                           onTap: () {
-                                            Navigator.of(context)
-                                                .pushNamed(LocationText.routeName);
+                                            Navigator.of(context).pushNamed(
+                                                LocationText.routeName);
                                           },
                                           child: Container(
                                             height: 40,
@@ -280,7 +278,7 @@ class _setLocationMapsState extends State<setLocationMaps> {
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 10),
                                           child: Text(
-                                            "${curUser.getPlaceName}, ${curUser.getUserContryName}, ${curUser.getUserPostalCode}",
+                                            "${curUser.getPlaceName}, ${curUser.getUserContryName}}",
                                             style: const TextStyle(
                                               overflow: TextOverflow.fade,
                                               color: Colors.white,
@@ -300,7 +298,7 @@ class _setLocationMapsState extends State<setLocationMaps> {
                                   onTap: () {
                                     print(curUser.getPlaceName);
                                     print(curUser.getUserContryName);
-                                    print(curUser.getUserPostalCode);
+                                    Navigator.of(context).pop();
                                   },
                                   child: Container(
                                     color: ColorPallets.lightBlue,

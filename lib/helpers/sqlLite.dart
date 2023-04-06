@@ -25,7 +25,6 @@ CREATE TABLE users(
   latitude DOUBLE,
   longitude DOUBLE,
   userProfileUrl TEXT,
-  userPostalCode TEXT,
   userContryName TEXT
 )
 ''');

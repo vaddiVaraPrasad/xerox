@@ -94,7 +94,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 userProfileUrl:
                     data["profilePicUrl"],
                 userContryName: userPlaceMark["country"],
-                userPostalCode: userPlaceMark["postalCode"],
               );
               currentUser.setCurrentUser(users);
               print(
@@ -232,7 +231,6 @@ class _LoginScreenState extends State<LoginScreen> {
         longitude: userCurrentPosition.longitude,
         userProfileUrl: FirebaseAuth.instance.currentUser!.photoURL as String,
         userContryName: userPlaceMark["country"],
-        userPostalCode: userPlaceMark["postalCode"],
       );
       currUser.setCurrentUser(users);
       print("<<<<------------------Provider Map is ------------------------>");

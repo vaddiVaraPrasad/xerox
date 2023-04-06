@@ -19,6 +19,7 @@ import "./utils/color_pallets.dart";
 import "./screens/auth/forget_password_Screen.dart";
 import "./screens/nav_drawers/navBar.dart";
 
+import "Provider/search_place.dart";
 import 'screens/dummy_screen.dart';
 import 'screens/dummyshopsScreen.dart';
 // import 'screens/home/home_nav_drawer_stack.dart';
@@ -66,7 +67,10 @@ class _XeroxState extends State<Xerox> {
       providers: [
         ChangeNotifierProvider(
           create: (context) => CurrentUser(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PlaceResult(),
+        ),
       ],
       child: MaterialApp(
         title: "Xerox",

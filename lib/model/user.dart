@@ -6,7 +6,6 @@ class Users {
   String userPlaceName;
   double latitude;
   double longitude;
-  String userPostalCode;
   String userContryName;
 
   Users({
@@ -18,7 +17,6 @@ class Users {
     required this.longitude,
     required this.userProfileUrl,
     required this.userContryName,
-    required this.userPostalCode,
   });
 
   Map<String, dynamic> get toMap {
@@ -30,7 +28,6 @@ class Users {
       "latitude": latitude,
       "longitude": longitude,
       "userProfileUrl": userProfileUrl,
-      "userPostalCode":userPostalCode,
       "userContryName":userContryName,
     };
   }
