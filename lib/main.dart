@@ -8,6 +8,7 @@ import 'package:xerox/firebase_options.dart';
 import "package:xerox/helpers/sqlLite.dart";
 import "package:xerox/screens/additional/network_error.dart";
 import "package:xerox/screens/auth/auth_screen.dart";
+import "package:xerox/screens/maps/textLocation.dart";
 import "package:xerox/screens/nav_drawers/hidden_drawer.dart";
 import 'package:xerox/screens/notificationPage.dart';
 import 'package:xerox/screens/pdf/cutom_pdf_Render_Screen.dart';
@@ -142,7 +143,8 @@ class _XeroxState extends State<Xerox> {
           DummyShops.routeName: (context) => const DummyShops(),
           ButtonNavigationBar.routeName: (context) =>
               const ButtonNavigationBar(),
-          setLocationMaps.routeName: (context) => const setLocationMaps()
+          setLocationMaps.routeName: (context) => const setLocationMaps(),
+          LocationText.routeName : (context) => const LocationText(),
           // HiddenSideZoomDrawer.routeName: (context) => const HiddenSideZoomDrawer()
         },
       ),

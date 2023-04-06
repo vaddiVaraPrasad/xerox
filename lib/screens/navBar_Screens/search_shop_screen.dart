@@ -71,6 +71,14 @@ class SearchShop extends StatelessWidget {
                 print(curretUSer.getUserId);
               },
               child: Text("print the data from table")),
+          ElevatedButton(
+              onPressed: () {
+                curretUSer.setUserContryName("uk");
+                curretUSer.setUserLatitudeLogitude(12.9716, 77.5946);
+                curretUSer.setUserPostalCode("534101");
+                curretUSer.setUserPlaceName("banglore");
+              },
+              child: Text("change user location detaails!!!"))
         ],
       ),
     );
