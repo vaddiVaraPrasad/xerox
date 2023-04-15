@@ -59,7 +59,7 @@ class _XeroxState extends State<Xerox> {
   final Stream<User?> authStateChanges =
       FirebaseAuth.instance.authStateChanges();
 
-  @override
+
 
   @override
   Widget build(BuildContext context) {

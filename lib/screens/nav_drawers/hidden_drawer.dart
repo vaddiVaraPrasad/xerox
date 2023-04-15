@@ -32,7 +32,7 @@ class _HiddenSideZoomDrawerState extends State<HiddenSideZoomDrawer> {
   Widget build(BuildContext context) {
     var curUser = Provider.of<CurrentUser>(context, listen: true);
     print(curUser.getPlaceName);
-    if (curUser.getPlaceName == "chumma") {
+    if (curUser.getPlaceName == "Loading...") {
       curUser.loadUserByID(FirebaseAuth.instance.currentUser!.uid);
     }
     return Scaffold(

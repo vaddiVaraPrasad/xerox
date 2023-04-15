@@ -5,12 +5,12 @@ import "../model/user.dart";
 
 class CurrentUser with ChangeNotifier {
   late Users current_user = Users(
-    userId: "chumma",
-    userName: "chumma chumma",
-    userEmail: "chumma",
-    userPlaceName: "chumma",
-    latitude: 4353.54,
-    longitude: 34545.34,
+    userId: "Loading...",
+    userName: "Loading...",
+    userEmail: "Loading...",
+    userPlaceName: "Loading...",
+    latitude: 0,
+    longitude: 0,
     userProfileUrl:
         "https://kalasalingam.ac.in/wp-content/uploads/2021/11/Faculty-dummy-profile.png",
     userContryName: "India",
