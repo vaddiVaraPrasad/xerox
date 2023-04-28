@@ -52,10 +52,6 @@ class _PdfImagesRenderState extends State<PdfImagesRender> {
       formKey.currentState!.save();
     }
     Navigator.of(context).pop();
-    // print("file name is $fileName");
-
-    // send the list of images to modal and get pdf from it !!!
-    // print("all these has to done");
     setState(() {
       isLoading = true;
     });

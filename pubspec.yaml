@@ -70,7 +70,7 @@ dependencies:
   geolocator: ^9.0.2
   geocoding: ^2.1.0
   fluttertoast: ^8.2.1
-  flutter_google_places: ^0.3.0
+  geoflutterfire2: ^2.3.15
 
 
   # The following adds the Cupertino Icons font to your application.
