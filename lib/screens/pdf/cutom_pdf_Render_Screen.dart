@@ -10,7 +10,7 @@ import "dart:io";
 import 'package:xerox/utils/color_pallets.dart';
 
 import '../../widgets/auth/sing_in_up_bar.dart';
-import 'dummyshopsScreen.dart';
+import 'nearestShopScreen.dart';
 
 class CustomPDFPreview extends StatefulWidget {
   static const routeName = "/cutomPDFPreview";

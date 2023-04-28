@@ -19,9 +19,10 @@ import "./utils/color_pallets.dart";
 import "./screens/auth/forget_password_Screen.dart";
 import "./screens/nav_drawers/navBar.dart";
 
+import "Provider/nearestShops.dart";
 import "Provider/search_place.dart";
 import 'screens/dummy_screen.dart';
-import 'screens/pdf/dummyshopsScreen.dart';
+import 'screens/pdf/nearestShopScreen.dart';
 import 'screens/navBar_Screens/cart_Screen.dart';
 import "screens/drawer_Screens/ContactUs.dart";
 import "screens/navBar_Screens/home_screen.dart";
@@ -58,8 +59,6 @@ class _XeroxState extends State<Xerox> {
   final Stream<User?> authStateChanges =
       FirebaseAuth.instance.authStateChanges();
 
-
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -69,6 +68,9 @@ class _XeroxState extends State<Xerox> {
         ),
         ChangeNotifierProvider(
           create: (context) => PlaceResult(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => NearestShopProvider(),
         ),
       ],
       child: MaterialApp(
@@ -135,7 +137,7 @@ class _XeroxState extends State<Xerox> {
           ButtonNavigationBar.routeName: (context) =>
               const ButtonNavigationBar(),
           setLocationMaps.routeName: (context) => const setLocationMaps(),
-          LocationText.routeName : (context) => const LocationText(),
+          LocationText.routeName: (context) => const LocationText(),
           // HiddenSideZoomDrawer.routeName: (context) => const HiddenSideZoomDrawer()
         },
       ),

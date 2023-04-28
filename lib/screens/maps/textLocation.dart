@@ -1,7 +1,6 @@
 import "dart:async";
 
 import "package:flutter/material.dart";
-import "package:flutter_google_places/flutter_google_places.dart";
 import "package:provider/provider.dart";
 import "package:xerox/utils/color_pallets.dart";
 
