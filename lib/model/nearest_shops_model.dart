@@ -9,6 +9,8 @@ class nearestShop {
   String shopOwnerName;
   String shopPicUrl;
   String shopID;
+  String distanceFromCurrentLocation;
+  String durationFromCurrentLocation;
 
   final double costForA0PerSingleSide;
   final double costForA0PErDobuleSide;
@@ -40,8 +42,8 @@ class nearestShop {
   final double costForOneBondPaper;
   final double costForTransparentSheetPerSheet;
 
-   nearestShop({
-   required this.email,
+  nearestShop({
+    required this.email,
     required this.ownerProfilePicUrl,
     required this.shopAddress,
     required this.shopLatitude,
@@ -51,6 +53,8 @@ class nearestShop {
     required this.shopPicUrl,
     required this.shopID,
     required this.shopCityName,
+    required this.durationFromCurrentLocation,
+    required this.distanceFromCurrentLocation,
     required this.costForA0PerSingleSide,
     required this.costForA0PErDobuleSide,
     required this.costForA1PErDobuleSide,
@@ -81,5 +85,4 @@ class nearestShop {
     required this.costForOneBondPaper,
     required this.costForTransparentSheetPerSheet,
   });
-
 }

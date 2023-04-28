@@ -26,4 +26,16 @@ class NearestShopProvider extends ChangeNotifier {
   int getShopListSize() {
     return allNearestShop.length;
   }
+
+  double getShopAtIndexLat(int index) {
+    return allNearestShop[index].shopLatitude;
+  }
+
+  double getShopAtIndexLng(int index) {
+    return allNearestShop[index].shopLongitude;
+  }
+
+  nearestShop getShopByIndex(int index) {
+    return allNearestShop[index];
+  }
 }

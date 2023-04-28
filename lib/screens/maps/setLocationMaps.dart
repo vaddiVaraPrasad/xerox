@@ -45,22 +45,27 @@ class _setLocationMapsState extends State<setLocationMaps> {
   Set<Marker> _markers = {};
 
   Future<void> goToSearchedPlace(double lat, double lag, double zoms) async {
-     setState(() {
+    setState(() {
       isLoading = true;
     });
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(
       CameraUpdate.newCameraPosition(
-        CameraPosition(target: LatLng(lat, lag), zoom: zoms),
+        CameraPosition(
+          target: LatLng(lat, lag),
+          zoom: zoms,
+          bearing: 80.0,
+          tilt: 90,
+        ),
       ),
     );
-     setState(() {
+    setState(() {
       isLoading = false;
     });
   }
 
   void setMarkers(lat, lag) {
-     setState(() {
+    setState(() {
       isLoading = true;
     });
     _markers = {};
@@ -79,26 +84,26 @@ class _setLocationMapsState extends State<setLocationMaps> {
     setState(() {
       _markers.add(marker);
     });
-     setState(() {
+    setState(() {
       isLoading = false;
     });
   }
 
   void goToProviderLocation(CurrentUser curUser, double zoms) async {
-     setState(() {
+    setState(() {
       isLoading = true;
     });
     await goToSearchedPlace(
         curUser.getUsetLatitude, curUser.getUserLongitude, zoms);
     setMarkers(curUser.getUsetLatitude, curUser.getUserLongitude);
-     setState(() {
+    setState(() {
       isLoading = false;
     });
   }
 
   void updateOnTapLocation(
       CurrentUser curUser, LatLng location, double zooms) async {
-         setState(() {
+    setState(() {
       isLoading = true;
     });
     Map<String, dynamic> userPlaceMark = await UserLocation.getUserPlaceMarks(
@@ -108,7 +113,7 @@ class _setLocationMapsState extends State<setLocationMaps> {
     curUser.setUserLatitudeLogitude(location.latitude, location.longitude);
     curUser.setUserPlaceName(userPlaceMark["locality"]);
     curUser.setUserContryName(userPlaceMark["country"]);
-     setState(() {
+    setState(() {
       isLoading = false;
     });
   }

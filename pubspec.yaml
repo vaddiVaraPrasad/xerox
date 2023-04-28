@@ -71,6 +71,7 @@ dependencies:
   geocoding: ^2.1.0
   fluttertoast: ^8.2.1
   geoflutterfire2: ^2.3.15
+  carousel_slider: ^4.2.1
 
 
   # The following adds the Cupertino Icons font to your application.
