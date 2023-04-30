@@ -233,7 +233,10 @@ class _DummyShopsState extends State<DummyShops> {
 
   @override
   Widget build(BuildContext context) {
-    File file = ModalRoute.of(context)!.settings.arguments as File;
+    Map<String,dynamic> fileData = ModalRoute.of(context)!.settings.arguments as Map<String ,dynamic>;
+    File file = fileData["file"];
+    String fileName = fileData["fileName"];
+
     SelectedShop seletedShopProvider = Provider.of<SelectedShop>(context);
     CurrentUser curUSer = Provider.of<CurrentUser>(context);
     NearestShopProvider nearshopProvider =
@@ -287,7 +290,7 @@ class _DummyShopsState extends State<DummyShops> {
                 itemCount: nearshopProvider.getShopListSize(),
                 itemBuilder: (context, index, realIndex) {
                   return ShopContainer(nearshopProvider.getShopByIndex(index),
-                      context, seletedShopProvider);
+                      context, seletedShopProvider,file,fileName);
                 },
               ),
             ),
@@ -298,7 +301,7 @@ class _DummyShopsState extends State<DummyShops> {
   }
 
   Widget ShopContainer(
-      nearestShop shop, BuildContext ctx, SelectedShop seletedShopProvider) {
+      nearestShop shop, BuildContext ctx, SelectedShop seletedShopProvider,File file,String fileName) {
     return Container(
         height: 150,
         width: double.infinity,
@@ -351,7 +354,7 @@ class _DummyShopsState extends State<DummyShops> {
                   InkWell(
                     onTap: () {
                       seletedShopProvider.setSeletedShop(shop);
-                      Navigator.of(context).pushNamed(PdfFilters.routeName);
+                      Navigator.of(context).pushNamed(PdfFilters.routeName,arguments: {"pdfFile":file,"fileName":fileName,});
                     },
                     child: Container(
                       // margin:const  EdgeInsets.symmetric(vertical: 10,horizontal: 10),

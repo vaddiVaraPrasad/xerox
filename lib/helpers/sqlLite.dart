@@ -59,7 +59,12 @@ CREATE TABLE users(
   static Future<Map<String, dynamic>> getUserById(String id) async {
     Database db = await getDatabase;
     var data = await db.rawQuery("SELECT * FROM users WHERE userId = ?", [id]);
+    print("data in SQL is ");
     print(data);
+    if (data.isEmpty) {
+      print("returned is !!!");
+      return {};
+    }
     return data[0];
   }
 

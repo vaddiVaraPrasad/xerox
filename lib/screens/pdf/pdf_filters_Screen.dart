@@ -187,6 +187,7 @@ class _PdfFiltersState extends State<PdfFilters> {
       final navData = ModalRoute.of(context)!.settings.arguments
               as Map<String, dynamic>,
           file = navData["pdfFile"];
+      fileName = navData["fileName"];
       PdfDocument document = PdfDocument(inputBytes: file!.readAsBytesSync());
       SelectedShop selectedShopProvider = Provider.of<SelectedShop>(context);
 

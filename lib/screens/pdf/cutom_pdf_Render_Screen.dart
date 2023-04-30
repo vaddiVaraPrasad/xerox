@@ -68,11 +68,11 @@ class _CustomPDFPreviewState extends State<CustomPDFPreview> {
     }
   }
 
-  void openFile(BuildContext ctx, File file) {
+  void openFile(BuildContext ctx, File file,String fileName) {
     setState(() {
       isUploadingToFirebase = false;
     });
-    Navigator.of(ctx).pushNamed(DummyShops.routeName, arguments: file);
+    Navigator.of(ctx).pushNamed(DummyShops.routeName, arguments: {"file" : file, "fileName": fileName});
     // setState(() {
     //   isPdfLoading = false;
     // });
@@ -121,7 +121,7 @@ class _CustomPDFPreviewState extends State<CustomPDFPreview> {
           child: SignInBar(
             label: "Select Shop",
             isLoading: isUploadingToFirebase,
-            onPressed: () => openFile(context, file),
+            onPressed: () => openFile(context, file,fileName),
           ),
         ),
       ),

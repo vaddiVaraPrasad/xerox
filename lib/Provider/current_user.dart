@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:xerox/helpers/sqlLite.dart';
+import '../helpers/sqlLite.dart';
+import '../helpers/user_location.dart';
 import "../model/user.dart";
 
 class CurrentUser with ChangeNotifier {
@@ -65,18 +69,44 @@ class CurrentUser with ChangeNotifier {
 
   void loadUserByID(String id) async {
     Map<String, dynamic> idUserMap = await SQLHelpers.getUserById(id);
-    Users id_user = Users(
-        userId: idUserMap["userId"],
-        userName: idUserMap["userName"],
-        userEmail: idUserMap["userEmail"],
-        userPlaceName: idUserMap["userPlaceName"],
-        latitude: idUserMap["latitude"],
-        longitude: idUserMap["longitude"],
-        userProfileUrl: idUserMap["userProfileUrl"],
-        userContryName: idUserMap["userContryName"]);
-    current_user = id_user;
-    print("old user is loaded");
-    notifyListeners();
+    print("in provider");
+    print(idUserMap);
+    if (idUserMap.isEmpty) {
+      print("need to load the user Data!!!!!");
+      final data =
+          await FirebaseFirestore.instance.collection('Users').doc(id).get();
+      Position userCurrentPosition = await UserLocation.getUserLatLong();
+      Map<String, dynamic> userPlaceMark = await UserLocation.getUserPlaceMarks(
+          userCurrentPosition.latitude, userCurrentPosition.longitude);
+      var user = data.data();
+      Users logInFireStoreUSer = Users(
+        userId: user!["userId"],
+        userName: user["userName"],
+        userEmail: user["email"],
+        userProfileUrl: user["profilePicUrl"],
+        userPlaceName: userPlaceMark["locality"],
+        latitude: userCurrentPosition.latitude,
+        longitude: userCurrentPosition.longitude,
+        userContryName: userPlaceMark["country"],
+      );
+      current_user = logInFireStoreUSer;
+      await SQLHelpers.insertUser(current_user);
+      print("USER FROM FIREBASE IS USED");
+      notifyListeners();
+    } else {
+      Users id_user = Users(
+          userId: idUserMap["userId"],
+          userName: idUserMap["userName"],
+          userEmail: idUserMap["userEmail"],
+          userPlaceName: idUserMap["userPlaceName"],
+          latitude: idUserMap["latitude"],
+          longitude: idUserMap["longitude"],
+          userProfileUrl: idUserMap["userProfileUrl"],
+          userContryName: idUserMap["userContryName"]);
+      current_user = id_user;
+      print("old user is loaded");
+      notifyListeners();
+    }
   }
 
   Users get gerUser {
@@ -146,8 +176,6 @@ class CurrentUser with ChangeNotifier {
   String get getUserContryName {
     return current_user.userContryName;
   }
-
-
 
   Map<String, dynamic> get getCurrentUserMap {
     return current_user.toMap;

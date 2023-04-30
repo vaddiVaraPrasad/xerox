@@ -28,12 +28,19 @@ class HiddenSideZoomDrawer extends StatefulWidget {
 
 class _HiddenSideZoomDrawerState extends State<HiddenSideZoomDrawer> {
   var currentItem = MenuItems.home;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     var curUser = Provider.of<CurrentUser>(context, listen: true);
     print(curUser.getPlaceName);
     if (curUser.getPlaceName == "Loading...") {
+      setState(() {
+        isLoading = true;
+      });
       curUser.loadUserByID(FirebaseAuth.instance.currentUser!.uid);
+      setState(() {
+        isLoading = false;
+      });
     }
     return Scaffold(
       body: ZoomDrawer(
@@ -46,17 +53,19 @@ class _HiddenSideZoomDrawerState extends State<HiddenSideZoomDrawer> {
         slideWidth: MediaQuery.of(context).size.width * 0.6,
         mainScreen: getScreen(),
         menuScreen: Builder(builder: (context) {
-          return DrawerScreen(
-            currentItem: currentItem,
-            userName: curUser.getUserName,
-            userProfileUrl: curUser.getUserProfileUrl,
-            onSelectedItems: (item) {
-              setState(() {
-                currentItem = item;
-                ZoomDrawer.of(context)!.close();
-              });
-            },
-          );
+          return isLoading
+              ? const CircularProgressIndicator()
+              : DrawerScreen(
+                  currentItem: currentItem,
+                  userName: curUser.getUserName,
+                  userProfileUrl: curUser.getUserProfileUrl,
+                  onSelectedItems: (item) {
+                    setState(() {
+                      currentItem = item;
+                      ZoomDrawer.of(context)!.close();
+                    });
+                  },
+                );
         }),
       ),
     );
