@@ -16,6 +16,7 @@ import 'package:xerox/utils/color_pallets.dart';
 import '../../../model/ListShopes.dart';
 import '../../Global/api_keys.dart';
 import '../../Provider/nearestShops.dart';
+import '../../Provider/selected_shop.dart';
 import 'pdf_filters_Screen.dart';
 
 class DummyShops extends StatefulWidget {
@@ -233,6 +234,7 @@ class _DummyShopsState extends State<DummyShops> {
   @override
   Widget build(BuildContext context) {
     File file = ModalRoute.of(context)!.settings.arguments as File;
+    SelectedShop seletedShopProvider = Provider.of<SelectedShop>(context);
     CurrentUser curUSer = Provider.of<CurrentUser>(context);
     NearestShopProvider nearshopProvider =
         Provider.of<NearestShopProvider>(context);
@@ -284,7 +286,8 @@ class _DummyShopsState extends State<DummyShops> {
                 ),
                 itemCount: nearshopProvider.getShopListSize(),
                 itemBuilder: (context, index, realIndex) {
-                  return ShopContainer(nearshopProvider.getShopByIndex(index));
+                  return ShopContainer(nearshopProvider.getShopByIndex(index),
+                      context, seletedShopProvider);
                 },
               ),
             ),
@@ -294,7 +297,8 @@ class _DummyShopsState extends State<DummyShops> {
     );
   }
 
-  Widget ShopContainer(nearestShop shop) {
+  Widget ShopContainer(
+      nearestShop shop, BuildContext ctx, SelectedShop seletedShopProvider) {
     return Container(
         height: 150,
         width: double.infinity,
@@ -321,23 +325,51 @@ class _DummyShopsState extends State<DummyShops> {
                   const SizedBox(
                     height: 12,
                   ),
-                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
-                    const SizedBox(width: 20,),
-                    Expanded(child: Text(shop.distanceFromCurrentLocation,style: TextStyle(color: Colors.white,fontSize: 18),)),
-                    Expanded(child: Text(shop.durationFromCurrentLocation,style: TextStyle(color: Colors.white,fontSize: 18))),
-                    const SizedBox(width: 10,)
-                  ],),
-                   const SizedBox(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                          child: Text(
+                        shop.distanceFromCurrentLocation,
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      )),
+                      Expanded(
+                          child: Text(shop.durationFromCurrentLocation,
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 18))),
+                      const SizedBox(
+                        width: 10,
+                      )
+                    ],
+                  ),
+                  const SizedBox(
                     height: 12,
                   ),
-                  Container(
-                    // margin:const  EdgeInsets.symmetric(vertical: 10,horizontal: 10),
-                    padding:const  EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-                    decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(18)), ),
-                    height: 40,
-                    child: const Text(
-                      "Proceed",
-                      style: TextStyle(color: ColorPallets.deepBlue,fontSize: 24,fontWeight: FontWeight.w500,),
+                  InkWell(
+                    onTap: () {
+                      seletedShopProvider.setSeletedShop(shop);
+                      Navigator.of(context).pushNamed(PdfFilters.routeName);
+                    },
+                    child: Container(
+                      // margin:const  EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(18)),
+                      ),
+                      height: 40,
+                      child: const Text(
+                        "Proceed",
+                        style: TextStyle(
+                          color: ColorPallets.deepBlue,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
                   ),
                 ],

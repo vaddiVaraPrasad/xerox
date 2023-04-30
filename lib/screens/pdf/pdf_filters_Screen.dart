@@ -3,11 +3,13 @@ import 'dart:io';
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pdf/widgets.dart' as pdwd;
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:xerox/utils/color_pallets.dart';
 
+import '../../Provider/selected_shop.dart';
 import '../../model/ListShopes.dart';
 import '../../model/pdf_filters.dart';
 import '../drawer_Screens/orders_Screen.dart';
@@ -186,6 +188,7 @@ class _PdfFiltersState extends State<PdfFilters> {
               as Map<String, dynamic>,
           file = navData["pdfFile"];
       PdfDocument document = PdfDocument(inputBytes: file!.readAsBytesSync());
+      SelectedShop selectedShopProvider = Provider.of<SelectedShop>(context);
 
 //Gets the pages count
       totalPages = document.pages.count;
@@ -211,7 +214,7 @@ class _PdfFiltersState extends State<PdfFilters> {
           bondPaperRange: "",
           isTransparentSheetNeed: false,
           transparentSheetColor: "",
-          seletedShop: navData["shopCost"]);
+          seletedShop: selectedShopProvider.getSeletedShop());
 
       totalPrice = currentPdfModal!.getCostOfXerox();
 //Disposes the document
@@ -345,7 +348,8 @@ class _PdfFiltersState extends State<PdfFilters> {
                     .pushReplacementNamed(DummyScreen.routeName);
               },
               child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   decoration: BoxDecoration(
                       // color: ColorPallets.deepBlue,
                       borderRadius: BorderRadius.circular(18)),

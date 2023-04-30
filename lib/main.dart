@@ -21,6 +21,7 @@ import "./screens/nav_drawers/navBar.dart";
 
 import "Provider/nearestShops.dart";
 import "Provider/search_place.dart";
+import "Provider/selected_shop.dart";
 import 'screens/dummy_screen.dart';
 import 'screens/pdf/nearestShopScreen.dart';
 import 'screens/navBar_Screens/cart_Screen.dart';
@@ -72,6 +73,10 @@ class _XeroxState extends State<Xerox> {
         ChangeNotifierProvider(
           create: (context) => NearestShopProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => SelectedShop(),
+        ),
+        
       ],
       child: MaterialApp(
         title: "Xerox",

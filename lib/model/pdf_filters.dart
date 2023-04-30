@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import "../screens/pdf/pdf_filters_Screen.dart";
 import "./pdf_shop_cost.dart";
+import "nearest_shops_model.dart";
 
 class PdfFiltersModal {
   final String pagesRange;
@@ -18,7 +19,7 @@ class PdfFiltersModal {
   final String bondPaperRange;
   final bool isTransparentSheetNeed;
   final String transparentSheetColor;
-  final PdShopeCost seletedShop;
+  final nearestShop seletedShop;
 
   PdfFiltersModal(
       {required this.pagesRange,
