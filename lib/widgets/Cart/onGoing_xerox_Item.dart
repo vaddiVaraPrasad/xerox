@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -372,12 +373,15 @@ class _CartItemState extends State<CartItem> {
           ),
           TextButton.icon(
               onPressed: () {
-                openMapsNavigation(
-                    curUSer.getUsetLatitude,
-                    curUSer.getUserLongitude,
-                    double.parse(widget.onGoingXeroxItem["shopLatitude"]),
-                    double.parse(widget.onGoingXeroxItem["shopLongitude"]));
-
+                // openMapsNavigation(
+                //     curUSer.getUsetLatitude,
+                //     curUSer.getUserLongitude,
+                //     double.parse(widget.onGoingXeroxItem["shopLatitude"]),
+                //     double.parse(widget.onGoingXeroxItem["shopLongitude"]));
+                mapLauncher(
+                    widget.onGoingXeroxItem["shopAddress"],
+                    widget.onGoingXeroxItem["shopLatitude"],
+                    widget.onGoingXeroxItem["shopLongitude"]);
                 // launchGoogleMaps(
                 //   double.parse(widget.onGoingXeroxItem["shopLatitude"]),
                 //   double.parse(widget.onGoingXeroxItem["shopLongitude"]),
@@ -386,29 +390,27 @@ class _CartItemState extends State<CartItem> {
               icon: const Icon(FontAwesomeIcons.locationArrow),
               label: const Text(
                 "Tap here to open Google Maps",
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 18, color: ColorPallets.deepBlue),
               ))
         ],
       ),
     );
   }
 
-  void launchGoogleMaps(double lat, double lng) async {
-    final String googleMapsUrl =
-        'https://www.google.com/maps/search/?api=1&query=$lat,$lng';
-    if (await canLaunchUrl(Uri.parse(googleMapsUrl))) {
-      await launchUrl(Uri.parse(googleMapsUrl));
-    } else {
-      throw 'Could not open the map.';
-    }
+  void mapLauncher(String mapAddress, String latitude, String longitude) {
+    MapsLauncher.launchCoordinates(
+        double.parse(latitude), double.parse(longitude));
+    // MapsLauncher.launchQuery(mapAddress);
   }
 
   void openMapsNavigation(double startLatitude, double startLongitude,
       double destinationLatitude, double destinationLongitude) async {
-    String googleMapsUrl =
-        'https://www.google.com/maps/dir/?api=1&origin=$startLatitude,$startLongitude&destination=$destinationLatitude,$destinationLongitude&travelmode=driving';
-    if (await canLaunchUrl(Uri.parse(googleMapsUrl))) {
-      await launchUrl(Uri.parse(googleMapsUrl));
+    // String googleMapsUrl =
+    //     'https://www.google.com/maps/dir/?api=1&origin=$startLatitude,$startLongitude&destination=$destinationLatitude,$destinationLongitude&travelmode=driving';
+    String url =
+        'https://www.google.com/maps/dir/?api=1&destination=$destinationLatitude,$destinationLongitude&travelmode=driving';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
     } else {
       throw 'Could not open the map.';
     }
@@ -431,15 +433,15 @@ class _CartItemState extends State<CartItem> {
             title: expandedTitle(),
             backgroundColor:
                 Color.fromARGB(255, 178, 239, 240).withOpacity(0.1),
-            trailing: SizedBox(),
+            // trailing: SizedBox(),
             // trailing: Icon(Icons.arrow_drop_down),
-            subtitle: const Text(
-              'view more',
-              style: TextStyle(
-                color: ColorPallets.deepBlue,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
+            // subtitle: const Text(
+            //   'view more',
+            //   style: TextStyle(
+            //     color: ColorPallets.deepBlue,
+            //     fontStyle: FontStyle.italic,
+            //   ),
+            // ),
             children: <Widget>[
               progressOrderTracker(widget.onGoingXeroxItem["orderStatus"]),
               // const SizedBox(

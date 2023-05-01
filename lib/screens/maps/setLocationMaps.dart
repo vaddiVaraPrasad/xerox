@@ -145,221 +145,219 @@ class _setLocationMapsState extends State<setLocationMaps> {
     CurrentUser curUser = Provider.of<CurrentUser>(context);
 
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: screenHeight,
-                  width: screenWidth,
-                  child: GoogleMap(
-                    initialCameraPosition: _initialCameraPosition,
-                    mapType: MapType.normal,
-                    onMapCreated: (GoogleMapController controller) {
-                      _controller.complete(controller);
-                      goToProviderLocation(curUser, 16);
-                    },
-                    // onCameraIdle: () {},
-                    // onCameraMove: (position) {},
-                    rotateGesturesEnabled: true,
-                    scrollGesturesEnabled: true,
-                    zoomControlsEnabled: false,
-                    zoomGesturesEnabled: true,
-                    onTap: (val) {
-                      updateOnTapLocation(curUser, val, 18);
-                    },
-      
-                    markers: _markers,
-                  ),
+      body: Column(
+        children: [
+          Stack(
+            children: [
+              Container(
+                height: screenHeight,
+                width: screenWidth,
+                child: GoogleMap(
+                  initialCameraPosition: _initialCameraPosition,
+                  mapType: MapType.normal,
+                  onMapCreated: (GoogleMapController controller) {
+                    _controller.complete(controller);
+                    goToProviderLocation(curUser, 16);
+                  },
+                  // onCameraIdle: () {},
+                  // onCameraMove: (position) {},
+                  rotateGesturesEnabled: true,
+                  scrollGesturesEnabled: true,
+                  zoomControlsEnabled: false,
+                  zoomGesturesEnabled: true,
+                  onTap: (val) {
+                    updateOnTapLocation(curUser, val, 18);
+                  },
+
+                  markers: _markers,
                 ),
-                Positioned(
-                  top: screenHeight - 250,
-                  left: screenWidth / 4,
-                  child: GestureDetector(
-                    onTap: () {
-                      goToCurrentLocation(curUser, 18);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.only(top: 8, left: 15, bottom: 8),
-                      decoration: BoxDecoration(
-                          color: ColorPallets.deepBlue.withOpacity(0.9),
-                          borderRadius: BorderRadius.circular(25),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorPallets.deepBlue.withOpacity(1),
-                              blurRadius: 5,
-                            )
-                          ]),
-                      height: 50,
-                      width: 190,
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            "assets/image/current_loaction.png",
-                            fit: BoxFit.cover,
-                            color: Colors.white,
-                            height: 35,
-                            width: 35,
-                          ),
-                          const SizedBox(
-                            width: 13,
-                          ),
-                          const Text(
-                            "Current Location",
-                            style: TextStyle(color: Colors.white, fontSize: 17),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: screenHeight - 180,
-                  left: 0,
+              ),
+              Positioned(
+                top: screenHeight - 250,
+                left: screenWidth / 4,
+                child: GestureDetector(
+                  onTap: () {
+                    goToCurrentLocation(curUser, 18);
+                  },
                   child: Container(
+                    padding: const EdgeInsets.only(top: 8, left: 15, bottom: 8),
                     decoration: BoxDecoration(
                         color: ColorPallets.deepBlue.withOpacity(0.9),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(22),
-                          topRight: Radius.circular(22),
-                        ),
+                        borderRadius: BorderRadius.circular(25),
                         boxShadow: [
                           BoxShadow(
                             color: ColorPallets.deepBlue.withOpacity(1),
-                            blurRadius: 20,
+                            blurRadius: 5,
                           )
                         ]),
-                    height: 180,
-                    width: screenWidth,
-                    child: isLoading
-                        ? const Center(
-                            child: CircularProgressIndicator(color: Colors.white),
-                          )
-                        : Column(
-                            children: [
-                              Expanded(
-                                flex: 4,
-                                child: Container(
-                                  width: screenWidth - 20,
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 20, horizontal: 30),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SizedBox(
-                                            width: 150,
-                                            child: Text(
-                                              curUser.getPlaceName,
-                                              style: const TextStyle(
-                                                overflow: TextOverflow.ellipsis,
+                    height: 50,
+                    width: 190,
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "assets/image/current_loaction.png",
+                          fit: BoxFit.cover,
+                          color: Colors.white,
+                          height: 35,
+                          width: 35,
+                        ),
+                        const SizedBox(
+                          width: 13,
+                        ),
+                        const Text(
+                          "Current Location",
+                          style: TextStyle(color: Colors.white, fontSize: 17),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: screenHeight - 180,
+                left: 0,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: ColorPallets.deepBlue.withOpacity(0.9),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(22),
+                        topRight: Radius.circular(22),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorPallets.deepBlue.withOpacity(1),
+                          blurRadius: 20,
+                        )
+                      ]),
+                  height: 180,
+                  width: screenWidth,
+                  child: isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(color: Colors.white),
+                        )
+                      : Column(
+                          children: [
+                            Expanded(
+                              flex: 4,
+                              child: Container(
+                                width: screenWidth - 20,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 20, horizontal: 30),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        SizedBox(
+                                          width: 150,
+                                          child: Text(
+                                            curUser.getPlaceName,
+                                            style: const TextStyle(
+                                              overflow: TextOverflow.ellipsis,
+                                              color: Colors.white,
+                                              fontSize: 27,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context).pushNamed(
+                                                LocationText.routeName);
+                                          },
+                                          child: Container(
+                                            height: 40,
+                                            width: 110,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(22),
+                                              border: Border.all(
                                                 color: Colors.white,
-                                                fontSize: 27,
+                                                width: 2,
+                                                style: BorderStyle.solid,
+                                              ),
+                                            ),
+                                            child: const Center(
+                                              child: Text(
+                                                "Change",
+                                                style: TextStyle(
+                                                    overflow: TextOverflow.clip,
+                                                    color: Colors.white,
+                                                    fontSize: 18),
+                                                textAlign: TextAlign.center,
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.of(context).pushNamed(
-                                                  LocationText.routeName);
-                                            },
-                                            child: Container(
-                                              height: 40,
-                                              width: 110,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(22),
-                                                border: Border.all(
-                                                  color: Colors.white,
-                                                  width: 2,
-                                                  style: BorderStyle.solid,
-                                                ),
-                                              ),
-                                              child: const Center(
-                                                child: Text(
-                                                  "Change",
-                                                  style: TextStyle(
-                                                      overflow: TextOverflow.clip,
-                                                      color: Colors.white,
-                                                      fontSize: 18),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 10),
-                                            child: Text(
-                                              "${curUser.getPlaceName}, ${curUser.getUserContryName}}",
-                                              style: const TextStyle(
-                                                overflow: TextOverflow.fade,
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                              ),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10),
+                                          child: Text(
+                                            "${curUser.getPlaceName}, ${curUser.getUserContryName}}",
+                                            style: const TextStyle(
+                                              overflow: TextOverflow.fade,
+                                              color: Colors.white,
+                                              fontSize: 16,
                                             ),
                                           ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
                                 ),
                               ),
-                              Expanded(
-                                  flex: 2,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      print(curUser.getPlaceName);
-                                      print(curUser.getUserContryName);
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Container(
-                                      color: ColorPallets.lightBlue,
-                                      child: const Center(
-                                        child: Text(
-                                          "Confirm",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 25,
-                                            letterSpacing: 1,
-                                          ),
+                            ),
+                            Expanded(
+                                flex: 2,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    print(curUser.getPlaceName);
+                                    print(curUser.getUserContryName);
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Container(
+                                    color: ColorPallets.lightBlue,
+                                    child: const Center(
+                                      child: Text(
+                                        "Confirm",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 25,
+                                          letterSpacing: 1,
                                         ),
                                       ),
                                     ),
-                                  ))
-                            ],
-                          ),
-                  ),
+                                  ),
+                                ))
+                          ],
+                        ),
                 ),
-                Positioned(
-                    left: 30,
-                    top: 50,
-                    child: CustomIconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: FontAwesomeIcons.chevronLeft,
-                      iconColor: ColorPallets.white,
-                      backGroundColor: ColorPallets.deepBlue,
-                      size: 40,
-                      iconSize: 16,
-                    ))
-              ],
-            )
-          ],
-        ),
+              ),
+              Positioned(
+                  left: 30,
+                  top: 50,
+                  child: CustomIconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: FontAwesomeIcons.chevronLeft,
+                    iconColor: ColorPallets.white,
+                    backGroundColor: ColorPallets.deepBlue,
+                    size: 40,
+                    iconSize: 16,
+                  ))
+            ],
+          )
+        ],
       ),
     );
   }

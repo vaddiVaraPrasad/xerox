@@ -30,9 +30,7 @@ import "screens/drawer_Screens/ContactUs.dart";
 import "screens/navBar_Screens/home_screen.dart";
 import "screens/drawer_Screens/about_us_Screen.dart";
 import "screens/navBar_Screens/profile_Screen.dart";
-import "screens/drawer_Screens/orders_Screen.dart";
-import "screens/drawer_Screens/rewards_screen.dart";
-import "screens/navBar_Screens/search_shop_screen.dart";
+import 'screens/drawer_Screens/history_order_screen.dart';
 import "screens/pdf/images_grid_file.dart";
 import "screens/pdf/pdf_filters_Screen.dart";
 import "screens/maps/setLocationMaps.dart";
@@ -134,8 +132,6 @@ class _XeroxState extends State<Xerox> {
           HomeScreen.routeName: (context) => const HomeScreen(),
           OrderScreen.routeName: (context) => const OrderScreen(),
           ProfilePage.routeName: (context) => const ProfilePage(),
-          rewardsScreen.routeName: (context) => const rewardsScreen(),
-          SearchShop.routeName: (context) => const SearchShop(),
           OrderPreviewScreen.routeName: (context) => const OrderPreviewScreen(),
           CustomPDFPreview.routeName: (context) => const CustomPDFPreview(),
           PdfImagesRender.routeName: (context) => const PdfImagesRender(),

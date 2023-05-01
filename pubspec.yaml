@@ -79,6 +79,7 @@ dependencies:
   accordion: ^2.5.1
   timeline_tile: ^2.0.0
   expandable: ^5.0.1
+  maps_launcher: ^2.2.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -130,6 +131,12 @@ flutter:
     - assets/image/started_xerox.png
     - assets/image/package.png
     - assets/image/printer.png
+    - assets/image/mail.png
+    - assets/image/phone.png
+    - assets/image/text_msg.png
+    - assets/image/whatsapp.png
+    - assets/image/browser.png
+    - assets/image/chrome.png
 
 
 

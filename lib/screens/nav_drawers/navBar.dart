@@ -21,12 +21,10 @@ class _ButtonNavigationBarState extends State<ButtonNavigationBar> {
   int _seletedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
-  
-  
 
   static const List<Widget> _screens = <Widget>[
     HomeScreen(),
-    SearchShop(),
+    // SearchShop(),
     CartScreen(),
     ProfilePage()
   ];
@@ -88,16 +86,16 @@ class _ButtonNavigationBarState extends State<ButtonNavigationBar> {
                   ]),
                   iconActiveColor: Colors.purple,
                 ),
-                GButton(
-                  icon: LineIcons.search,
-                  textColor: const Color.fromARGB(220, 193, 49, 102),
-                  backgroundGradient: LinearGradient(colors: [
-                    ColorPallets.pinkinshShadedPurple.withOpacity(.7),
-                    ColorPallets.pinkinshShadedPurple.withOpacity(.2)
-                  ]),
-                  iconActiveColor: const Color.fromARGB(220, 193, 49, 102),
-                  text: 'Search',
-                ),
+                // GButton(
+                //   icon: LineIcons.search,
+                //   textColor: const Color.fromARGB(220, 193, 49, 102),
+                //   backgroundGradient: LinearGradient(colors: [
+                //     ColorPallets.pinkinshShadedPurple.withOpacity(.7),
+                //     ColorPallets.pinkinshShadedPurple.withOpacity(.2)
+                //   ]),
+                //   iconActiveColor: const Color.fromARGB(220, 193, 49, 102),
+                //   text: 'Search',
+                // ),
                 GButton(
                   icon: LineIcons.shoppingBag,
                   textColor: ColorPallets.deepBlue,
@@ -111,11 +109,11 @@ class _ButtonNavigationBarState extends State<ButtonNavigationBar> {
                 GButton(
                   icon: LineIcons.user,
                   text: 'Profile',
-                  textColor: Colors.amber,
-                  iconActiveColor: Colors.amber,
+                  textColor: const Color.fromARGB(220, 193, 49, 102),
+                  iconActiveColor: const Color.fromARGB(220, 193, 49, 102),
                   backgroundGradient: LinearGradient(colors: [
-                    Colors.amber.withOpacity(.4),
-                    Colors.amber.withOpacity(.1)
+                    ColorPallets.pinkinshShadedPurple.withOpacity(.7),
+                    ColorPallets.pinkinshShadedPurple.withOpacity(.2)
                   ]),
                 ),
               ],

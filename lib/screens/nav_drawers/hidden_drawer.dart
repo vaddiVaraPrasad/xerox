@@ -10,9 +10,8 @@ import "./drawer_screen.dart";
 
 import "../drawer_Screens/ContactUs.dart";
 import "../drawer_Screens/about_us_Screen.dart";
-import "../drawer_Screens/orders_Screen.dart";
-import "../drawer_Screens/rewards_screen.dart";
-import "../drawer_Screens/rateUs_Screens.dart";
+import '../drawer_Screens/history_order_screen.dart';
+
 import "./navBar.dart";
 
 class HiddenSideZoomDrawer extends StatefulWidget {
@@ -43,7 +42,7 @@ class _HiddenSideZoomDrawerState extends State<HiddenSideZoomDrawer> {
       });
     }
     return Scaffold(
-      body:  ZoomDrawer(
+      body: ZoomDrawer(
         menuBackgroundColor: ColorPallets.lightPurplishWhile.withOpacity(.7),
         borderRadius: 28,
         style: DrawerStyle.defaultStyle,
@@ -53,17 +52,19 @@ class _HiddenSideZoomDrawerState extends State<HiddenSideZoomDrawer> {
         slideWidth: MediaQuery.of(context).size.width * 0.6,
         mainScreen: getScreen(),
         menuScreen: Builder(builder: (context) {
-          return isLoading ? const  CircularProgressIndicator() : DrawerScreen(
-            currentItem: currentItem,
-            userName: curUser.getUserName,
-            userProfileUrl: curUser.getUserProfileUrl,
-            onSelectedItems: (item) {
-              setState(() {
-                currentItem = item;
-                ZoomDrawer.of(context)!.close();
-              });
-            },
-          );
+          return isLoading
+              ? const CircularProgressIndicator()
+              : DrawerScreen(
+                  currentItem: currentItem,
+                  userName: curUser.getUserName,
+                  userProfileUrl: curUser.getUserProfileUrl,
+                  onSelectedItems: (item) {
+                    setState(() {
+                      currentItem = item;
+                      ZoomDrawer.of(context)!.close();
+                    });
+                  },
+                );
         }),
       ),
     );
@@ -74,14 +75,10 @@ class _HiddenSideZoomDrawerState extends State<HiddenSideZoomDrawer> {
       return const ButtonNavigationBar();
     } else if (currentItem == MenuItems.orders) {
       return const OrderScreen();
-    } else if (currentItem == MenuItems.rewards) {
-      return const rewardsScreen();
     } else if (currentItem == MenuItems.contactUs) {
       return const ContactUs();
-    } else if (currentItem == MenuItems.aboutUs) {
-      return const AboutUs();
     } else {
-      return const RateUsScreen();
+      return const AboutUs();
     }
   }
 }

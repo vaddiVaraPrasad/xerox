@@ -49,9 +49,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   padding: const EdgeInsets.only(left: 12.0, right: 8),
                   child: CircleAvatar(
                     radius: 25,
-                    backgroundImage: NetworkImage(
-                      widget.userProfileUrl
-                    ),
+                    backgroundImage: NetworkImage(widget.userProfileUrl),
                     backgroundColor: ColorPallets.pinkinshShadedPurple,
                   ),
                 ),
@@ -175,13 +173,8 @@ class MenuItems {
   );
 
   static final orders = MenuItem(
-    title: "Orders",
-    icon: FontAwesomeIcons.shoppingCart,
-  );
-
-  static final rewards = MenuItem(
-    title: "Rewards",
-    icon: FontAwesomeIcons.gifts,
+    title: "History",
+    icon: FontAwesomeIcons.history,
   );
 
   static final contactUs = MenuItem(
@@ -194,17 +187,10 @@ class MenuItems {
     icon: FontAwesomeIcons.info,
   );
 
-  static final rateUs = MenuItem(
-    title: "RateUs",
-    icon: FontAwesomeIcons.star,
-  );
-
   static final all = <MenuItem>[
     home,
     orders,
-    rewards,
     contactUs,
     aboutUs,
-    rateUs,
   ];
 }
