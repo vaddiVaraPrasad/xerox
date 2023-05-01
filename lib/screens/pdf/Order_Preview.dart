@@ -10,9 +10,9 @@ import 'package:xerox/utils/color_pallets.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 
-import '../Provider/current_order.dart';
-import 'navBar_Screens/cart_Screen.dart';
-import 'nav_drawers/navBar.dart';
+import '../../Provider/current_order.dart';
+import '../navBar_Screens/cart_Screen.dart';
+import '../nav_drawers/navBar.dart';
 
 class OrderPreviewScreen extends StatefulWidget {
   static const routeName = "/orderFilePreview";
@@ -94,7 +94,11 @@ class _OrderPreviewScreenState extends State<OrderPreviewScreen> {
               "Distance ", curOrder.orderShopDistanceFromCurrentLocation),
           KeyValueOfFeature(
               "Time taken", curOrder.orderdurationFromCurrentLocation),
-          KeyValueOfFeature("Shop Address", curOrder.orderShopAddress),
+          KeyValueOfFeature("Shop Addres", curOrder.orderShopAddress),
+          // KeyValueLong("Shop Address", curOrder.orderShopAddress),
+          const SizedBox(
+            height: 80,
+          )
         ]),
       ),
       bottomSheet: Container(
@@ -209,6 +213,8 @@ class _OrderPreviewScreenState extends State<OrderPreviewScreen> {
                         curOrder.orderdurationFromCurrentLocation,
                     "shopAddress": curOrder.orderShopAddress,
                     "shopPicUrl": curOrder.orderShopPicUrl,
+                    "shopLatitude": curOrder.orderShopLatitude,
+                    "shopLongitude": curOrder.orderShopLogitude,
                   });
                 } catch (e) {
                   showDialog(
@@ -332,14 +338,58 @@ class _OrderPreviewScreenState extends State<OrderPreviewScreen> {
     );
   }
 
+  Widget KeyValueLong(String key, String value) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                maxLines: 2,
+                key,
+                style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18,
+                    color: ColorPallets.deepBlue),
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              const Text(":",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: ColorPallets.deepBlue,
+                    fontWeight: FontWeight.w600,
+                  ))
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            value,
+            maxLines: 3,
+            style: const TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 18,
+                color: Colors.black54),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget KeyValueOfFeature(String key, String value) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 2),
+      padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
       child: Row(
         children: [
           Expanded(
-              child: Center(
             child: Text(
+              maxLines: 2,
               key,
               style: const TextStyle(
                   fontWeight: FontWeight.w400,
@@ -347,7 +397,7 @@ class _OrderPreviewScreenState extends State<OrderPreviewScreen> {
                   color: ColorPallets.deepBlue),
               overflow: TextOverflow.ellipsis,
             ),
-          )),
+          ),
           const SizedBox(
             width: 10,
           ),
@@ -360,11 +410,11 @@ class _OrderPreviewScreenState extends State<OrderPreviewScreen> {
             ),
           ),
           const SizedBox(
-            width: 10,
+            width: 20,
           ),
           Expanded(
-              child: Center(
             child: Text(
+              maxLines: 8,
               value,
               style: const TextStyle(
                   fontWeight: FontWeight.w400,
@@ -372,7 +422,7 @@ class _OrderPreviewScreenState extends State<OrderPreviewScreen> {
                   color: Colors.black54),
               overflow: TextOverflow.ellipsis,
             ),
-          )),
+          ),
         ],
       ),
     );

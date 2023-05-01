@@ -249,61 +249,63 @@ class _DummyShopsState extends State<DummyShops> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: screenHeight,
-            width: screenWidth,
-            child: GoogleMap(
-              initialCameraPosition: _initialCameraPosition,
-              mapType: MapType.normal,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-                goToProviderLocation(curUSer, 16);
-              },
-              rotateGesturesEnabled: true,
-              scrollGesturesEnabled: true,
-              zoomControlsEnabled: false,
-              zoomGesturesEnabled: true,
-              compassEnabled: false,
-              markers: _markers,
-            ),
-          ),
-          Positioned(
-            bottom: 20,
-            child: Container(
-              height: 160.0,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              height: screenHeight,
               width: screenWidth,
-              child: CarouselSlider.builder(
-                carouselController: carouselCtrl,
-                options: CarouselOptions(
-                  height: 150,
-                  autoPlay: false,
-                  reverse: false,
-                  enableInfiniteScroll: false,
-                  enlargeCenterPage: true,
-                  initialPage: 0,
-                  enlargeStrategy: CenterPageEnlargeStrategy.height,
-                  onPageChanged: (index, reason) async {
-                    await goToSearchedPlace(
-                        nearshopProvider.getShopAtIndexLat(index),
-                        nearshopProvider.getShopAtIndexLng(index),
-                        19);
-                  },
-                ),
-                itemCount: nearshopProvider.getShopListSize(),
-                itemBuilder: (context, index, realIndex) {
-                  return ShopContainer(
-                    nearshopProvider.getShopByIndex(index),
-                    context,
-                    seletedShopProvider,
-                    curOrder
-                  );
+              child: GoogleMap(
+                initialCameraPosition: _initialCameraPosition,
+                mapType: MapType.normal,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                  goToProviderLocation(curUSer, 16);
                 },
+                rotateGesturesEnabled: true,
+                scrollGesturesEnabled: true,
+                zoomControlsEnabled: false,
+                zoomGesturesEnabled: true,
+                compassEnabled: false,
+                markers: _markers,
               ),
             ),
-          )
-        ],
+            Positioned(
+              bottom: 20,
+              child: Container(
+                height: 160.0,
+                width: screenWidth,
+                child: CarouselSlider.builder(
+                  carouselController: carouselCtrl,
+                  options: CarouselOptions(
+                    height: 150,
+                    autoPlay: false,
+                    reverse: false,
+                    enableInfiniteScroll: false,
+                    enlargeCenterPage: true,
+                    initialPage: 0,
+                    enlargeStrategy: CenterPageEnlargeStrategy.height,
+                    onPageChanged: (index, reason) async {
+                      await goToSearchedPlace(
+                          nearshopProvider.getShopAtIndexLat(index),
+                          nearshopProvider.getShopAtIndexLng(index),
+                          19);
+                    },
+                  ),
+                  itemCount: nearshopProvider.getShopListSize(),
+                  itemBuilder: (context, index, realIndex) {
+                    return ShopContainer(
+                      nearshopProvider.getShopByIndex(index),
+                      context,
+                      seletedShopProvider,
+                      curOrder
+                    );
+                  },
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -375,6 +377,8 @@ class _DummyShopsState extends State<DummyShops> {
                         shop.durationFromCurrentLocation,
                         shop.shopAddressByGooglePlaces,
                         shop.shopPicUrl,
+                        shop.shopLatitude.toString(),
+                        shop.shopLongitude.toString(),
                       );
                       Navigator.of(context).pushNamed(PdfFilters.routeName);
                     },

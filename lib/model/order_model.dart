@@ -6,6 +6,9 @@ class Order {
 
   String priceOfOrder;
 
+  String shopLatitude;
+  String shopLongitude;
+
   String pagesRange;
   String noOfPages;
   String noOfCopies;
@@ -39,38 +42,40 @@ class Order {
   String orderStatus;
   String modeOfOrder;
 
-  Order(
-      {required this.orderId,
-      required this.pdfFile,
-      required this.pdfName,
-      required this.priceOfOrder,
-      required this.pagesRange,
-      required this.noOfPages,
-      required this.noOfCopies,
-      required this.pageOrient,
-      required this.pagePrintSide,
-      required this.pageSize,
-      required this.printJobType,
-      required this.colorPagesCount,
-      required this.colorPagesRange,
-      required this.bindingType,
-      required this.isBondPaperNeeded,
-      required this.bondPaperRange,
-      required this.isTransparentSheetNeed,
-      required this.transparentSheetColor,
-      required this.customerId,
-      required this.customerName,
-      required this.customerEmailAddress,
-      required this.shopId,
-      required this.shopName,
-      required this.shopOweerName,
-      required this.shopEmail,
-      required this.shopDistanceFromCurrentLocation,
-      required this.durationFromCurrentLocation,
-      required this.shopAddress,
-      required this.dataOfOrder,
-      required this.orderStatus,
-      required this.modeOfOrder,
-      required this.shopPicUrl,
-      });
+  Order({
+    required this.shopLatitude,
+    required this.shopLongitude,
+    required this.orderId,
+    required this.pdfFile,
+    required this.pdfName,
+    required this.priceOfOrder,
+    required this.pagesRange,
+    required this.noOfPages,
+    required this.noOfCopies,
+    required this.pageOrient,
+    required this.pagePrintSide,
+    required this.pageSize,
+    required this.printJobType,
+    required this.colorPagesCount,
+    required this.colorPagesRange,
+    required this.bindingType,
+    required this.isBondPaperNeeded,
+    required this.bondPaperRange,
+    required this.isTransparentSheetNeed,
+    required this.transparentSheetColor,
+    required this.customerId,
+    required this.customerName,
+    required this.customerEmailAddress,
+    required this.shopId,
+    required this.shopName,
+    required this.shopOweerName,
+    required this.shopEmail,
+    required this.shopDistanceFromCurrentLocation,
+    required this.durationFromCurrentLocation,
+    required this.shopAddress,
+    required this.dataOfOrder,
+    required this.orderStatus,
+    required this.modeOfOrder,
+    required this.shopPicUrl,
+  });
 }

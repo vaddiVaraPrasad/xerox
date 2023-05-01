@@ -5,39 +5,40 @@ import '../model/order_model.dart';
 
 class CurrentOrder extends ChangeNotifier {
   Order currentOrder = Order(
-    orderId: "",
-    pdfFile: File(""),
-    pdfName: "",
-    priceOfOrder: "",
-    pagesRange: "",
-    noOfPages: "",
-    noOfCopies: "",
-    pageOrient: "",
-    pagePrintSide: "",
-    pageSize: "",
-    printJobType: "",
-    colorPagesCount: "",
-    colorPagesRange: "",
-    bindingType: "",
-    isBondPaperNeeded: "",
-    bondPaperRange: "",
-    isTransparentSheetNeed: "",
-    transparentSheetColor: "",
-    customerId: "",
-    customerName: "",
-    customerEmailAddress: "",
-    shopId: "",
-    shopName: "",
-    shopOweerName: "",
-    shopEmail: "",
-    shopDistanceFromCurrentLocation: "",
-    durationFromCurrentLocation: "",
-    shopAddress: "",
-    dataOfOrder: "",
-    orderStatus: "",
-    modeOfOrder: "",
-    shopPicUrl: "",
-  );
+      orderId: "",
+      pdfFile: File(""),
+      pdfName: "",
+      priceOfOrder: "",
+      pagesRange: "",
+      noOfPages: "",
+      noOfCopies: "",
+      pageOrient: "",
+      pagePrintSide: "",
+      pageSize: "",
+      printJobType: "",
+      colorPagesCount: "",
+      colorPagesRange: "",
+      bindingType: "",
+      isBondPaperNeeded: "",
+      bondPaperRange: "",
+      isTransparentSheetNeed: "",
+      transparentSheetColor: "",
+      customerId: "",
+      customerName: "",
+      customerEmailAddress: "",
+      shopId: "",
+      shopName: "",
+      shopOweerName: "",
+      shopEmail: "",
+      shopDistanceFromCurrentLocation: "",
+      durationFromCurrentLocation: "",
+      shopAddress: "",
+      dataOfOrder: "",
+      orderStatus: "",
+      modeOfOrder: "",
+      shopPicUrl: "",
+      shopLatitude: "",
+      shopLongitude: ",");
 
   void setCurrentOrder(Order order) {
     currentOrder = order;
@@ -174,15 +175,16 @@ class CurrentOrder extends ChangeNotifier {
   }
 
   void setShopDetails(
-    String shopId,
-    String shopName,
-    String shopOwnerName,
-    String shopEmail,
-    String shopDistanceFromCurrentLocation,
-    String durationFromCurrentLocation,
-    String shopAddress,
-    String shopPicUrl,
-  ) {
+      String shopId,
+      String shopName,
+      String shopOwnerName,
+      String shopEmail,
+      String shopDistanceFromCurrentLocation,
+      String durationFromCurrentLocation,
+      String shopAddress,
+      String shopPicUrl,
+      String shopLat,
+      String shopLng) {
     currentOrder.shopId = shopId;
     currentOrder.shopName = shopName;
     currentOrder.shopOweerName = shopOwnerName;
@@ -192,7 +194,17 @@ class CurrentOrder extends ChangeNotifier {
     currentOrder.durationFromCurrentLocation = durationFromCurrentLocation;
     currentOrder.shopAddress = shopAddress;
     currentOrder.shopPicUrl = shopPicUrl;
+    currentOrder.shopLatitude = shopLat;
+    currentOrder.shopLongitude = shopLng;
     notifyListeners();
+  }
+
+  String get orderShopLatitude {
+    return currentOrder.shopLatitude;
+  }
+
+  String get orderShopLogitude {
+    return currentOrder.shopLongitude;
   }
 
   String get orderShopOwnerName {

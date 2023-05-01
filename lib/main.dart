@@ -23,7 +23,7 @@ import "Provider/current_order.dart";
 import "Provider/nearestShops.dart";
 import "Provider/search_place.dart";
 import "Provider/selected_shop.dart";
-import 'screens/Order_Preview.dart';
+import 'screens/pdf/Order_Preview.dart';
 import 'screens/pdf/nearestShopScreen.dart';
 import 'screens/navBar_Screens/cart_Screen.dart';
 import "screens/drawer_Screens/ContactUs.dart";
