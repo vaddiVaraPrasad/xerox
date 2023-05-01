@@ -9,6 +9,7 @@ import 'package:geoflutterfire2/geoflutterfire2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:xerox/Provider/current_order.dart';
 import 'package:xerox/Provider/current_user.dart';
 import 'package:xerox/model/nearest_shops_model.dart';
 import 'package:xerox/utils/color_pallets.dart';
@@ -104,6 +105,8 @@ class _DummyShopsState extends State<DummyShops> {
         Map<String, String> temp = {};
         temp["duration"] = data['routes'][0]['legs'][0]['duration']['text'];
         temp["distance"] = data['routes'][0]['legs'][0]['distance']['text'];
+        temp["shopAddresByPlacesId"] =
+            data['routes'][0]['legs'][0]['end_address'];
         return temp;
       }
     }
@@ -209,7 +212,8 @@ class _DummyShopsState extends State<DummyShops> {
               costForSpiralBound: double.parse(data["shopPrices"]["costForSpiralBound"].toString()),
               costForStickFile: double.parse(data["shopPrices"]["costForStickFile"].toString()),
               costForOneBondPaper: double.parse(data["shopPrices"]["costForOneBondPaper"].toString()),
-              costForTransparentSheetPerSheet: double.parse(data["shopPrices"]["costForTransparentSheetPerSheet"].toString()));
+              costForTransparentSheetPerSheet: double.parse(data["shopPrices"]["costForTransparentSheetPerSheet"].toString()),
+              shopAddressByGooglePlaces: DisDuration["shopAddresByPlacesId"] as String);
           nearshopprovider.addShopToList(shop);
           setMarkers(double.parse(data["shopDetails"]["shopLat"].toString()),
               double.parse(data["shopDetails"]["shopLng"].toString()));
@@ -233,9 +237,9 @@ class _DummyShopsState extends State<DummyShops> {
 
   @override
   Widget build(BuildContext context) {
-    Map<String,dynamic> fileData = ModalRoute.of(context)!.settings.arguments as Map<String ,dynamic>;
-    File file = fileData["file"];
-    String fileName = fileData["fileName"];
+    CurrentOrder curOrder = Provider.of<CurrentOrder>(context);
+    File file = curOrder.getPdfFile;
+    String fileName = curOrder.getPdfFileName;
 
     SelectedShop seletedShopProvider = Provider.of<SelectedShop>(context);
     CurrentUser curUSer = Provider.of<CurrentUser>(context);
@@ -289,8 +293,11 @@ class _DummyShopsState extends State<DummyShops> {
                 ),
                 itemCount: nearshopProvider.getShopListSize(),
                 itemBuilder: (context, index, realIndex) {
-                  return ShopContainer(nearshopProvider.getShopByIndex(index),
-                      context, seletedShopProvider,file,fileName);
+                  return ShopContainer(
+                    nearshopProvider.getShopByIndex(index),
+                    context,
+                    seletedShopProvider,
+                  );
                 },
               ),
             ),
@@ -301,7 +308,10 @@ class _DummyShopsState extends State<DummyShops> {
   }
 
   Widget ShopContainer(
-      nearestShop shop, BuildContext ctx, SelectedShop seletedShopProvider,File file,String fileName) {
+    nearestShop shop,
+    BuildContext ctx,
+    SelectedShop seletedShopProvider,
+  ) {
     return Container(
         height: 150,
         width: double.infinity,
@@ -341,7 +351,7 @@ class _DummyShopsState extends State<DummyShops> {
                       )),
                       Expanded(
                           child: Text(shop.durationFromCurrentLocation,
-                              style: TextStyle(
+                              style:const  TextStyle(
                                   color: Colors.white, fontSize: 18))),
                       const SizedBox(
                         width: 10,
@@ -354,7 +364,19 @@ class _DummyShopsState extends State<DummyShops> {
                   InkWell(
                     onTap: () {
                       seletedShopProvider.setSeletedShop(shop);
-                      Navigator.of(context).pushNamed(PdfFilters.routeName,arguments: {"pdfFile":file,"fileName":fileName,});
+                      CurrentOrder curOrder =
+                          Provider.of<CurrentOrder>(context);
+                      curOrder.setShopDetails(
+                        shop.shopID,
+                        shop.shopName,
+                        shop.shopOwnerName,
+                        shop.email,
+                        shop.distanceFromCurrentLocation,
+                        shop.durationFromCurrentLocation,
+                        shop.shopAddressByGooglePlaces,
+                        shop.shopPicUrl,
+                      );
+                      Navigator.of(context).pushNamed(PdfFilters.routeName);
                     },
                     child: Container(
                       // margin:const  EdgeInsets.symmetric(vertical: 10,horizontal: 10),

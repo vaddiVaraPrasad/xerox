@@ -9,11 +9,12 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:xerox/utils/color_pallets.dart';
 
+import '../../Provider/current_order.dart';
 import '../../Provider/selected_shop.dart';
 import '../../model/ListShopes.dart';
 import '../../model/pdf_filters.dart';
 import '../drawer_Screens/orders_Screen.dart';
-import '../dummy_screen.dart';
+import '../Order_Preview.dart';
 import '../navBar_Screens/home_screen.dart';
 import '../nav_drawers/hidden_drawer.dart';
 import '../nav_drawers/navBar.dart';
@@ -33,6 +34,58 @@ enum TransparentPaperColor { blue, green, brow, purple }
 enum JobTypes { blackAndWhite, fullColor, partialColor }
 
 enum SizeOfSheets { legal, letter, a0, a1, a2, a3, a4, a5 }
+
+String getStringPrintingSides(PritingSides side) {
+  if (side == PritingSides.singleSided) {
+    return "Single Side";
+  }
+  return "Double Side";
+}
+
+String getStringSizeOfSheet(SizeOfSheets size) {
+  if (size == SizeOfSheets.legal) {
+    return "Legal";
+  } else if (size == SizeOfSheets.letter) {
+    return "Letter";
+  } else if (size == SizeOfSheets.a0) {
+    return "A0";
+  } else if (size == SizeOfSheets.a1) {
+    return "A1";
+  } else if (size == SizeOfSheets.a3) {
+    return "A3";
+  } else if (size == SizeOfSheets.a4) {
+    return "A4";
+  }
+  return "A5";
+}
+
+String getStringPageOrientations(PageOrientation orient) {
+  if (orient == PageOrientation.landScape) {
+    return "landscape";
+  } else {
+    return "potrait";
+  }
+}
+
+String getStringTransparentPaperColor(TransparentPaperColor color) {
+  if (color == TransparentPaperColor.blue) {
+    return "blue";
+  } else if (color == TransparentPaperColor.green) {
+    return "green";
+  } else if (color == TransparentPaperColor.brow) {
+    return "brown";
+  }
+  return "purple";
+}
+
+String getStringJobTypes(JobTypes job) {
+  if (job == JobTypes.blackAndWhite) {
+    return "black And White";
+  } else if (job == JobTypes.fullColor) {
+    return "full Color ";
+  }
+  return "Partial Color";
+}
 
 class PdfFilters extends StatefulWidget {
   static const routeName = "/filterspdf";
@@ -345,8 +398,28 @@ class _PdfFiltersState extends State<PdfFilters> {
             ),
             InkWell(
               onTap: () {
+                CurrentOrder curOrder = Provider.of<CurrentOrder>(context);
+                curOrder.setPdfFilterDetails(
+                    currentPdfModal!.pagesRange,
+                    PdfFiltersModal.getPagesCount(currentPdfModal!.pagesRange)
+                        .toString(),
+                    currentPdfModal!.noOfCopies,
+                    getStringPageOrientations(currentPdfModal!.pageOrient),
+                    getStringPrintingSides(currentPdfModal!.pagePrintSide),
+                    currentPdfModal!.pageSize,
+                    getStringJobTypes(currentPdfModal!.printJobType),
+                    currentPdfModal!.colorPagesRange,
+                    PdfFiltersModal.getPagesCount(
+                            currentPdfModal!.colorPagesRange)
+                        .toString(),
+                    currentPdfModal!.bindingType,
+                    currentPdfModal!.isBondPaperNeeded.toString(),
+                    currentPdfModal!.bondPaperRange,
+                    currentPdfModal!.isTransparentSheetNeed.toString(),
+                    currentPdfModal!.transparentSheetColor,
+                    currentPdfModal!.getCostOfXerox().toString());
                 Navigator.of(context)
-                    .pushReplacementNamed(DummyScreen.routeName);
+                    .pushReplacementNamed(OrderPreviewScreen.routeName);
               },
               child: Container(
                   padding:

@@ -3,7 +3,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path/path.dart';
+import 'package:provider/provider.dart';
 import "package:syncfusion_flutter_pdfviewer/pdfviewer.dart";
+import 'package:xerox/Provider/current_order.dart';
+import 'package:xerox/Provider/current_user.dart';
 
 import "dart:io";
 
@@ -68,11 +71,18 @@ class _CustomPDFPreviewState extends State<CustomPDFPreview> {
     }
   }
 
-  void openFile(BuildContext ctx, File file,String fileName) {
+  void openFile(BuildContext ctx, File file, String fileName) {
     setState(() {
       isUploadingToFirebase = false;
     });
-    Navigator.of(ctx).pushNamed(DummyShops.routeName, arguments: {"file" : file, "fileName": fileName});
+    CurrentOrder curOrder = Provider.of<CurrentOrder>(ctx);
+    CurrentUser curUser = Provider.of<CurrentUser>(ctx);
+    curOrder.setFileAndFileName(file, fileName);
+    curOrder.setCustomerInfo(
+        curUser.getUserId, curUser.getUserName, curUser.getUserEmail);
+
+    Navigator.of(ctx).pushNamed(DummyShops.routeName);
+
     // setState(() {
     //   isPdfLoading = false;
     // });
@@ -121,7 +131,7 @@ class _CustomPDFPreviewState extends State<CustomPDFPreview> {
           child: SignInBar(
             label: "Select Shop",
             isLoading: isUploadingToFirebase,
-            onPressed: () => openFile(context, file,fileName),
+            onPressed: () => openFile(context, file, fileName),
           ),
         ),
       ),

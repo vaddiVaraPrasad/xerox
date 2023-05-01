@@ -19,10 +19,11 @@ import "./utils/color_pallets.dart";
 import "./screens/auth/forget_password_Screen.dart";
 import "./screens/nav_drawers/navBar.dart";
 
+import "Provider/current_order.dart";
 import "Provider/nearestShops.dart";
 import "Provider/search_place.dart";
 import "Provider/selected_shop.dart";
-import 'screens/dummy_screen.dart';
+import 'screens/Order_Preview.dart';
 import 'screens/pdf/nearestShopScreen.dart';
 import 'screens/navBar_Screens/cart_Screen.dart';
 import "screens/drawer_Screens/ContactUs.dart";
@@ -76,7 +77,9 @@ class _XeroxState extends State<Xerox> {
         ChangeNotifierProvider(
           create: (context) => SelectedShop(),
         ),
-        
+        ChangeNotifierProvider(
+          create: (context) => CurrentOrder(),
+        )
       ],
       child: MaterialApp(
         title: "Xerox",
@@ -133,7 +136,7 @@ class _XeroxState extends State<Xerox> {
           ProfilePage.routeName: (context) => const ProfilePage(),
           rewardsScreen.routeName: (context) => const rewardsScreen(),
           SearchShop.routeName: (context) => const SearchShop(),
-          DummyScreen.routeName: (context) => const DummyScreen(),
+          OrderPreviewScreen.routeName: (context) => const OrderPreviewScreen(),
           CustomPDFPreview.routeName: (context) => const CustomPDFPreview(),
           PdfImagesRender.routeName: (context) => const PdfImagesRender(),
           PdfFilters.routeName: (context) => const PdfFilters(),

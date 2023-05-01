@@ -11,6 +11,7 @@ class nearestShop {
   String shopID;
   String distanceFromCurrentLocation;
   String durationFromCurrentLocation;
+  String shopAddressByGooglePlaces;
 
   final double costForA0PerSingleSide;
   final double costForA0PErDobuleSide;
@@ -84,5 +85,6 @@ class nearestShop {
     required this.costForStickFile,
     required this.costForOneBondPaper,
     required this.costForTransparentSheetPerSheet,
+    required this.shopAddressByGooglePlaces,
   });
 }
