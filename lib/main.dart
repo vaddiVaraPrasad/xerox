@@ -91,7 +91,7 @@ class _XeroxState extends State<Xerox> {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           textTheme: GoogleFonts.ubuntuTextTheme(),
           colorScheme: ColorScheme.fromSwatch().copyWith(
-            secondary: ColorPallets.pinkinshShadedPurple,
+            secondary: ColorPallets.deepBlue,
             primary: ColorPallets.deepBlue,
           ),
           appBarTheme: const AppBarTheme(

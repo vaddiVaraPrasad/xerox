@@ -4,7 +4,40 @@ import 'package:flutter/material.dart';
 import '../model/order_model.dart';
 
 class CurrentOrder extends ChangeNotifier {
-  late Order currentOrder;
+  Order currentOrder = Order(
+    orderId: "",
+    pdfFile: File(""),
+    pdfName: "",
+    priceOfOrder: "",
+    pagesRange: "",
+    noOfPages: "",
+    noOfCopies: "",
+    pageOrient: "",
+    pagePrintSide: "",
+    pageSize: "",
+    printJobType: "",
+    colorPagesCount: "",
+    colorPagesRange: "",
+    bindingType: "",
+    isBondPaperNeeded: "",
+    bondPaperRange: "",
+    isTransparentSheetNeed: "",
+    transparentSheetColor: "",
+    customerId: "",
+    customerName: "",
+    customerEmailAddress: "",
+    shopId: "",
+    shopName: "",
+    shopOweerName: "",
+    shopEmail: "",
+    shopDistanceFromCurrentLocation: "",
+    durationFromCurrentLocation: "",
+    shopAddress: "",
+    dataOfOrder: "",
+    orderStatus: "",
+    modeOfOrder: "",
+    shopPicUrl: "",
+  );
 
   void setCurrentOrder(Order order) {
     currentOrder = order;
@@ -64,7 +97,7 @@ class CurrentOrder extends ChangeNotifier {
     notifyListeners();
   }
 
-  String get orderPriceOfOrder {
+  String get orderPrice {
     return currentOrder.priceOfOrder;
   }
 
@@ -106,6 +139,10 @@ class CurrentOrder extends ChangeNotifier {
 
   String get orderIsBOndPaperNeeded {
     return currentOrder.isBondPaperNeeded;
+  }
+
+  String get orderBondPapersRange {
+    return currentOrder.bondPaperRange;
   }
 
   String get orderisTransparentSheetNeed {
@@ -158,6 +195,10 @@ class CurrentOrder extends ChangeNotifier {
     notifyListeners();
   }
 
+  String get orderShopOwnerName {
+    return currentOrder.shopOweerName;
+  }
+
   String get orderShopId {
     return currentOrder.shopId;
   }
@@ -166,8 +207,8 @@ class CurrentOrder extends ChangeNotifier {
     return currentOrder.shopName;
   }
 
-  String get getorderShopOwnerName {
-    return currentOrder.shopOweerName;
+  String get orderShopPicUrl {
+    return currentOrder.shopPicUrl;
   }
 
   String get orderShopEmail {

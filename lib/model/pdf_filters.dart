@@ -1,7 +1,6 @@
 import 'dart:ffi';
 
 import "../screens/pdf/pdf_filters_Screen.dart";
-import "./pdf_shop_cost.dart";
 import "nearest_shops_model.dart";
 
 class PdfFiltersModal {

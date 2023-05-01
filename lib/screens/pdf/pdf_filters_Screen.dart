@@ -11,7 +11,6 @@ import 'package:xerox/utils/color_pallets.dart';
 
 import '../../Provider/current_order.dart';
 import '../../Provider/selected_shop.dart';
-import '../../model/ListShopes.dart';
 import '../../model/pdf_filters.dart';
 import '../drawer_Screens/orders_Screen.dart';
 import '../Order_Preview.dart';
@@ -61,28 +60,28 @@ String getStringSizeOfSheet(SizeOfSheets size) {
 
 String getStringPageOrientations(PageOrientation orient) {
   if (orient == PageOrientation.landScape) {
-    return "landscape";
+    return "Landscape";
   } else {
-    return "potrait";
+    return "Potrait";
   }
 }
 
 String getStringTransparentPaperColor(TransparentPaperColor color) {
   if (color == TransparentPaperColor.blue) {
-    return "blue";
+    return "Blue";
   } else if (color == TransparentPaperColor.green) {
-    return "green";
+    return "Green";
   } else if (color == TransparentPaperColor.brow) {
-    return "brown";
+    return "Brown";
   }
-  return "purple";
+  return "Purple";
 }
 
 String getStringJobTypes(JobTypes job) {
   if (job == JobTypes.blackAndWhite) {
-    return "black And White";
+    return "Black And White";
   } else if (job == JobTypes.fullColor) {
-    return "full Color ";
+    return "Full Color";
   }
   return "Partial Color";
 }
@@ -237,10 +236,9 @@ class _PdfFiltersState extends State<PdfFilters> {
   @override
   void didChangeDependencies() {
     if (isInit) {
-      final navData = ModalRoute.of(context)!.settings.arguments
-              as Map<String, dynamic>,
-          file = navData["pdfFile"];
-      fileName = navData["fileName"];
+      CurrentOrder curOrder = Provider.of<CurrentOrder>(context);
+      file = curOrder.getPdfFile;
+      fileName = curOrder.getPdfFileName;
       PdfDocument document = PdfDocument(inputBytes: file!.readAsBytesSync());
       SelectedShop selectedShopProvider = Provider.of<SelectedShop>(context);
 
@@ -254,7 +252,7 @@ class _PdfFiltersState extends State<PdfFilters> {
       _pagesController.text = "1-$totalPages";
       _ColorPagesController.text = "1-$totalPages";
       _bondPagesController.text = "1-$totalPages";
-
+      _noPagesController.text = "1";
       currentPdfModal = PdfFiltersModal(
           pagesRange: _pagesController.text,
           noOfCopies: _noPagesController.text,
@@ -288,6 +286,7 @@ class _PdfFiltersState extends State<PdfFilters> {
 
   @override
   Widget build(BuildContext context) {
+    CurrentOrder curOrder = Provider.of<CurrentOrder>(context);
     // height of page text files
     contHeight = showSlider ? 140 : 70;
 
@@ -398,7 +397,6 @@ class _PdfFiltersState extends State<PdfFilters> {
             ),
             InkWell(
               onTap: () {
-                CurrentOrder curOrder = Provider.of<CurrentOrder>(context);
                 curOrder.setPdfFilterDetails(
                     currentPdfModal!.pagesRange,
                     PdfFiltersModal.getPagesCount(currentPdfModal!.pagesRange)
@@ -1674,6 +1672,25 @@ class _PdfFiltersState extends State<PdfFilters> {
                               setState(() {
                                 boudSheets = true;
                               });
+                                currentPdfModal = PdfFiltersModal(
+                                    pagesRange: currentPdfModal!.pagesRange,
+                                    noOfCopies: currentPdfModal!.noOfCopies,
+                                    pageOrient: currentPdfModal!.pageOrient,
+                                    pagePrintSide:
+                                        currentPdfModal!.pagePrintSide,
+                                    pageSize: currentPdfModal!.pageSize,
+                                    printJobType: currentPdfModal!.printJobType,
+                                    colorPagesRange:
+                                        currentPdfModal!.colorPagesRange,
+                                    bindingType: currentPdfModal!.bindingType,
+                                    isBondPaperNeeded: true,
+                                    bondPaperRange:_bondPagesController.text ,
+                                    isTransparentSheetNeed:
+                                        currentPdfModal!.isTransparentSheetNeed,
+                                    transparentSheetColor:
+                                        currentPdfModal!.transparentSheetColor,
+                                    seletedShop: currentPdfModal!.seletedShop);
+                                totalPrice = currentPdfModal!.getCostOfXerox();
                               if (showBondSheetsTextBox == false) {
                                 setState(() {
                                   showBondSheetsTextBox = true;

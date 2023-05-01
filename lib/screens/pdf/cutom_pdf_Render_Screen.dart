@@ -75,11 +75,6 @@ class _CustomPDFPreviewState extends State<CustomPDFPreview> {
     setState(() {
       isUploadingToFirebase = false;
     });
-    CurrentOrder curOrder = Provider.of<CurrentOrder>(ctx);
-    CurrentUser curUser = Provider.of<CurrentUser>(ctx);
-    curOrder.setFileAndFileName(file, fileName);
-    curOrder.setCustomerInfo(
-        curUser.getUserId, curUser.getUserName, curUser.getUserEmail);
 
     Navigator.of(ctx).pushNamed(DummyShops.routeName);
 
@@ -90,6 +85,8 @@ class _CustomPDFPreviewState extends State<CustomPDFPreview> {
 
   @override
   Widget build(BuildContext context) {
+    CurrentOrder curOrder = Provider.of<CurrentOrder>(context);
+    CurrentUser curUser = Provider.of<CurrentUser>(context);
     File file = ModalRoute.of(context)!.settings.arguments as File;
     String fileName = basename(file.path);
     String displayName = basename(file.path).split('.')[0];
@@ -131,7 +128,12 @@ class _CustomPDFPreviewState extends State<CustomPDFPreview> {
           child: SignInBar(
             label: "Select Shop",
             isLoading: isUploadingToFirebase,
-            onPressed: () => openFile(context, file, fileName),
+            onPressed: () {
+              curOrder.setFileAndFileName(file, fileName);
+              curOrder.setCustomerInfo(
+                  curUser.getUserId, curUser.getUserName, curUser.getUserEmail);
+              openFile(context, file, fileName);
+            },
           ),
         ),
       ),

@@ -14,7 +14,7 @@ import 'package:xerox/Provider/current_user.dart';
 import 'package:xerox/model/nearest_shops_model.dart';
 import 'package:xerox/utils/color_pallets.dart';
 
-import '../../../model/ListShopes.dart';
+
 import '../../Global/api_keys.dart';
 import '../../Provider/nearestShops.dart';
 import '../../Provider/selected_shop.dart';
@@ -297,6 +297,7 @@ class _DummyShopsState extends State<DummyShops> {
                     nearshopProvider.getShopByIndex(index),
                     context,
                     seletedShopProvider,
+                    curOrder
                   );
                 },
               ),
@@ -311,6 +312,7 @@ class _DummyShopsState extends State<DummyShops> {
     nearestShop shop,
     BuildContext ctx,
     SelectedShop seletedShopProvider,
+    CurrentOrder   curOrder
   ) {
     return Container(
         height: 150,
@@ -364,8 +366,6 @@ class _DummyShopsState extends State<DummyShops> {
                   InkWell(
                     onTap: () {
                       seletedShopProvider.setSeletedShop(shop);
-                      CurrentOrder curOrder =
-                          Provider.of<CurrentOrder>(context);
                       curOrder.setShopDetails(
                         shop.shopID,
                         shop.shopName,

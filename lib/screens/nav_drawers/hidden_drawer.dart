@@ -43,7 +43,7 @@ class _HiddenSideZoomDrawerState extends State<HiddenSideZoomDrawer> {
       });
     }
     return Scaffold(
-      body: ZoomDrawer(
+      body:  ZoomDrawer(
         menuBackgroundColor: ColorPallets.lightPurplishWhile.withOpacity(.7),
         borderRadius: 28,
         style: DrawerStyle.defaultStyle,
@@ -53,19 +53,17 @@ class _HiddenSideZoomDrawerState extends State<HiddenSideZoomDrawer> {
         slideWidth: MediaQuery.of(context).size.width * 0.6,
         mainScreen: getScreen(),
         menuScreen: Builder(builder: (context) {
-          return isLoading
-              ? const CircularProgressIndicator()
-              : DrawerScreen(
-                  currentItem: currentItem,
-                  userName: curUser.getUserName,
-                  userProfileUrl: curUser.getUserProfileUrl,
-                  onSelectedItems: (item) {
-                    setState(() {
-                      currentItem = item;
-                      ZoomDrawer.of(context)!.close();
-                    });
-                  },
-                );
+          return isLoading ? const  CircularProgressIndicator() : DrawerScreen(
+            currentItem: currentItem,
+            userName: curUser.getUserName,
+            userProfileUrl: curUser.getUserProfileUrl,
+            onSelectedItems: (item) {
+              setState(() {
+                currentItem = item;
+                ZoomDrawer.of(context)!.close();
+              });
+            },
+          );
         }),
       ),
     );
