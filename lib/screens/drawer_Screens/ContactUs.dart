@@ -12,7 +12,7 @@ class ContactUs extends StatelessWidget {
   const ContactUs({super.key});
 
   void launchWebsite() async {
-    Uri uri = Uri.https("www.google.com");
+    Uri uri = Uri.https("www.bmsce.ac.in");
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     } else {

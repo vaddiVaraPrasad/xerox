@@ -80,6 +80,8 @@ dependencies:
   timeline_tile: ^2.0.0
   expandable: ^5.0.1
   maps_launcher: ^2.2.0
+  app_settings: 4.2.0
+  open_settings: ^2.0.2
 
 
   # The following adds the Cupertino Icons font to your application.
